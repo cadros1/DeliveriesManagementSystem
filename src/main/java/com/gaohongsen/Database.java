@@ -3,6 +3,7 @@ package com.gaohongsen;
 import java.sql.*;
 
 public class Database {
+    
     public static void readUsersName ()throws SQLException{
         String JDBC_URL = "jdbc:mysql://localhost:3306/DataMiningProject?useSSL=false&characterEncoding=utf8";
         String JDBC_USER = "root";
