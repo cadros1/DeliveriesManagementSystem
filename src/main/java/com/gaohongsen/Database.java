@@ -7,6 +7,8 @@ import com.zaxxer.hikari.*;
 /*
  * 这个类提供了对数据库的访问功能，目前包括：新增用户，登录检查
  * 所有方法均为静态方法，不需要实例化对象
+ * 
+ * @author 高洪森
  */
 public class Database {
 
