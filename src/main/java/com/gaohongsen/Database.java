@@ -85,7 +85,7 @@ public class Database {
 
     //此方法用于在登陆时检查用户是否存在以及密码是否正确，需要传入account,password两个参数
     //如果传入的account不存在或者account与password不匹配，则抛出一个SQLException
-    public static void loginCheck(String account,String password)throws SQLException{
+    public static int loginCheck(String account,String password)throws SQLException{
         //如果未初始化，则进行一次初始化
         if(!hasInitialized){
             initialize();
@@ -102,6 +102,8 @@ public class Database {
                     if(!password.equals(rs.getString("password"))){
                         throw new SQLException("密码错误");
                     }
+                    int id=rs.getInt("id");
+                    return id;
                 }
             }
         }
