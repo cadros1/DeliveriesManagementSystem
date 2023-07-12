@@ -14,7 +14,6 @@ public class Database {
     private static DataSource ds;
     private static boolean hasInitialized=false;
 
-
     //不允许实例化对象
     private Database(){}
 
