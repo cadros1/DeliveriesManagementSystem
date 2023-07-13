@@ -52,10 +52,30 @@ public class Database {
         }
     }
 
+    //此方法根据账号查询用户信息，并返回id/name/permission的字符串。需要传入account参数
+    //如果出现错误如查询出错、账号不存在等，均抛出SQLException
+    public static String getUserInfo(String account)throws SQLException{
+        int id;
+        String name;
+        int permission;
+
+        try(Connection conn=ds.getConnection()){
+            try(PreparedStatement ps=conn.prepareStatement("SELECT * FROM users WHERE account=?")){
+                ps.setString(1,account);
+                try(ResultSet rs=ps.executeQuery()){
+                    id=rs.getInt("id");
+                    name=rs.getString("name");
+                    permission=rs.getInt("permission");
+                }
+            }
+        }
+        return id+"/"+name+"/"+permission;
+    }
+
 
     //此方法用于在users表中新增一个用户，需要传入account,password,name,permission四个参数
     //如果传入的account已经存在，则抛出一个SQLException
-    public static void createUser(String account,String password,String name,int permission)throws SQLException{
+    public static void addUser(String account,String password,String name,int permission)throws SQLException{
         //如果未初始化，则进行一次初始化
         if(!hasInitialized){
             initialize();
