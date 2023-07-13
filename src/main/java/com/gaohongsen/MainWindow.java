@@ -2,6 +2,7 @@ package com.gaohongsen;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class MainWindow extends JFrame {
     private final CardLayout cardLayout;
@@ -214,12 +215,20 @@ public class MainWindow extends JFrame {
     }
 
     public String loginCheck(String username, String password) {
-        return Client.send("0/" + username + "/" + password);
+        try {
+            return Client.sendRequest("0/" + username + "/" + password);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         //将登录时的用户名和密码，发送至数据库进行核验
     }
 
     public String registerCheck(String username, String password, String name, String permission) {
-        return Client.send("2/" + username + "/" + password + "/" + name + "/" + permission);
+        try {
+            return Client.sendRequest("2/" + username + "/" + password + "/" + name + "/" + permission);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         //将注册时的用户名，发送至数据库进行核验
     }
 
@@ -240,6 +249,3 @@ public class MainWindow extends JFrame {
         new MainWindow();
     }
 }
-
-
-
