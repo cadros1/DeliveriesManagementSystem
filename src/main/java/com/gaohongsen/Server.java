@@ -71,11 +71,11 @@ class Handler extends Thread{
                 
                 //请求为注册
                 case 2:
-                    String account=arr[1];
-                    String password=arr[2];
-                    String name=arr[3];
-                    int permission=Integer.parseInt(arr[4]);
                     try{
+                        String account=arr[1];
+                        String password=arr[2];
+                        String name=arr[3];
+                        int permission=Integer.parseInt(arr[4]);
                         Database.addUser(account, password,name,permission);
                         writer.write("1");
                         break;

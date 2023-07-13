@@ -183,14 +183,15 @@ public class MainWindow extends JFrame {
                 else if (!passwordMatches(passwordField.getPassword(), confirmPasswordField.getPassword()))
                     JOptionPane.showMessageDialog(null, "前后密码不同！", "错误", JOptionPane.ERROR_MESSAGE);
                 else {
-                    String[] str=registerCheck(usernameTextField.getText(), String.valueOf(passwordField.getPassword()), nameTextField.getText(), permissionLabel.getText()).split("/");
+                    String[] str=registerCheck(usernameTextField.getText(), String.valueOf(passwordField.getPassword()), nameTextField.getText(), permissionField.getText()).split("/");
                     //将登录时的用户名，密码，姓名，权限，发送至数据库进行核验
-                    switch (str[0]) {
-                        case "0":
+                    String[] arr=str[0].split("/");
+                    switch (Integer.parseInt(arr[0])) {
+                        case 0:
                             //服务端返回值0，代表注册失败
-                            JOptionPane.showMessageDialog(null, str[1], "错误", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(null, arr[1], "错误", JOptionPane.ERROR_MESSAGE);
                             break;
-                        case "1":
+                        case 1:
                             //服务端返回值1，代表注册成功
                             JOptionPane.showMessageDialog(null, "注册成功！", "提示", JOptionPane.INFORMATION_MESSAGE);
                             // 注册成功后显示登录界面
@@ -227,7 +228,7 @@ public class MainWindow extends JFrame {
         try {
             return Client.sendRequest("2/" + username + "/" + password + "/" + name + "/" + permission);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            return "0/"+e.getMessage();
         }
         //将注册时的用户名，发送至数据库进行核验
     }
