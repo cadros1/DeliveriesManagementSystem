@@ -63,7 +63,7 @@ class Handler extends Thread{
                         writer.flush();
                         break;
                     }
-                    writer.write("1"+"/"+info);
+                    writer.write(info);
                     break;
                 
                 //请求为登出
