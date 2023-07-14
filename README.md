@@ -6,8 +6,8 @@
 
 ## 对于数据库
 
-目前存在users和log两个表。
+目前存在users和logs两个表。
 
 users用于储存用户信息，有id/INT、account/VARCHAR(20)、password/VARCHAR(20)、name/VARCHAR(20)、permission/TINYINT五个字段，其中id为自增主键，permission为用户权限。
 
-log用于储存日志信息，有id/INT、name/VARCHAR(20)、account/VARCHAR(20)、datetime/DATETIME、type/TINYINYT五个字段，其中id为自增主键，type为操作类型（0为登出，1为登入，2为注册）
+logs用于储存日志信息，有id/INT、name/VARCHAR(20)、account/VARCHAR(20)、datetime/DATETIME、type/TINYINYT五个字段，其中id为自增主键，type为操作类型（0为登出，1为登入，2为注册）
