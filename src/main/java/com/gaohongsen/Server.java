@@ -57,14 +57,16 @@ class Handler extends Thread{
                     try{
                         Database.loginCheck(arr[1], arr[2]);
                         info=Database.getUserInfo(arr[1]);
+                        writer.write("1"+"/"+info);
+                        writer.newLine();
+                        writer.flush();
+                        break;
                     }catch(Exception e){
                         writer.write("0"+"/"+e.getMessage());
                         writer.newLine();
                         writer.flush();
                         break;
                     }
-                    writer.write("1"+"/"+info);
-                    break;
                 
                 //请求为登出
                 case 1:

@@ -63,6 +63,7 @@ public class Database {
             try(PreparedStatement ps=conn.prepareStatement("SELECT * FROM users WHERE account=?")){
                 ps.setString(1,account);
                 try(ResultSet rs=ps.executeQuery()){
+                    rs.next();
                     id=rs.getInt("id");
                     name=rs.getString("name");
                     permission=rs.getInt("permission");
@@ -106,7 +107,7 @@ public class Database {
 
     //此方法用于在登陆时检查用户是否存在以及密码是否正确，需要传入account,password两个参数
     //如果传入的account不存在或者account与password不匹配，则抛出一个SQLException
-    public static int loginCheck(String account,String password)throws SQLException{
+    public static void loginCheck(String account,String password)throws SQLException{
         //如果未初始化，则进行一次初始化
         if(!hasInitialized){
             initialize();
@@ -117,14 +118,13 @@ public class Database {
             try(PreparedStatement ps=conn.prepareStatement("SELECT * FROM users WHERE account=?")){
                 ps.setString(1,account);
                 try(ResultSet rs=ps.executeQuery()){
-                    if(!rs.next()){
+                    if(rs.next()){
+                        if(!rs.getString("password").equals(password)){
+                            throw new SQLException("密码错误");
+                        }
+                    }else{
                         throw new SQLException("用户不存在");
                     }
-                    if(!password.equals(rs.getString("password"))){
-                        throw new SQLException("密码错误");
-                    }
-                    int id=rs.getInt("id");
-                    return id;
                 }
             }
         }
