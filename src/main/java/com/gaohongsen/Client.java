@@ -6,6 +6,8 @@ import java.net.*;
 /*
  * 此类为客户端，用于与服务端通信，发送请求并接收服务端的数据
  * 在目前的设计下请求应被整合为一条长字符串，并在串首添加一个int值为请求的类型
+ * 
+ * @author 高洪森
  */
 public class Client {
     public static String sendRequest(String request)throws IOException{
