@@ -1,5 +1,13 @@
 package com.gaohongsen;
 
+/*
+ @file MainWindow
+  * @brief 实现图形化界面和交互逻辑
+ * @author 李祖怡
+ * @date 2023/7/14
+ */
+
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
@@ -8,9 +16,12 @@ public class MainWindow extends JFrame {
     private final CardLayout cardLayout;
     private final JPanel contentPane;
 
+    public static User user=new User(0,"0","0",0);
+
+
     public MainWindow() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(750, 500);
+        setSize(900, 560);
         setResizable(false);
 
         // 创建内容面板和CardLayout
@@ -20,12 +31,10 @@ public class MainWindow extends JFrame {
         // 创建登录和注册面板
         LoginPanel loginPanel = new LoginPanel(this);
         RegisterPanel registerPanel = new RegisterPanel(this);
-        MainAppPanel mainAppPanel = new MainAppPanel();
 
         // 添加面板到内容面板
         contentPane.add(loginPanel, "login");
         contentPane.add(registerPanel, "register");
-        contentPane.add(mainAppPanel, "mainApp");
 
         // 设置初始显示的面板为登录面板
         showLoginPanel();
@@ -41,16 +50,9 @@ public class MainWindow extends JFrame {
         cardLayout.show(contentPane, "login");
     }
 
-    public void showRegisterPanel() {
-        cardLayout.show(contentPane, "register");
-    }
+    public void showRegisterPanel() {cardLayout.show(contentPane, "register");}
 
-    public void showMainAppPanel(
-            String username,
-            String ID,
-            String name,
-            int permission
-    ) {
+    public void showMainAppPanel() {
         cardLayout.show(contentPane, "mainApp");
     }
 
@@ -58,13 +60,13 @@ public class MainWindow extends JFrame {
         public LoginPanel(MainWindow mainWindow) {
             setLayout(null);
             // 初始化界面组件和布局
-            JLabel usernameLabel = new JLabel("用户名:");
-            usernameLabel.setBounds(240, 20, 80, 25);
-            add(usernameLabel);
+            JLabel accountLabel = new JLabel("用户名:");
+            accountLabel.setBounds(240, 20, 80, 25);
+            add(accountLabel);
 
-            JTextField usernameTextField = new JTextField();
-            usernameTextField.setBounds(320, 20, 160, 25);
-            add(usernameTextField);
+            JTextField accountTextField = new JTextField();
+            accountTextField.setBounds(320, 20, 160, 25);
+            add(accountTextField);
 
             JLabel passwordLabel = new JLabel("密码:");
             passwordLabel.setBounds(240, 80, 80, 25);
@@ -86,23 +88,27 @@ public class MainWindow extends JFrame {
             loginButton.addActionListener(e -> {
 
                 //核验用户名和密码的长度
-                if (usernameTextField.getText().length() > 12 || usernameTextField.getText().length() < 3)
+                if (accountTextField.getText().length() > 12 || accountTextField.getText().length() < 3)
                     JOptionPane.showMessageDialog(null, "用户名长度错误！", "错误", JOptionPane.ERROR_MESSAGE);
                 else if (passwordField.getPassword().length > 12 || passwordField.getPassword().length < 3)
                     JOptionPane.showMessageDialog(null, "密码长度错误！", "错误", JOptionPane.ERROR_MESSAGE);
-                else{
+                else {
                     //将登录时的用户名和密码，发送至数据库进行核验
-                    String[] str=loginCheck(usernameTextField.getText(), String.valueOf(passwordField.getPassword())).split("/");
+                    String[] str = loginCheck(accountTextField.getText(), String.valueOf(passwordField.getPassword())).split("/");
                     switch (str[0]) {
                         case "0":
                             //服务端返回值0，代表用户名或密码错误,弹出一个错误框
-                            JOptionPane.showMessageDialog(null,str[1], "错误", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(null, str[1], "错误", JOptionPane.ERROR_MESSAGE);
                             break;
                         case "1":
                             //服务端返回值1，代表登录成功,弹出一个信息提示框
                             JOptionPane.showMessageDialog(null, "登录成功！", "提示", JOptionPane.INFORMATION_MESSAGE);
                             // 登录成功后显示应用主界面
-                            mainWindow.showMainAppPanel(usernameTextField.getText(),str[1],str[2],Integer.parseInt(str[3]));
+                            user = new User(Integer.parseInt(str[1]),accountTextField.getText(),str[2],Integer.parseInt(str[3]));
+
+                            MainAppPanel mainAppPanel = new MainAppPanel();
+                            contentPane.add(mainAppPanel, "mainApp");
+                            mainWindow.showMainAppPanel();
                             break;
                     }
                 }
@@ -119,13 +125,14 @@ public class MainWindow extends JFrame {
         public RegisterPanel(MainWindow mainWindow) {
             setLayout(null);
             // 初始化界面组件和布局
-            JLabel usernameLabel = new JLabel("用户名:");
-            usernameLabel.setBounds(240, 20, 80, 25);
-            add(usernameLabel);
 
-            JTextField usernameTextField = new JTextField();
-            usernameTextField.setBounds(320, 20, 160, 25);
-            add(usernameTextField);
+            JLabel accountLabel = new JLabel("用户名:");
+            accountLabel.setBounds(240, 20, 80, 25);
+            add(accountLabel);
+
+            JTextField accountTextField = new JTextField();
+            accountTextField.setBounds(320, 20, 160, 25);
+            add(accountTextField);
 
             JLabel passwordLabel = new JLabel("密码:");
             passwordLabel.setBounds(240, 50, 80, 25);
@@ -172,18 +179,18 @@ public class MainWindow extends JFrame {
             confirmRegisterButton.addActionListener(e -> {
 
                 //核验用户名，密码和姓名的长度
-                if (usernameTextField.getText().length() > 12 || usernameTextField.getText().length() < 3)
+                if (accountTextField.getText().length() > 12 || accountTextField.getText().length() < 3)
                     JOptionPane.showMessageDialog(null, "用户名长度错误！", "错误", JOptionPane.ERROR_MESSAGE);
                 else if (passwordField.getPassword().length > 12 || passwordField.getPassword().length < 3)
                     JOptionPane.showMessageDialog(null, "密码长度错误！", "错误", JOptionPane.ERROR_MESSAGE);
-                else if (nameTextField.getText().length() > 12 || usernameTextField.getText().length() < 3)
+                else if (nameTextField.getText().length() > 12 || nameTextField.getText().length() < 3)
                     JOptionPane.showMessageDialog(null, "姓名长度错误！", "错误", JOptionPane.ERROR_MESSAGE);
 
                     //核验密码与确认密码
                 else if (!passwordMatches(passwordField.getPassword(), confirmPasswordField.getPassword()))
                     JOptionPane.showMessageDialog(null, "前后密码不同！", "错误", JOptionPane.ERROR_MESSAGE);
                 else {
-                    String[] str=registerCheck(usernameTextField.getText(), String.valueOf(passwordField.getPassword()), nameTextField.getText(), permissionComboBox.getSelectedIndex()).split("/");
+                    String[] str = registerCheck(accountTextField.getText(), String.valueOf(passwordField.getPassword()), nameTextField.getText(), permissionComboBox.getSelectedIndex()).split("/");
                     //将登录时的用户名，密码，姓名，权限，发送至数据库进行核验
                     switch (Integer.parseInt(str[0])) {
                         case 0:
@@ -204,21 +211,35 @@ public class MainWindow extends JFrame {
         }
     }
 
-    private static class MainAppPanel extends JPanel {
+    public static class MainAppPanel extends JPanel {
+
         public MainAppPanel() {
             setLayout(null);
-            JLabel testLabel = new JLabel("Welcome!");
-            testLabel.setBounds(260, 140, 80, 25);
+
+
+            JLabel IDLabel = new JLabel("Welcome!"+user.getId());
+            IDLabel.setBounds(260, 140, 80, 25);
+            add(IDLabel);
+
+            JLabel welcomeLabel = new JLabel("Welcome!"+user.getName());
+            welcomeLabel.setBounds(260, 170, 80, 25);
+            add(welcomeLabel);
+
+            JLabel testLabel = new JLabel("Welcome!"+user.getPermission());
+            testLabel.setBounds(260, 200, 80, 25);
             add(testLabel);
+
+
             // 初始化界面组件和布局
         }
     }
 
-    public String loginCheck(String username, String password) {
+    public String loginCheck(String account, String password) {
+//        return "1/001/Jack/2";
         try {
-            return Client.sendRequest("0/" + username + "/" + password);
+            return Client.sendRequest("0/" + account + "/" + password);
         } catch (IOException e) {
-            return "0/"+e.getMessage();
+            return "0/" + e.getMessage();
         }
         //将登录时的用户名和密码，发送至数据库进行核验
     }
@@ -227,7 +248,7 @@ public class MainWindow extends JFrame {
         try {
             return Client.sendRequest("2/" + username + "/" + password + "/" + name + "/" + permission);
         } catch (IOException e) {
-            return "0/"+e.getMessage();
+            return "0/" + e.getMessage();
         }
         //将注册时的用户名，发送至数据库进行核验
     }
@@ -236,7 +257,6 @@ public class MainWindow extends JFrame {
         if (password1.length != password2.length) {
             return false;
         }
-
         for (int i = 0; i < password1.length; i++) {
             if (password1[i] != password2[i]) {
                 return false;
