@@ -5,8 +5,9 @@ import javax.sql.*;
 import com.zaxxer.hikari.*;
 
 /*
- * 这个类提供了对数据库的访问功能，目前包括：新增用户，登录检查
+ * 此类提供了对数据库的访问功能，目前包括：按账号查询名字，按账号查询用户所有信息，新增用户，登录检查，新增日志
  * 所有方法均为静态方法，不需要实例化对象
+ * 使用了Hikari连接池
  * 
  * @author 高洪森
  */
@@ -37,20 +38,26 @@ public class Database {
         hasInitialized=true;
     }
     
-    
-    public static void readUsersName()throws SQLException{
-        //示例功能，请勿使用
+
+    //此方法根据账号查询用户姓名，并返回姓名。需要传入account参数
+    //如果出现错误如查询出错、账号不存在等，均抛出SQLException
+    public static String getUserName(String account)throws SQLException{
+        String name;
         try(Connection conn=ds.getConnection()){
-            try(PreparedStatement ps=conn.prepareStatement("SELECT name FROM users")){
+            try(PreparedStatement ps=conn.prepareStatement("SELECT name FROM users WHERE account=?")){
+                ps.setString(1,account);
                 try(ResultSet rs=ps.executeQuery()){
-                    while(rs.next()){
-                        String name=rs.getString("name");
-                        System.out.println(name);
+                    if(rs.next()){
+                        name=rs.getString("name");
+                    }else{
+                        throw new SQLException("账号不存在");
                     }
                 }
             }
         }
+        return name;
     }
+
 
     //此方法根据账号查询用户信息，并返回id/name/permission的字符串。需要传入account参数
     //如果出现错误如查询出错、账号不存在等，均抛出SQLException
@@ -126,6 +133,26 @@ public class Database {
                         throw new SQLException("用户不存在");
                     }
                 }
+            }
+        }
+    }
+
+
+    //此方法向logs表中添加一条日志，内容为name,account,time,type，需要传入name,account,type三个参数，time由程序获取系统时间填充
+    //如果数据库操作出错，则抛出SQLException
+    public static void addLog(String name,String account,int type)throws SQLException{
+        //如果未初始化，则进行一次初始化
+        if(!hasInitialized){
+            initialize();
+        }
+
+        //添加日志
+        try(Connection conn=ds.getConnection()){
+            try(PreparedStatement ps=conn.prepareStatement("INSERT INTO logs(name,account,datetime,type) VALUES(?,?,now(),?)")){
+                ps.setString(1,name);
+                ps.setString(2,account);
+                ps.setInt(3,type);
+                ps.executeUpdate();
             }
         }
     }
