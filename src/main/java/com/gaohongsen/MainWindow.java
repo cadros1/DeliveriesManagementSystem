@@ -7,10 +7,15 @@ package com.gaohongsen;
  * @date 2023/7/14
  */
 
-
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.net.URL;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
 
 public class MainWindow extends JFrame {
     private final CardLayout cardLayout;
@@ -21,7 +26,7 @@ public class MainWindow extends JFrame {
 
     public MainWindow() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(900, 560);
+        setSize(750, 500);
         setResizable(false);
 
         // 创建内容面板和CardLayout
@@ -83,6 +88,14 @@ public class MainWindow extends JFrame {
             JButton registerButton = new JButton("注册");
             registerButton.setBounds(370, 220, 80, 25);
             add(registerButton);
+
+            // 设置背景
+            JLabel lblBackground = new JLabel(); // 创建一个标签组件对象
+            URL resource = this.getClass().getResource("/setu.jpg"); // 获取背景图片路径
+            ImageIcon icon = new ImageIcon(resource); // 创建背景图片对象
+            lblBackground.setIcon(icon); // 设置标签组件要显示的图标
+            lblBackground.setBounds(0, 0, icon.getIconWidth(), icon.getIconHeight()); // 设置组件的显示位置及大小
+            add(lblBackground); // 将组件添加到面板中
 
             // 添加登录按钮的点击事件处理逻辑
             loginButton.addActionListener(e -> {
@@ -175,6 +188,14 @@ public class MainWindow extends JFrame {
             confirmRegisterButton.setBounds(370, 220, 80, 25);
             add(confirmRegisterButton);
 
+            // 设置背景
+            JLabel lblBackground = new JLabel(); // 创建一个标签组件对象
+            URL resource = this.getClass().getResource("/setu.jpg"); // 获取背景图片路径
+            ImageIcon icon = new ImageIcon(resource); // 创建背景图片对象
+            lblBackground.setIcon(icon); // 设置标签组件要显示的图标
+            lblBackground.setBounds(0, 0, icon.getIconWidth(), icon.getIconHeight()); // 设置组件的显示位置及大小
+            add(lblBackground); // 将组件添加到面板中
+
             // 添加确认注册按钮的点击事件处理逻辑
             confirmRegisterButton.addActionListener(e -> {
 
@@ -229,8 +250,14 @@ public class MainWindow extends JFrame {
             testLabel.setBounds(260, 200, 80, 25);
             add(testLabel);
 
+            // 设置背景
+            JLabel lblBackground = new JLabel(); // 创建一个标签组件对象
+            URL resource = this.getClass().getResource("/setu.jpg"); // 获取背景图片路径
+            ImageIcon icon = new ImageIcon(resource); // 创建背景图片对象
+            lblBackground.setIcon(icon); // 设置标签组件要显示的图标
+            lblBackground.setBounds(0, 0, icon.getIconWidth(), icon.getIconHeight()); // 设置组件的显示位置及大小
+            add(lblBackground); // 将组件添加到面板中
 
-            // 初始化界面组件和布局
         }
     }
 
