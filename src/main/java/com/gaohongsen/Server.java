@@ -78,6 +78,8 @@ class Handler extends Thread{
                         int permission=Integer.parseInt(arr[4]);
                         Database.addUser(account, password,name,permission);
                         writer.write("1");
+                        writer.newLine();
+                        writer.flush();
                         break;
                     }catch(Exception e){
                         writer.write("0"+"/"+e.getMessage());

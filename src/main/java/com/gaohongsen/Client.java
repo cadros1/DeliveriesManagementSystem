@@ -26,6 +26,7 @@ public class Client {
         writer.write(request);
         writer.newLine();
         writer.flush();
-        return reader.readLine();
+        String s=reader.readLine();
+        return s;
     }
 }

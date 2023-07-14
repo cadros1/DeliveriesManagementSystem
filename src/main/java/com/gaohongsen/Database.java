@@ -114,7 +114,7 @@ public class Database {
 
         //校验账号是否存在，若存在，校验密码是否正确
         try(Connection conn=ds.getConnection()){
-            try(PreparedStatement ps=conn.prepareStatement("SELECT password FROM users WHERE account=?")){
+            try(PreparedStatement ps=conn.prepareStatement("SELECT * FROM users WHERE account=?")){
                 ps.setString(1,account);
                 try(ResultSet rs=ps.executeQuery()){
                     if(!rs.next()){
