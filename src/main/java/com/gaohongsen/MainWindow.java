@@ -218,7 +218,7 @@ public class MainWindow extends JFrame {
         try {
             return Client.sendRequest("0/" + username + "/" + password);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            return "0/"+e.getMessage();
         }
         //将登录时的用户名和密码，发送至数据库进行核验
     }
