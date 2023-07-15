@@ -10,7 +10,7 @@ import java.net.*;
  * @author 高洪森
  */
 public class Client {
-    public static String sendRequest(String request)throws IOException{
+    public static String sendRequest(final String request)throws IOException{
         Socket sock=new Socket("localhost",6666);
         String answer="0";
         try(InputStream input=sock.getInputStream()){

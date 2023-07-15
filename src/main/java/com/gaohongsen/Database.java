@@ -5,7 +5,7 @@ import javax.sql.*;
 import com.zaxxer.hikari.*;
 
 /*
- * 此类提供了对数据库的访问功能，目前包括：按账号查询名字，按账号查询用户所有信息，新增用户，登录检查，新增日志
+ * 此类提供了对数据库的访问功能，目前包括：按账号查询名字，按账号查询用户所有信息，新增用户，登录检查，新增日志，更改密码
  * 所有方法均为静态方法，不需要实例化对象
  * 使用了Hikari连接池
  * 
@@ -41,7 +41,7 @@ public class Database {
 
     //此方法根据账号查询用户姓名，并返回姓名。需要传入account参数
     //如果出现错误如查询出错、账号不存在等，均抛出SQLException
-    public static String getUserName(String account)throws SQLException{
+    public static String getUserName(final String account)throws SQLException{
         String name;
         try(Connection conn=ds.getConnection()){
             try(PreparedStatement ps=conn.prepareStatement("SELECT name FROM users WHERE account=?")){
@@ -61,7 +61,7 @@ public class Database {
 
     //此方法根据账号查询用户信息，并返回id/name/permission的字符串。需要传入account参数
     //如果出现错误如查询出错、账号不存在等，均抛出SQLException
-    public static String getUserInfo(String account)throws SQLException{
+    public static String getUserInfo(final String account)throws SQLException{
         int id;
         String name;
         int permission;
@@ -83,7 +83,7 @@ public class Database {
 
     //此方法用于在users表中新增一个用户，需要传入account,password,name,permission四个参数
     //如果传入的account已经存在，则抛出一个SQLException
-    public static void addUser(String account,String password,String name,int permission)throws SQLException{
+    public static void addUser(final String account,final String password,final String name,final int permission)throws SQLException{
         //如果未初始化，则进行一次初始化
         if(!hasInitialized){
             initialize();
@@ -112,9 +112,9 @@ public class Database {
     }
 
 
-    //此方法用于在登陆时检查用户是否存在以及密码是否正确，需要传入account,password两个参数
+    //此方法用于检查用户是否存在以及密码是否正确，需要传入account,password两个参数
     //如果传入的account不存在或者account与password不匹配，则抛出一个SQLException
-    public static void loginCheck(String account,String password)throws SQLException{
+    public static void passwordCheck(final String account,final String password)throws SQLException{
         //如果未初始化，则进行一次初始化
         if(!hasInitialized){
             initialize();
@@ -140,7 +140,7 @@ public class Database {
 
     //此方法向logs表中添加一条日志，内容为name,account,time,type，需要传入name,account,type三个参数，time由程序获取系统时间填充
     //如果数据库操作出错，则抛出SQLException
-    public static void addLog(String name,String account,int type)throws SQLException{
+    public static void addLog(final String name,final String account,final int type)throws SQLException{
         //如果未初始化，则进行一次初始化
         if(!hasInitialized){
             initialize();
@@ -152,6 +152,24 @@ public class Database {
                 ps.setString(1,name);
                 ps.setString(2,account);
                 ps.setInt(3,type);
+                ps.executeUpdate();
+            }
+        }
+    }
+
+    //此方法用于更新用户密码，需要传入account,password两个参数
+    //如果出错，则抛出一个SQLException
+    public static void updatePassword(final String account,final String password)throws SQLException{
+        //如果未初始化，则进行一次初始化
+        if(!hasInitialized){
+            initialize();
+        }
+
+        //更新密码
+        try(Connection conn=ds.getConnection()){
+            try(PreparedStatement ps=conn.prepareStatement("UPDATE users SET password=? WHERE account=?")){
+                ps.setString(1,password);
+                ps.setString(2,account);
                 ps.executeUpdate();
             }
         }
