@@ -46,18 +46,6 @@ public class MainWindow extends JFrame {
         setVisible(true);
     }
 
-    public void showLoginPanel() {
-
-    }
-
-    public void showRegisterPanel() {cardLayout.show(contentPane, "register");}
-
-    public void showMainAppPanel() {
-        cardLayout.show(contentPane, "mainApp");
-    }
-
-
-
     public static void main(String[] args) {
         MainWindow mainWindow= new MainWindow();
     }

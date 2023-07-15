@@ -66,14 +66,14 @@ public class LoginPanel extends JPanel {
 
                         MainAppPanel mainAppPanel = new MainAppPanel(mainWindow);
                         contentPane.add(mainAppPanel, "mainApp");
-                        mainWindow.showMainAppPanel();
+                        cardLayout.show(contentPane, "mainApp");
                         break;
                 }
             }
         });
 
         // 添加注册按钮的点击事件处理逻辑
-        registerButton.addActionListener(e -> mainWindow.showRegisterPanel());
+        registerButton.addActionListener(e -> cardLayout.show(contentPane, "register"));
 
     }
 
