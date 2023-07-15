@@ -49,7 +49,10 @@ public class SearchPanel extends JPanel {
         add(scrollPane);
 
         confirmSearchButton.addActionListener(e -> {
-            cardLayout.show(contentPane, "search");
+            /**************************************************************************
+             * 待完成
+             * 通过选中项，查找对应物流信息，然后显示在表上
+             *************************************************************************/
         });
 
 

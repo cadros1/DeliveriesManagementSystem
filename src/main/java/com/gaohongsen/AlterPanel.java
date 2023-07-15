@@ -12,6 +12,81 @@ public class AlterPanel extends JPanel {
     public AlterPanel(MainWindow mainWindow) {
         setLayout(null);
 
+        JLabel titleLabel = new JLabel("请输入单号：");
+        titleLabel.setBounds(10, 50, 80, 25);
+        add(titleLabel);
+        JTextField titleTextField = new JTextField();
+        titleTextField.setBounds(90, 50, 80, 25);
+        add(titleTextField);
+
+        JLabel sendPlaceLabel = new JLabel("发货地：");
+        sendPlaceLabel.setBounds(10, 80, 80, 25);
+        add(sendPlaceLabel);
+        JTextField sendPlaceTextField = new JTextField();
+        sendPlaceTextField.setBounds(90, 80, 80, 25);
+        add(sendPlaceTextField);
+
+        JLabel receivePlaceLabel = new JLabel("收货地：");
+        receivePlaceLabel.setBounds(10, 110, 80, 25);
+        add(receivePlaceLabel);
+        JTextField receivePlaceTextField = new JTextField();
+        receivePlaceTextField.setBounds(90, 110, 80, 25);
+        add(receivePlaceTextField);
+
+        JLabel senderLabel = new JLabel("发件人：");
+        senderLabel.setBounds(300, 80, 80, 25);
+        add(senderLabel);
+        JTextField senderTextField = new JTextField();
+        senderTextField.setBounds(380, 80, 80, 25);
+        add(senderTextField);
+
+        JLabel receiverLabel = new JLabel("收件人：");
+        receiverLabel.setBounds(300, 110, 80, 25);
+        add(receiverLabel);
+        JTextField receiverTextField = new JTextField();
+        receiverTextField.setBounds(380, 110, 80, 25);
+        add(receiverTextField);
+
+        JLabel logisticStatusLabel = new JLabel("物流状态");
+        logisticStatusLabel.setBounds(10, 140, 80, 25);
+        add(logisticStatusLabel);
+        JTextField logisticStatusTextField = new JTextField();
+        logisticStatusTextField.setBounds(90, 140, 80, 25);
+        add(logisticStatusTextField);
+
+
+        JButton confirmTitleButton = new JButton("重置");
+        confirmTitleButton.setBounds(10, 170, 80, 25);
+        add(confirmTitleButton);
+        confirmTitleButton.addActionListener(e -> {
+            /**************************************************************************
+             * 待完成
+             * 查找titleTextField对应的物流信息,错误则弹出提示框，成功则通过setText更改下方输入框的值
+             *************************************************************************/
+
+        });
+
+        JButton confirmButton = new JButton("更改");
+        confirmButton.setBounds(300, 170, 80, 25);
+        add(confirmButton);
+        confirmButton.addActionListener(e -> {
+            /**************************************************************************
+             * 待完成
+             * 将物流信息上传，弹出提示框
+             *************************************************************************/
+        });
+
+        JButton deleteButton = new JButton("删除");
+        deleteButton.setBounds(590, 170, 80, 25);
+        add(deleteButton);
+        deleteButton.addActionListener(e -> {
+            /**************************************************************************
+             * 待完成
+             * 将删除请求上传，弹出提示框
+             *************************************************************************/
+        });
+
+
         JButton searchButton = new JButton("查找物流");
         searchButton.setBounds(20, 20, 90, 25);
         add(searchButton);

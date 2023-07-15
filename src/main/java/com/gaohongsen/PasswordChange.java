@@ -53,17 +53,26 @@ public class PasswordChange extends JFrame {
                     String.valueOf(newPasswordField.getPassword())
             ).split("/");
             //将修改密码时的用户名，原密码，密码发送至数据库进行核验
-            switch (Integer.parseInt(str[0])) {
-                case 0:
-                    //服务端返回值0，代表修改失败
-                    JOptionPane.showMessageDialog(null, str[1], "错误", JOptionPane.ERROR_MESSAGE);
-                    break;
-                case 1:
-                    //服务端返回值1，代表修改成功
-                    JOptionPane.showMessageDialog(null, "修改成功！", "提示", JOptionPane.INFORMATION_MESSAGE);
-                    // 修改成功后关闭该界面
-                    dispose();
-                    break;
+            if (originalPasswordField.getText().length() > 12 || originalPasswordField.getText().length() < 3)
+                JOptionPane.showMessageDialog(null, "原密码长度错误！", "错误", JOptionPane.ERROR_MESSAGE);
+            else if (newPasswordField.getPassword().length > 12 || newPasswordField.getPassword().length < 3)
+                JOptionPane.showMessageDialog(null, "密码长度错误！", "错误", JOptionPane.ERROR_MESSAGE);
+            else if (RegisterPanel.passwordMatches(originalPasswordField.getPassword(), newPasswordField.getPassword())) {
+                JOptionPane.showMessageDialog(null, "前后密码相同！", "错误", JOptionPane.ERROR_MESSAGE);
+            } else {
+                switch (Integer.parseInt(str[0])) {
+                    case 0:
+                        //服务端返回值0，代表修改失败
+                        JOptionPane.showMessageDialog(null, str[1], "错误", JOptionPane.ERROR_MESSAGE);
+                        break;
+                    case 1:
+                        //服务端返回值1，代表修改成功
+                        JOptionPane.showMessageDialog(null, "修改成功！", "提示", JOptionPane.INFORMATION_MESSAGE);
+                        // 修改成功后关闭该界面
+                        dispose();
+                        break;
+                }
+
             }
         });
 
@@ -78,8 +87,4 @@ public class PasswordChange extends JFrame {
 //        }
         //将登出时的用户名，发送至数据库进行核验
     }
-
-//    public static void main(String[] args) {
-//        new PasswordChange();
-//    }
 }

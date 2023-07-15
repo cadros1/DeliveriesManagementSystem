@@ -13,36 +13,36 @@ public class NewPanel extends JPanel {
         setLayout(null);
 
         JLabel titleLabel = new JLabel("新建物流信息");
-        titleLabel.setBounds(10, 100, 80, 25);
+        titleLabel.setBounds(10, 50, 80, 25);
         add(titleLabel);
         JLabel sendPlaceLabel = new JLabel("发货地：");
-        sendPlaceLabel.setBounds(10, 130, 80, 25);
+        sendPlaceLabel.setBounds(10, 80, 80, 25);
         add(sendPlaceLabel);
         JLabel receivePlaceLabel = new JLabel("收货地：");
-        receivePlaceLabel.setBounds(10, 160, 80, 25);
+        receivePlaceLabel.setBounds(10, 110, 80, 25);
         add(receivePlaceLabel);
         JLabel senderLabel = new JLabel("发件人：");
-        senderLabel.setBounds(300, 130, 80, 25);
+        senderLabel.setBounds(300, 80, 80, 25);
         add(senderLabel);
         JLabel receiverLabel = new JLabel("收件人：");
-        receiverLabel.setBounds(300, 160, 80, 25);
+        receiverLabel.setBounds(300, 110, 80, 25);
         add(receiverLabel);
 
         JTextField sendPlaceTextField = new JTextField();
-        sendPlaceTextField.setBounds(90, 130, 80, 25);
+        sendPlaceTextField.setBounds(90, 80, 80, 25);
         add(sendPlaceTextField);
         JTextField receivePlaceTextField = new JTextField();
-        receivePlaceTextField.setBounds(90, 160, 80, 25);
+        receivePlaceTextField.setBounds(90, 110, 80, 25);
         add(receivePlaceTextField);
         JTextField senderTextField = new JTextField();
-        senderTextField.setBounds(380, 130, 80, 25);
+        senderTextField.setBounds(380, 80, 80, 25);
         add(senderTextField);
         JTextField receiverTextField = new JTextField();
-        receiverTextField.setBounds(380, 160, 80, 25);
+        receiverTextField.setBounds(380, 110, 80, 25);
         add(receiverTextField);
 
         JButton confirmNewButton = new JButton("创建");
-        confirmNewButton.setBounds(10, 190, 80, 25);
+        confirmNewButton.setBounds(10, 140, 80, 25);
         add(confirmNewButton);
         confirmNewButton.addActionListener(e -> {
 

@@ -109,16 +109,16 @@ public class RegisterPanel extends JPanel {
         backToLoginButton.addActionListener(e -> cardLayout.show(contentPane, "login"));
     }
 
-    public String registerCheck(String username, String password, String name, int permission) {
+    public String registerCheck(String account, String password, String name, int permission) {
         try {
-            return Client.sendRequest("2/" + username + "/" + password + "/" + name + "/" + permission);
+            return Client.sendRequest("2/" + account + "/" + password + "/" + name + "/" + permission);
         } catch (IOException e) {
             return "0/" + e.getMessage();
         }
         //将注册时的用户名，发送至数据库进行核验
     }
 
-    public boolean passwordMatches(char[] password1, char[] password2) {
+    public static boolean passwordMatches(char[] password1, char[] password2) {
         if (password1.length != password2.length) {
             return false;
         }
