@@ -79,4 +79,13 @@ public class User implements java.io.Serializable {
     public int getPermission() {
         return permission;
     }
+
+    public String getPermissionString() {
+        if (permission == 1)
+            return "用户";
+        else if (permission == 2)
+            return "工作人员";
+        else
+            return "管理员";
+    }
 }

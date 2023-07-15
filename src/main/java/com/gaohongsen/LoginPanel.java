@@ -62,29 +62,30 @@ public class LoginPanel extends JPanel {
                         //服务端返回值1，代表登录成功,弹出一个信息提示框
                         JOptionPane.showMessageDialog(null, "登录成功！", "提示", JOptionPane.INFORMATION_MESSAGE);
                         // 登录成功后显示应用主界面
-                        user = new User(Integer.parseInt(str[1]),accountTextField.getText(),str[2],Integer.parseInt(str[3]));
+                        user = new User(Integer.parseInt(str[1]), accountTextField.getText(), str[2], Integer.parseInt(str[3]));
 
-                        MainAppPanel mainAppPanel = new MainAppPanel(mainWindow);
-                        contentPane.add(mainAppPanel, "mainApp");
-                        mainWindow.showMainAppPanel();
+                        WelcomePanel welcomePanel = new WelcomePanel(mainWindow);
+                        contentPane.add(welcomePanel, "welcome");
+
+                        cardLayout.show(contentPane, "welcome");
                         break;
                 }
             }
         });
 
         // 添加注册按钮的点击事件处理逻辑
-        registerButton.addActionListener(e -> mainWindow.showRegisterPanel());
+        registerButton.addActionListener(e -> cardLayout.show(contentPane, "register"));
 
     }
 
 
     public String loginCheck(String account, String password) {
-//        return "1/001/Jack/2";
-        try {
-            return Client.sendRequest("0/" + account + "/" + password);
-        } catch (IOException e) {
-            return "0/" + e.getMessage();
-        }
+        return "1/001/Jack/2";
+//        try {
+//            return Client.sendRequest("0/" + account + "/" + password);
+//        } catch (IOException e) {
+//            return "0/" + e.getMessage();
+//        }
         //将登录时的用户名和密码，发送至数据库进行核验
     }
 

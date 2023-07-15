@@ -48,7 +48,7 @@ public class RegisterPanel extends JPanel {
         permissionLabel.setBounds(240, 140, 80, 25);
         add(permissionLabel);
 
-        final String[] permissions = {"-请选择-","客户", "员工", "管理员"};
+        final String[] permissions = {"-请选择-", "客户", "员工", "管理员"};
         JComboBox<String> permissionComboBox = new JComboBox<>(permissions);
         permissionComboBox.setBounds(320, 140, 160, 25);
         add(permissionComboBox);
@@ -82,11 +82,15 @@ public class RegisterPanel extends JPanel {
                 //核验密码与确认密码
             else if (!passwordMatches(passwordField.getPassword(), confirmPasswordField.getPassword()))
                 JOptionPane.showMessageDialog(null, "前后密码不同！", "错误", JOptionPane.ERROR_MESSAGE);
-            else if (permissionComboBox.getSelectedIndex()==0)
+            else if (permissionComboBox.getSelectedIndex() == 0)
                 JOptionPane.showMessageDialog(null, "请选择账户权限！", "错误", JOptionPane.ERROR_MESSAGE);
             else {
-                String[] str = registerCheck(accountTextField.getText(), String.valueOf(passwordField.getPassword()), nameTextField.getText(), permissionComboBox.getSelectedIndex()).split("/");
-                //将登录时的用户名，密码，姓名，权限，发送至数据库进行核验
+                String[] str = registerCheck(
+                        accountTextField.getText(),
+                        String.valueOf(passwordField.getPassword()),
+                        nameTextField.getText(),
+                        permissionComboBox.getSelectedIndex()
+                ).split("/");//将登录时的用户名，密码，姓名，权限，发送至数据库进行核验
                 switch (Integer.parseInt(str[0])) {
                     case 0:
                         //服务端返回值0，代表注册失败
@@ -105,16 +109,16 @@ public class RegisterPanel extends JPanel {
         backToLoginButton.addActionListener(e -> cardLayout.show(contentPane, "login"));
     }
 
-    public String registerCheck(String username, String password, String name, int permission) {
+    public String registerCheck(String account, String password, String name, int permission) {
         try {
-            return Client.sendRequest("2/" + username + "/" + password + "/" + name + "/" + permission);
+            return Client.sendRequest("2/" + account + "/" + password + "/" + name + "/" + permission);
         } catch (IOException e) {
             return "0/" + e.getMessage();
         }
         //将注册时的用户名，发送至数据库进行核验
     }
 
-    public boolean passwordMatches(char[] password1, char[] password2) {
+    public static boolean passwordMatches(char[] password1, char[] password2) {
         if (password1.length != password2.length) {
             return false;
         }
