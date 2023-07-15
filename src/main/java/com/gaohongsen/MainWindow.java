@@ -21,6 +21,7 @@ public class MainWindow extends JFrame {
 
     public MainWindow() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setTitle("物流日志");
         setSize(750, 500);
         setResizable(false);
 
@@ -31,6 +32,8 @@ public class MainWindow extends JFrame {
         // 创建登录和注册面板
         LoginPanel loginPanel = new LoginPanel(this);
         RegisterPanel registerPanel = new RegisterPanel(this);
+
+
 
         // 添加面板到内容面板
         contentPane.add(loginPanel, "login");

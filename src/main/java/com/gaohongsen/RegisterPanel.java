@@ -85,8 +85,12 @@ public class RegisterPanel extends JPanel {
             else if (permissionComboBox.getSelectedIndex()==0)
                 JOptionPane.showMessageDialog(null, "请选择账户权限！", "错误", JOptionPane.ERROR_MESSAGE);
             else {
-                String[] str = registerCheck(accountTextField.getText(), String.valueOf(passwordField.getPassword()), nameTextField.getText(), permissionComboBox.getSelectedIndex()).split("/");
-                //将登录时的用户名，密码，姓名，权限，发送至数据库进行核验
+                String[] str = registerCheck(
+                        accountTextField.getText(),
+                        String.valueOf(passwordField.getPassword()),
+                        nameTextField.getText(),
+                        permissionComboBox.getSelectedIndex()
+                ).split("/");//将登录时的用户名，密码，姓名，权限，发送至数据库进行核验
                 switch (Integer.parseInt(str[0])) {
                     case 0:
                         //服务端返回值0，代表注册失败

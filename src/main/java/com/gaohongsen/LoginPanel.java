@@ -64,9 +64,19 @@ public class LoginPanel extends JPanel {
                         // 登录成功后显示应用主界面
                         user = new User(Integer.parseInt(str[1]),accountTextField.getText(),str[2],Integer.parseInt(str[3]));
 
-                        MainAppPanel mainAppPanel = new MainAppPanel(mainWindow);
-                        contentPane.add(mainAppPanel, "mainApp");
-                        cardLayout.show(contentPane, "mainApp");
+                        WelcomePanel welcomePanel = new WelcomePanel(mainWindow);
+                        contentPane.add(welcomePanel, "welcome");
+
+//                        NewPanel newPanel = new NewPanel(mainWindow);
+//                        contentPane.add(newPanel, "new");
+//
+//                        LogPanel logPanel = new LogPanel(mainWindow);
+//                        contentPane.add(logPanel, "log");
+//
+//                        AlterPanel alterPanel = new AlterPanel(mainWindow);
+//                        contentPane.add(alterPanel, "alter");
+
+                        cardLayout.show(contentPane, "welcome");
                         break;
                 }
             }
@@ -79,12 +89,12 @@ public class LoginPanel extends JPanel {
 
 
     public String loginCheck(String account, String password) {
-//        return "1/001/Jack/2";
-        try {
-            return Client.sendRequest("0/" + account + "/" + password);
-        } catch (IOException e) {
-            return "0/" + e.getMessage();
-        }
+        return "1/001/Jack/2";
+//        try {
+//            return Client.sendRequest("0/" + account + "/" + password);
+//        } catch (IOException e) {
+//            return "0/" + e.getMessage();
+//        }
         //将登录时的用户名和密码，发送至数据库进行核验
     }
 
