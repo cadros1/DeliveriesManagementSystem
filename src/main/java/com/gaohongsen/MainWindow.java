@@ -175,7 +175,7 @@ public class MainWindow extends JFrame {
             permissionLabel.setBounds(240, 140, 80, 25);
             add(permissionLabel);
 
-            final String[] permissions = {"客户", "员工", "管理员"};
+            final String[] permissions = {"-请选择-","客户", "员工", "管理员"};
             JComboBox<String> permissionComboBox = new JComboBox<>(permissions);
             permissionComboBox.setBounds(320, 140, 160, 25);
             add(permissionComboBox);
@@ -206,10 +206,11 @@ public class MainWindow extends JFrame {
                     JOptionPane.showMessageDialog(null, "密码长度错误！", "错误", JOptionPane.ERROR_MESSAGE);
                 else if (nameTextField.getText().length() > 12 || nameTextField.getText().length() < 3)
                     JOptionPane.showMessageDialog(null, "姓名长度错误！", "错误", JOptionPane.ERROR_MESSAGE);
-
                     //核验密码与确认密码
                 else if (!passwordMatches(passwordField.getPassword(), confirmPasswordField.getPassword()))
                     JOptionPane.showMessageDialog(null, "前后密码不同！", "错误", JOptionPane.ERROR_MESSAGE);
+                else if (permissionComboBox.getSelectedIndex()==0)
+                    JOptionPane.showMessageDialog(null, "请选择账户权限！", "错误", JOptionPane.ERROR_MESSAGE);
                 else {
                     String[] str = registerCheck(accountTextField.getText(), String.valueOf(passwordField.getPassword()), nameTextField.getText(), permissionComboBox.getSelectedIndex()).split("/");
                     //将登录时的用户名，密码，姓名，权限，发送至数据库进行核验
@@ -249,6 +250,10 @@ public class MainWindow extends JFrame {
             JLabel testLabel = new JLabel("Welcome!"+user.getPermission());
             testLabel.setBounds(260, 200, 80, 25);
             add(testLabel);
+
+
+
+
 
             // 设置背景
             JLabel lblBackground = new JLabel(); // 创建一个标签组件对象
