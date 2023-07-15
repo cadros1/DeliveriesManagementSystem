@@ -33,6 +33,13 @@ public class LogPanel extends JPanel {
             cardLayout.show(contentPane, "log");
         });
 
+        JButton alterButton = new JButton("删改物流");
+        alterButton.setBounds(320, 20, 90, 25);
+        add(alterButton);
+        alterButton.addActionListener(e -> {
+            cardLayout.show(contentPane, "alter");
+        });
+
         //设置背景
         JLabel lblBackground = new JLabel(); // 创建一个标签组件对象
         URL resource = this.getClass().getResource("/WhiteLine.jpg"); // 获取背景图片路径

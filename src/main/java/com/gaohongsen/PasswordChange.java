@@ -6,6 +6,7 @@ import java.awt.*;
 import java.net.URL;
 
 import static com.gaohongsen.MainWindow.*;
+
 public class PasswordChange extends JFrame {
     public PasswordChange() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -14,7 +15,7 @@ public class PasswordChange extends JFrame {
         setResizable(false);
         setVisible(true);
 
-        JLabel accountLabel = new JLabel("用户名:"+user.getAccount());
+        JLabel accountLabel = new JLabel("用户名:" + user.getAccount());
         accountLabel.setBounds(20, 20, 60, 25);
         add(accountLabel);
 
@@ -67,7 +68,8 @@ public class PasswordChange extends JFrame {
         });
 
     }
-    public String passwordChangeCheck(String account,String originalPassword,String newPassword) {
+
+    public String passwordChangeCheck(String account, String originalPassword, String newPassword) {
         return "1";
 //        try {
 //            return Client.sendRequest("3/" + account+"/"+originalPassword+"/"+newPassword);

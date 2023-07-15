@@ -62,19 +62,10 @@ public class LoginPanel extends JPanel {
                         //服务端返回值1，代表登录成功,弹出一个信息提示框
                         JOptionPane.showMessageDialog(null, "登录成功！", "提示", JOptionPane.INFORMATION_MESSAGE);
                         // 登录成功后显示应用主界面
-                        user = new User(Integer.parseInt(str[1]),accountTextField.getText(),str[2],Integer.parseInt(str[3]));
+                        user = new User(Integer.parseInt(str[1]), accountTextField.getText(), str[2], Integer.parseInt(str[3]));
 
                         WelcomePanel welcomePanel = new WelcomePanel(mainWindow);
                         contentPane.add(welcomePanel, "welcome");
-
-//                        NewPanel newPanel = new NewPanel(mainWindow);
-//                        contentPane.add(newPanel, "new");
-//
-//                        LogPanel logPanel = new LogPanel(mainWindow);
-//                        contentPane.add(logPanel, "log");
-//
-//                        AlterPanel alterPanel = new AlterPanel(mainWindow);
-//                        contentPane.add(alterPanel, "alter");
 
                         cardLayout.show(contentPane, "welcome");
                         break;

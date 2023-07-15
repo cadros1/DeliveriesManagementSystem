@@ -19,17 +19,18 @@ public class WelcomePanel extends JPanel {
         contentPane.add(newPanel, "new");
         LogPanel logPanel = new LogPanel(mainWindow);
         contentPane.add(logPanel, "log");
+        AlterPanel alterPanel = new AlterPanel(mainWindow);
+        contentPane.add(alterPanel, "alter");
 
         Font font = new Font("宋体", Font.PLAIN, 80);//创建1个字体实例
-        JLabel WelcomeLabel1 =new JLabel("Welcome!");
-        WelcomeLabel1.setBounds(100,100,750,125);
+        JLabel WelcomeLabel1 = new JLabel("Welcome!");
+        WelcomeLabel1.setBounds(100, 100, 750, 125);
         add(WelcomeLabel1);
         WelcomeLabel1.setFont(font);
-        JLabel WelcomeLabel2 =new JLabel("欢迎回来，"+user.getName());
-        WelcomeLabel2.setBounds(100,200,750,125);
+        JLabel WelcomeLabel2 = new JLabel("欢迎回来，" + user.getName());
+        WelcomeLabel2.setBounds(100, 200, 750, 125);
         add(WelcomeLabel2);
         WelcomeLabel2.setFont(font);
-
 
 
         JMenuBar JMB = new JMenuBar();//创建菜单栏
@@ -44,14 +45,14 @@ public class WelcomePanel extends JPanel {
         JMI1.addActionListener(e -> {
             JOptionPane.showMessageDialog(
                     null,
-                    "账户名："+user.getAccount()+"\n姓名:"+user.getName() + "\n用户ID"+user.getId()+"\n权限"+user.getPermissionString(),
+                    "账户名:  " + user.getAccount() + "\n姓名    :  " + user.getName() + "\n用户ID:  " + user.getId() + "\n权限    :  " + user.getPermissionString(),
                     "账户信息",
                     JOptionPane.INFORMATION_MESSAGE);
         });
         JMenuItem JMI2 = new JMenuItem("登出账户");//创建一个菜单项
         JM1.add(JMI2);//添加到菜单
         JMI2.addActionListener(e -> {
-            String[] str=exitCheck(user.getAccount()).split("/");
+            String[] str = exitCheck(user.getAccount()).split("/");
             switch (str[0]) {
                 case "0":
                     //服务端返回值0，代表登出失败,弹出一个错误框
@@ -69,7 +70,7 @@ public class WelcomePanel extends JPanel {
         JM1.add(JMI3);//添加到菜单
         JMI3.addActionListener(e -> {
             new PasswordChange();
-            });
+        });
 
         JMenu JM2 = new JMenu("帮助");//创建一个子菜单
         JMB.add(JM2);//添加到菜单栏
@@ -107,6 +108,13 @@ public class WelcomePanel extends JPanel {
             cardLayout.show(contentPane, "log");
         });
 
+        JButton alterButton = new JButton("删改物流");
+        alterButton.setBounds(320, 20, 90, 25);
+        add(alterButton);
+        alterButton.addActionListener(e -> {
+            cardLayout.show(contentPane, "alter");
+        });
+
         //设置背景
         JLabel lblBackground = new JLabel(); // 创建一个标签组件对象
         URL resource = this.getClass().getResource("/WhiteLine.jpg"); // 获取背景图片路径
@@ -126,7 +134,6 @@ public class WelcomePanel extends JPanel {
 //        }
         //将登出时的用户名，发送至数据库进行核验
     }
-
 
 
 }

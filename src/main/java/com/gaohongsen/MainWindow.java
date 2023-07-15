@@ -16,7 +16,7 @@ public class MainWindow extends JFrame {
     public static CardLayout cardLayout;
     public static JPanel contentPane;
 
-    public static User user=new User(0,"0","0",0);
+    public static User user = new User(0, "0", "0", 0);
 
 
     public MainWindow() {
@@ -34,7 +34,6 @@ public class MainWindow extends JFrame {
         RegisterPanel registerPanel = new RegisterPanel(this);
 
 
-
         // 添加面板到内容面板
         contentPane.add(loginPanel, "login");
         contentPane.add(registerPanel, "register");
@@ -50,6 +49,6 @@ public class MainWindow extends JFrame {
     }
 
     public static void main(String[] args) {
-        MainWindow mainWindow= new MainWindow();
+        MainWindow mainWindow = new MainWindow();
     }
 }

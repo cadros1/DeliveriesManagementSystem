@@ -12,11 +12,11 @@ public class SearchPanel extends JPanel {
     public SearchPanel(MainWindow mainWindow) {
         setLayout(null);
 
-        JLabel searchLabel = new JLabel("查找内容");
+        JLabel searchLabel = new JLabel("查找内容:");
         searchLabel.setBounds(20, 50, 90, 25);
         add(searchLabel);
 
-        final String[] permissions = {"-请选择-","单号", "发货地", "收货地","发件人","收件人"};
+        final String[] permissions = {"-请选择-", "单号", "发货地", "收货地", "发件人", "收件人"};
         JComboBox<String> permissionComboBox = new JComboBox<>(permissions);
         permissionComboBox.setBounds(100, 50, 90, 25);
         add(permissionComboBox);
@@ -28,18 +28,29 @@ public class SearchPanel extends JPanel {
         JButton confirmSearchButton = new JButton("查找");
         confirmSearchButton.setBounds(300, 50, 90, 25);
         add(confirmSearchButton);
+
+
+        // 表格上的title
+        String[] columnNames = new String[]{"序号", "单号", "发货地", "收货地", "发件人", "收件人", "物流状态"};
+        // 表格中的内容，是一个二维数组
+        String[][] logistics = new String[][]{
+                {"1", "114", "北京", "成都", "张三", "李四", "0"},
+                {"2", "115", "成都", "南京", "李四", "王五", "1"},
+                {"3", "116", "上海", "深圳", "赵六", "孙七", "2"}};
+        JTable table = new JTable(logistics, columnNames);
+        table.setEnabled(false);
+
+        JScrollPane scrollPane = new JScrollPane(table);
+        scrollPane.setBounds(10, 100, 720, 300);
+        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS); // 设置垂直滚动条一直显示
+        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER); // 设置水平滚动条从不显示
+        scrollPane.setOpaque(false);
+        scrollPane.getViewport().setOpaque(false);
+        add(scrollPane);
+
         confirmSearchButton.addActionListener(e -> {
-
+            cardLayout.show(contentPane, "search");
         });
-
-
-
-
-
-
-
-
-
 
 
         JButton searchButton = new JButton("查找物流");
@@ -61,6 +72,13 @@ public class SearchPanel extends JPanel {
         add(logButton);
         logButton.addActionListener(e -> {
             cardLayout.show(contentPane, "log");
+        });
+
+        JButton alterButton = new JButton("删改物流");
+        alterButton.setBounds(320, 20, 90, 25);
+        add(alterButton);
+        alterButton.addActionListener(e -> {
+            cardLayout.show(contentPane, "alter");
         });
 
         //设置背景

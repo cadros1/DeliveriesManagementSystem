@@ -48,7 +48,7 @@ public class RegisterPanel extends JPanel {
         permissionLabel.setBounds(240, 140, 80, 25);
         add(permissionLabel);
 
-        final String[] permissions = {"-请选择-","客户", "员工", "管理员"};
+        final String[] permissions = {"-请选择-", "客户", "员工", "管理员"};
         JComboBox<String> permissionComboBox = new JComboBox<>(permissions);
         permissionComboBox.setBounds(320, 140, 160, 25);
         add(permissionComboBox);
@@ -82,7 +82,7 @@ public class RegisterPanel extends JPanel {
                 //核验密码与确认密码
             else if (!passwordMatches(passwordField.getPassword(), confirmPasswordField.getPassword()))
                 JOptionPane.showMessageDialog(null, "前后密码不同！", "错误", JOptionPane.ERROR_MESSAGE);
-            else if (permissionComboBox.getSelectedIndex()==0)
+            else if (permissionComboBox.getSelectedIndex() == 0)
                 JOptionPane.showMessageDialog(null, "请选择账户权限！", "错误", JOptionPane.ERROR_MESSAGE);
             else {
                 String[] str = registerCheck(
