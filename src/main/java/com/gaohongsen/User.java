@@ -1,21 +1,54 @@
 package com.gaohongsen;
 
 /*
- * 此类对user进行了封装，封装数据不包含password，因为password只应在登入时被校验，此后便不应再保存于内存中
+ * 此类对user进行了封装
+ * 实例化对象时请根据需求选择合适的构造方法传入参数，构造方法选择不当将会导致异常
  * 
  * @author 高洪森
  * @param id 用户id，为自增主键
  * @param account 用户账号
+ * @param password 用户密码
+ * @param updatedPassword 用户修改后的密码
  * @param name 用户姓名
  * @param permission 用户权限，0为客户，1为普通员工，2为管理员
  */
 
-public class User {
+public class User implements java.io.Serializable {
     private int id;
     private String account;
+    private String password;
+    private String updatedPassword;
     private String name;
     private int permission;
 
+    //登入时用此构造方法
+    public User(String account,String password) {
+        this.account = account;
+        this.password = password;
+    }
+
+    //登出时用此构造方法
+    public User(String account) {
+        this.account = account;
+    }
+
+    //注册时用此构造方法
+    public User(String account,String password,String name,int permission) {
+        this.account = account;
+        this.password = password;
+        this.name = name;
+        this.permission = permission;
+    }
+
+    //修改密码时用此构造方法
+    //使用时请将旧密码传入password，新密码传入updatedPassword
+    public User(String account,String password,String updatedPassword) {
+        this.account = account;
+        this.password = password;
+        this.updatedPassword = updatedPassword;
+    }
+
+    //提供给getUserInfo方法使用
     public User(int id,String account,String name,int permission) {
         this.id = id;
         this.account = account;
@@ -29,6 +62,14 @@ public class User {
 
     public String getAccount() {
         return account;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getUpdatedPassword() {
+        return updatedPassword;
     }
 
     public String getName() {

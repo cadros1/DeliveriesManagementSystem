@@ -5,30 +5,43 @@ import java.net.*;
 
 /*
  * 此类为客户端，用于与服务端通信，发送请求并接收服务端的数据
- * 在目前的设计下请求应被整合为一条长字符串，并在串首添加一个int值为请求的类型
+ * 在目前的设计下，客户端与服务端之间的通信以对象的形式进行
+ * 客户端将实例化一个包含请求信息的Request对象并发送给服务端进行处理
+ * 服务端将返回一个包含处理结果的Reply对象,其中可能包含一个带有信息的数据对象或一个Exception
  * 
  * @author 高洪森
  */
 public class Client {
-    public static String sendRequest(final String request)throws IOException{
+    public static Object sendRequest(final Object request)throws IOException,ClassNotFoundException{
         Socket sock=new Socket("localhost",6666);
-        String answer="0";
+        Reply reply=null;
         try(InputStream input=sock.getInputStream()){
             try(OutputStream output=sock.getOutputStream()){
-                answer=handle(input,output,request);
+                reply=handle(input,output,request);
             }
         }
         sock.close();
-        return answer;
+        return reply;
     }
 
-    private static String handle(InputStream input,OutputStream output,String request)throws IOException{
+    /* 暂时无用功能，可与服务端之间以字符串形式通讯
+    private static String sendType(InputStream input,OutputStream output,int type)throws IOException{
         BufferedWriter writer=new BufferedWriter(new OutputStreamWriter(output));
         BufferedReader reader=new BufferedReader(new InputStreamReader(input));
-        writer.write(request);
+        writer.write(type);
         writer.newLine();
         writer.flush();
         String s=reader.readLine();
+        return s;
+    }
+    */
+
+    private static Reply handle(InputStream input,OutputStream output,final Object request)throws IOException,ClassNotFoundException{
+        ObjectOutputStream oos=new ObjectOutputStream(output);
+        ObjectInputStream ois=new ObjectInputStream(input);
+        oos.writeObject(request);
+        oos.flush();
+        Reply s=(Reply)ois.readObject();
         return s;
     }
 }
