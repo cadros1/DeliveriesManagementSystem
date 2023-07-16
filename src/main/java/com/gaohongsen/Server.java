@@ -152,8 +152,7 @@ class Handler extends Thread{
 
     //添加一条物流信息
     private void addDelivery(Delivery delivery)throws Exception{
-        Database.addDelivery(delivery);
-        oos.writeObject(new Reply(true,Database.getDeliveryInfo(delivery)));
+        oos.writeObject(new Reply(true,Database.addDelivery(delivery)));
         oos.flush();
     }
 }

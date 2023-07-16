@@ -178,7 +178,7 @@ public class Database {
 
     //此方法用于添加一条快递信息，需要传入带sendplace,receiveplace,sender,receiver,situation的delivery对象
     //如果出错，则抛出一个SQLException
-    public static void addDelivery(final Delivery delivery)throws SQLException{
+    public static Delivery addDelivery(final Delivery delivery)throws SQLException{
         if(!hasInitialized){
             initialize();
         }
@@ -191,6 +191,10 @@ public class Database {
                 ps.setString(4,delivery.getReceiver());
                 ps.setInt(5,delivery.getSituation());
                 ps.executeUpdate();
+                try(ResultSet rs=ps.getGeneratedKeys()){
+                    rs.next();
+                    return new Delivery(rs.getInt(1),delivery.getSendPlace(),delivery.getReceivePlace(),delivery.getSender(),delivery.getReceiver(),delivery.getSituation());
+                }
             }
         }
     }
@@ -209,7 +213,8 @@ public class Database {
                 try(ResultSet rs=ps.executeQuery()){
                     if(rs.next())
                     {
-                        return new Delivery(rs.getInt("id"),rs.getString("sendplace"),rs.getString("receiveplace"),rs.getString("sender"),rs.getString("receiver"),rs.getInt("situation"));
+                        Delivery d=new Delivery(rs.getInt("id"),rs.getString("sendplace"),rs.getString("receiveplace"),rs.getString("sender"),rs.getString("receiver"),rs.getInt("situation"));
+                        return d;
                     }else{
                         throw new SQLException("此单号不存在");
                     }
