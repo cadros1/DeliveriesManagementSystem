@@ -31,4 +31,28 @@ public class Delivery implements java.io.Serializable{
     public Delivery(int id) {
         this.id = id;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getSendPlace() {
+        return sendPlace;
+    }
+
+    public String getReceivePlace() {
+        return receivePlace;
+    }
+
+    public String getSender() {
+        return sender;
+    }
+
+    public String getReceiver() {
+        return receiver;
+    }
+
+    public int getSituation() {
+        return situation;
+    }
 }
