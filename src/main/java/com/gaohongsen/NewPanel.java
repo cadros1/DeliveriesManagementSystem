@@ -44,7 +44,7 @@ public class NewPanel extends JPanel {
 
         final String[] situation = {"-请选择-", "未发货", "已揽收", "已发货", "已到货", "已签收"};
         JComboBox<String> situationComboBox = new JComboBox<>(situation);
-        situationComboBox.setBounds(90, 140, 160, 25);
+        situationComboBox.setBounds(90, 140, 80, 25);
         add(situationComboBox);
 
         JButton confirmNewButton = new JButton("创建");
