@@ -83,7 +83,7 @@ class Handler extends Thread{
                 //将会传入包含account、password、name和permission的user对象
                 case 2:
                     try{
-                        this.registe((User)request.getItem());
+                        this.register((User)request.getItem());
                         break;
                     }catch(Exception e){
                         oos.writeObject(new Reply(false,e));
@@ -122,7 +122,7 @@ class Handler extends Thread{
     }
 
     //注册
-    private void registe(User user)throws Exception{
+    private void register(User user)throws Exception{
         Database.addUser(user);
         Database.addLog(user,2);
         oos.writeObject(new Reply(true,null));
