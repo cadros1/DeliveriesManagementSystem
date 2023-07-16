@@ -174,4 +174,41 @@ public class Database {
             }
         }
     }
+
+    public static void addDelivery(final Delivery delivery)throws SQLException{
+        if(!hasInitialized){
+            initialize();
+        }
+
+        try(Connection conn=ds.getConnection()){
+            try(PreparedStatement ps=conn.prepareStatement("INSERT INTO delivery(sendplace,receiveplace,sender,receiver,situation) VALUES(?,?,?,?,?)")){
+                ps.setString(1,delivery.getSendPlace());
+                ps.setString(2,delivery.getReceivePlace());
+                ps.setString(3,delivery.getSender());
+                ps.setString(4,delivery.getReceiver());
+                ps.setInt(5,delivery.getSituation());
+                ps.executeUpdate();
+            }
+        }
+    }
+
+    public static Delivery getDeliveryInfo(final Delivery delivery)throws SQLException{
+        if(!hasInitialized){
+            initialize();
+        }
+
+        try(Connection conn=ds.getConnection()){
+            try(PreparedStatement ps=conn.prepareStatement("SELECT * FROM delivery WHERE id=?")){
+                ps.setInt(1,delivery.getId());
+                try(ResultSet rs=ps.executeQuery()){
+                    if(rs.next())
+                    {
+                        return new Delivery(rs.getInt("id"),rs.getString("sendplace"),rs.getString("receiveplace"),rs.getString("sender"),rs.getString("receiver"),rs.getInt("situation"));
+                    }else{
+                        throw new SQLException("此单号不存在");
+                    }
+                }
+            }
+        }
+    }
 }

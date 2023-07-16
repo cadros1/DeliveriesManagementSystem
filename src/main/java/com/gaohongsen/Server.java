@@ -101,6 +101,18 @@ class Handler extends Thread{
                         oos.flush();
                         break;
                     }
+                
+                    //请求为添加一条物流信息
+                    //将会传入包含sendplace、receiveplace、sender、receiver、situation的delivery对象
+                case 4:
+                    try{
+                        this.addDelivery((Delivery)request.getItem());
+                        break;
+                    }catch(Exception e){
+                        oos.writeObject(new Reply(false,e));
+                        oos.flush();
+                        break;
+                    }
                 }
         }
     }
@@ -109,9 +121,8 @@ class Handler extends Thread{
     //登入
     private void logIn(User user)throws Exception{
         Database.passwordCheck(user);
-        User replyUser=Database.getUserInfo(user);
-        Database.addLog(replyUser,0);
-        oos.writeObject(new Reply(true,replyUser));
+        Database.addLog(user,0);
+        oos.writeObject(new Reply(true,Database.getUserInfo(user)));
         oos.flush();
     }
 
@@ -119,6 +130,7 @@ class Handler extends Thread{
     private void logOut(User user)throws Exception{
         Database.addLog(Database.getUserInfo(user),1);
         oos.writeObject(new Reply(true,null));
+        oos.flush();
     }
 
     //注册
@@ -126,6 +138,7 @@ class Handler extends Thread{
         Database.addUser(user);
         Database.addLog(user,2);
         oos.writeObject(new Reply(true,null));
+        oos.flush();
     }
 
     //修改密码
@@ -133,5 +146,13 @@ class Handler extends Thread{
         Database.passwordCheck(user);
         Database.updatePassword(user);
         oos.writeObject(new Reply(true,Database.getUserInfo(user)));
+        oos.flush();
+    }
+
+    //添加一条物流信息
+    private void addDelivery(Delivery delivery)throws Exception{
+        Database.addDelivery(delivery);
+        oos.writeObject(new Reply(true,Database.getDeliveryInfo(delivery)));
+        oos.flush();
     }
 }
