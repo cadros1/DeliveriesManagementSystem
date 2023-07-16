@@ -191,9 +191,13 @@ public class Database {
                 ps.setString(4,delivery.getReceiver());
                 ps.setInt(5,delivery.getSituation());
                 ps.executeUpdate();
-                try(ResultSet rs=ps.getGeneratedKeys()){
-                    rs.next();
-                    return new Delivery(rs.getInt(1),delivery.getSendPlace(),delivery.getReceivePlace(),delivery.getSender(),delivery.getReceiver(),delivery.getSituation());
+                try(PreparedStatement ps2=conn.prepareStatement("SELECT id FROM deliveries WHERE sendplace=? AND receiveplace=? AND sender=? AND receiver=? AND situation=?")){
+                    ps2.setString(1,delivery.getSendPlace());
+                    try(ResultSet rs=ps2.executeQuery()){
+                        rs.next();
+                        Delivery d=new Delivery(rs.getInt("id"),delivery.getSendPlace(),delivery.getReceivePlace(),delivery.getSender(),delivery.getReceiver(),delivery.getSituation());
+                        return d;
+                    }
                 }
             }
         }
