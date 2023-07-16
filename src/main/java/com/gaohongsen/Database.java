@@ -228,6 +228,7 @@ public class Database {
         }
     }
 
+    //此方法用于修改一条物流的信息，需要传入带id的delivery对象
     public static void updateDelivery(final Delivery delivery)throws SQLException{
         if(!hasInitialized){
             initialize();
@@ -237,6 +238,19 @@ public class Database {
             try(PreparedStatement ps=conn.prepareStatement("UPDATE deliveries SET situation=? WHERE id=?")){
                 ps.setInt(1,delivery.getSituation());
                 ps.setInt(2,delivery.getId());
+                ps.executeUpdate();
+            }
+        }
+    }
+
+    public static void deleteDelivery(final Delivery delivery)throws SQLException{
+        if(!hasInitialized){
+            initialize();
+        }
+
+        try(Connection conn=ds.getConnection()){
+            try(PreparedStatement ps=conn.prepareStatement("DELETE FROM deliveries WHERE id=?")){
+                ps.setInt(1,delivery.getId());
                 ps.executeUpdate();
             }
         }

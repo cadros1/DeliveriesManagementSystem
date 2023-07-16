@@ -125,6 +125,15 @@ class Handler extends Thread{
                         oos.flush();
                         break;
                     }
+
+                case 6:
+                    try{
+                        this.deleteDeliveryById((Delivery)request.getItem());
+                    }catch(Exception e){
+                        oos.writeObject(new Reply(false,e));
+                        oos.flush();
+                        break;
+                    }
             }
         }
     }
@@ -172,5 +181,11 @@ class Handler extends Thread{
     private void getDeliveryInfoById(Delivery delivery)throws Exception{
         oos.writeObject(new Reply(true,Database.getDeliveryInfo(delivery)));
         oos.flush();
+    }
+
+    //按id删除一条物流信息
+    private void deleteDeliveryById(Delivery delivery)throws Exception{
+        Database.deleteDelivery(delivery);
+        oos.writeObject(new Reply(true,null));
     }
 }
