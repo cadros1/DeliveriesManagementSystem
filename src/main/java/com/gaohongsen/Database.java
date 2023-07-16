@@ -59,7 +59,7 @@ public class Database {
     }
 
 
-    //此方法根据账号查询用户信息，并返回带有id/name/permission的user对象。需要传入带有account的user对象
+    //此方法根据账号查询用户信息，并返回带有id/account/name/permission的user对象。需要传入带有account的user对象
     //如果出现错误如查询出错、账号不存在等，均抛出SQLException
     public static User getUserInfo(final User user)throws SQLException{
         int id;
