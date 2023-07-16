@@ -184,7 +184,7 @@ public class Database {
         }
 
         try(Connection conn=ds.getConnection()){
-            try(PreparedStatement ps=conn.prepareStatement("INSERT INTO delivries(sendplace,receiveplace,sender,receiver,situation) VALUES(?,?,?,?,?)")){
+            try(PreparedStatement ps=conn.prepareStatement("INSERT INTO delivaries(sendplace,receiveplace,sender,receiver,situation) VALUES(?,?,?,?,?)")){
                 ps.setString(1,delivery.getSendPlace());
                 ps.setString(2,delivery.getReceivePlace());
                 ps.setString(3,delivery.getSender());
@@ -204,7 +204,7 @@ public class Database {
         }
 
         try(Connection conn=ds.getConnection()){
-            try(PreparedStatement ps=conn.prepareStatement("SELECT * FROM delivery WHERE id=?")){
+            try(PreparedStatement ps=conn.prepareStatement("SELECT * FROM deliveries WHERE id=?")){
                 ps.setInt(1,delivery.getId());
                 try(ResultSet rs=ps.executeQuery()){
                     if(rs.next())
