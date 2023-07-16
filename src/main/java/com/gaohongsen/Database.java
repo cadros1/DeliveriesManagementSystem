@@ -184,7 +184,7 @@ public class Database {
         }
 
         try(Connection conn=ds.getConnection()){
-            try(PreparedStatement ps=conn.prepareStatement("INSERT INTO delivaries(sendplace,receiveplace,sender,receiver,situation) VALUES(?,?,?,?,?)")){
+            try(PreparedStatement ps=conn.prepareStatement("INSERT INTO deliveries(sendplace,receiveplace,sender,receiver,situation) VALUES(?,?,?,?,?)")){
                 ps.setString(1,delivery.getSendPlace());
                 ps.setString(2,delivery.getReceivePlace());
                 ps.setString(3,delivery.getSender());
