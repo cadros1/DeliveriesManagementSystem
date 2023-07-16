@@ -61,7 +61,7 @@ public class NewPanel extends JPanel {
                 JOptionPane.showMessageDialog(null, "收件人长度错误！", "错误", JOptionPane.ERROR_MESSAGE);
             else {
                 try {
-                    Delivery delivery=(Delivery) newDelivery(
+                    Delivery delivery= newDelivery(
                             sendPlaceTextField.getText(),
                             receivePlaceTextField.getText(),
                             senderTextField.getText(),
@@ -108,7 +108,7 @@ public class NewPanel extends JPanel {
     }
 
     public Delivery newDelivery(String sendPlace, String receivePlace, String sender, String receiver, int situation)throws Exception {
-        Reply reply = (Reply) Client.sendRequest(new Request(2, new Delivery(sendPlace,receivePlace, sender, receiver,situation)));
+        Reply reply = (Reply) Client.sendRequest(new Request(4, new Delivery(sendPlace,receivePlace, sender, receiver,situation)));
         if (reply.hasSucceed()) {
             return (Delivery) reply.getItem();
         } else {
