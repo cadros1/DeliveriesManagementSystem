@@ -8,16 +8,16 @@ package com.gaohongsen;
  * @param item 传输的对象
  */
 public class Reply implements java.io.Serializable{
-    private boolean hasSuccess=false;
+    private boolean hasSucceed=false;
     private Object item;
 
     public Reply(boolean hasSuccess,Object item){
-        this.hasSuccess=hasSuccess;
+        this.hasSucceed=hasSuccess;
         this.item=item;
     }
 
-    public boolean hasSuccess(){
-        return hasSuccess;
+    public boolean hasSucceed(){
+        return hasSucceed;
     }
 
     public Object getItem(){
