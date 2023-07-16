@@ -58,7 +58,7 @@ public class PasswordChange extends JFrame {
                             user.getAccount(),
                             String.valueOf(originalPasswordField.getPassword()),
                             String.valueOf(newPasswordField.getPassword()));
-                    JOptionPane.showMessageDialog(null, "注册成功！", "提示", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "修改成功！", "提示", JOptionPane.INFORMATION_MESSAGE);
                     dispose();
                 } catch (Exception exception) {
                     JOptionPane.showMessageDialog(null, exception.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
@@ -71,7 +71,7 @@ public class PasswordChange extends JFrame {
 
     public User passwordChangeCheck(String account, String originalPassword, String newPassword) throws Exception {
         //将登录时的用户名和密码，发送至数据库进行核验
-        Reply reply = (Reply) Client.sendRequest(new Request(0, new User(account, originalPassword, newPassword)));
+        Reply reply = (Reply) Client.sendRequest(new Request(3, new User(account, originalPassword, newPassword)));
         if (reply.hasSucceed()) {
             return (User) reply.getItem();
         } else {

@@ -107,8 +107,8 @@ public class WelcomePanel extends JPanel {
     }
 
     public User exitCheck(String account) throws Exception {
-        //将登录时的用户名和密码，发送至数据库进行核验
-        Reply reply = (Reply) Client.sendRequest(new Request(0, new User(account)));
+        //将登出时的用户名，发送至数据库进行核验
+        Reply reply = (Reply) Client.sendRequest(new Request(1, new User(account)));
         if (reply.hasSucceed()) {
             return (User) reply.getItem();
         } else {
