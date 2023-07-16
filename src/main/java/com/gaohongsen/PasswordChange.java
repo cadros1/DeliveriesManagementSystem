@@ -2,10 +2,7 @@ package com.gaohongsen;
 
 import javax.swing.*;
 
-import java.awt.*;
-import java.net.URL;
-
-import static com.gaohongsen.MainWindow.*;
+import static com.gaohongsen.MainWindow.user;
 
 public class PasswordChange extends JFrame {
     public PasswordChange() {
@@ -47,44 +44,36 @@ public class PasswordChange extends JFrame {
 
         backButton.addActionListener(e -> dispose());
         confirmChangeButton.addActionListener(e -> {
-            String[] str = passwordChangeCheck(
-                    user.getAccount(),
-                    String.valueOf(originalPasswordField.getPassword()),
-                    String.valueOf(newPasswordField.getPassword())
-            ).split("/");
+
             //将修改密码时的用户名，原密码，密码发送至数据库进行核验
-            if (originalPasswordField.getText().length() > 12 || originalPasswordField.getText().length() < 3)
+            if (originalPasswordField.getPassword().length > 12 || originalPasswordField.getPassword().length < 3)
                 JOptionPane.showMessageDialog(null, "原密码长度错误！", "错误", JOptionPane.ERROR_MESSAGE);
             else if (newPasswordField.getPassword().length > 12 || newPasswordField.getPassword().length < 3)
                 JOptionPane.showMessageDialog(null, "密码长度错误！", "错误", JOptionPane.ERROR_MESSAGE);
             else if (RegisterPanel.passwordMatches(originalPasswordField.getPassword(), newPasswordField.getPassword())) {
                 JOptionPane.showMessageDialog(null, "前后密码相同！", "错误", JOptionPane.ERROR_MESSAGE);
             } else {
-                switch (Integer.parseInt(str[0])) {
-                    case 0:
-                        //服务端返回值0，代表修改失败
-                        JOptionPane.showMessageDialog(null, str[1], "错误", JOptionPane.ERROR_MESSAGE);
-                        break;
-                    case 1:
-                        //服务端返回值1，代表修改成功
-                        JOptionPane.showMessageDialog(null, "修改成功！", "提示", JOptionPane.INFORMATION_MESSAGE);
-                        // 修改成功后关闭该界面
-                        dispose();
-                        break;
+                try {
+                    user = passwordChangeCheck(
+                            user.getAccount(),
+                            String.valueOf(originalPasswordField.getPassword()),
+                            String.valueOf(newPasswordField.getPassword()));
+                } catch (Exception exception) {
+                    JOptionPane.showMessageDialog(null, exception.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
                 }
-
             }
         });
 
     }
 
-    public String passwordChangeCheck(String account, String originalPassword, String newPassword) {
-        return "1";
-//        try {
-//            return Client.sendRequest("3/" + account+"/"+originalPassword+"/"+newPassword);
-//        } catch (IOException e) {
-//            return "0/" + e.getMessage();
-//        }
-        //将登出时的用户名，发送至数据库进行核验
+
+    public User passwordChangeCheck(String account, String originalPassword, String newPassword) throws Exception {
+        //将登录时的用户名和密码，发送至数据库进行核验
+        Reply reply = (Reply) Client.sendRequest(new Request(0, new User(account, originalPassword, newPassword)));
+        if (reply.hasSucceed()) {
+            return (User) reply.getItem();
+        } else {
+            throw (Exception) reply.getItem();
+        }
     }
 }

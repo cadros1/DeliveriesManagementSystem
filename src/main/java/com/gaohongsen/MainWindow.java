@@ -31,7 +31,7 @@ public class MainWindow extends JFrame {
         contentPane.setLayout(cardLayout);
         // 创建登录和注册面板
         LoginPanel loginPanel = new LoginPanel(this);
-        RegisterPanel registerPanel = new RegisterPanel(this);
+        RegisterPanel registerPanel = new RegisterPanel();
 
 
         // 添加面板到内容面板

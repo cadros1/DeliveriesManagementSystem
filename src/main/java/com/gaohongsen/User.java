@@ -3,7 +3,7 @@ package com.gaohongsen;
 /*
  * 此类对user进行了封装
  * 实例化对象时请根据需求选择合适的构造方法传入参数，构造方法选择不当将会导致异常
- * 
+ *
  * @author 高洪森
  * @param id 用户id，为自增主键
  * @param account 用户账号
@@ -15,14 +15,14 @@ package com.gaohongsen;
 
 public class User implements java.io.Serializable {
     private int id;
-    private String account;
+    private final String account;
     private String password;
     private String updatedPassword;
     private String name;
     private int permission;
 
     //登入时用此构造方法
-    public User(String account,String password) {
+    public User(String account, String password) {
         this.account = account;
         this.password = password;
     }
@@ -33,7 +33,7 @@ public class User implements java.io.Serializable {
     }
 
     //注册时用此构造方法
-    public User(String account,String password,String name,int permission) {
+    public User(String account, String password, String name, int permission) {
         this.account = account;
         this.password = password;
         this.name = name;
@@ -42,14 +42,14 @@ public class User implements java.io.Serializable {
 
     //修改密码时用此构造方法
     //使用时请将旧密码传入password，新密码传入updatedPassword
-    public User(String account,String password,String updatedPassword) {
+    public User(String account, String password, String updatedPassword) {
         this.account = account;
         this.password = password;
         this.updatedPassword = updatedPassword;
     }
 
     //提供给getUserInfo方法使用
-    public User(int id,String account,String name,int permission) {
+    public User(int id, String account, String name, int permission) {
         this.id = id;
         this.account = account;
         this.name = name;

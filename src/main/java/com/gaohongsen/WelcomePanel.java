@@ -3,7 +3,6 @@ package com.gaohongsen;
 import javax.swing.*;
 
 import java.awt.*;
-import java.io.IOException;
 import java.net.URL;
 
 import static com.gaohongsen.MainWindow.*;
@@ -13,13 +12,13 @@ public class WelcomePanel extends JPanel {
     public WelcomePanel(MainWindow mainWindow) {
         setLayout(null);
 
-        SearchPanel searchPanel = new SearchPanel(mainWindow);
+        SearchPanel searchPanel = new SearchPanel();
         contentPane.add(searchPanel, "search");
-        NewPanel newPanel = new NewPanel(mainWindow);
+        NewPanel newPanel = new NewPanel();
         contentPane.add(newPanel, "new");
-        LogPanel logPanel = new LogPanel(mainWindow);
+        LogPanel logPanel = new LogPanel();
         contentPane.add(logPanel, "log");
-        AlterPanel alterPanel = new AlterPanel(mainWindow);
+        AlterPanel alterPanel = new AlterPanel();
         contentPane.add(alterPanel, "alter");
 
         Font font = new Font("宋体", Font.PLAIN, 80);//创建1个字体实例
