@@ -61,7 +61,7 @@ public class NewPanel extends JPanel {
                 JOptionPane.showMessageDialog(null, "收件人长度错误！", "错误", JOptionPane.ERROR_MESSAGE);
             else {
                 try {
-                    Delivery delivery=(Delivery) newDelivery(
+                    Delivery delivery= newDelivery(
                             sendPlaceTextField.getText(),
                             receivePlaceTextField.getText(),
                             senderTextField.getText(),
