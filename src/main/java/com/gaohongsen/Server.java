@@ -8,7 +8,7 @@ import java.net.*;
  * 作为服务端，这个类需要保持长时间运行
  * 在目前的设计下，发送来的请求为一个封装后的Request对象，包含了请求类型与带有数据的对象
  * 完成请求后将返回一个封装后的Reply对象，包含了是否成功的布尔值，可能还有带有数据的对象，如果不成功，将会返回一个异常
- * 请求类型如下：0-登入，1-登出，2-注册，3-修改密码，4-添加一条物流信息
+ * 请求类型如下：0-登入，1-登出，2-注册，3-修改密码，4-添加一条物流信息,5-按单号查找一条物流信息
  * 
  * @author 高洪森
  */
@@ -102,8 +102,8 @@ class Handler extends Thread{
                         break;
                     }
                 
-                    //请求为添加一条物流信息
-                    //将会传入包含sendplace、receiveplace、sender、receiver、situation的delivery对象
+                //请求为添加一条物流信息
+                //将会传入包含sendplace、receiveplace、sender、receiver、situation的delivery对象
                 case 4:
                     try{
                         this.addDelivery((Delivery)request.getItem());
@@ -113,7 +113,19 @@ class Handler extends Thread{
                         oos.flush();
                         break;
                     }
-                }
+
+                //请求为按单号查找物流信息
+                //将会传入包含id的delivery对象
+                case 5:
+                    try{
+                        this.getDeliveryInfoById((Delivery)request.getItem());
+                        break;
+                    }catch(Exception e){
+                        oos.writeObject(new Reply(false,e));
+                        oos.flush();
+                        break;
+                    }
+            }
         }
     }
 
@@ -153,6 +165,12 @@ class Handler extends Thread{
     //添加一条物流信息
     private void addDelivery(Delivery delivery)throws Exception{
         oos.writeObject(new Reply(true,Database.addDelivery(delivery)));
+        oos.flush();
+    }
+
+    //按单号查找物流信息
+    private void getDeliveryInfoById(Delivery delivery)throws Exception{
+        oos.writeObject(new Reply(true,Database.getDeliveryInfo(delivery)));
         oos.flush();
     }
 }
