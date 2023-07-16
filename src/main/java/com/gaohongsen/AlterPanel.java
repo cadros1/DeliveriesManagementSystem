@@ -75,6 +75,27 @@ public class AlterPanel extends JPanel {
             }
         });
 
+        JButton deleteButton = new JButton("删除");
+        deleteButton.setBounds(10, 170, 80, 25);
+        add(deleteButton);
+        deleteButton.addActionListener(e -> {
+            if (idTextField.getText().length() > 12 || idTextField.getText()==null)
+                JOptionPane.showMessageDialog(null, "单号长度错误！", "错误", JOptionPane.ERROR_MESSAGE);
+            else {
+                try {
+                    Delivery delivery = deleteDelivery(Integer.parseInt(idTextField.getText()));
+                    JOptionPane.showMessageDialog(null, "删除成功！" , "提示", JOptionPane.INFORMATION_MESSAGE);
+                    senderTextField.setText(null);
+                    receiverTextField.setText(null);
+                    sendPlaceTextField.setText(null);
+                    receivePlaceTextField.setText(null);
+                    situationComboBox.setSelectedIndex(0);
+                } catch (Exception exception) {
+                    JOptionPane.showMessageDialog(null, exception.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
         JButton confirmButton = new JButton("更改");
         confirmButton.setBounds(300, 170, 80, 25);
         add(confirmButton);
@@ -106,26 +127,6 @@ public class AlterPanel extends JPanel {
             }
         });
 
-        JButton deleteButton = new JButton("删除");
-        deleteButton.setBounds(10, 170, 80, 25);
-        add(deleteButton);
-        deleteButton.addActionListener(e -> {
-            if (idTextField.getText().length() > 12 || idTextField.getText()==null)
-                JOptionPane.showMessageDialog(null, "单号长度错误！", "错误", JOptionPane.ERROR_MESSAGE);
-            else {
-                try {
-                    Delivery delivery = deleteDelivery(Integer.parseInt(idTextField.getText()));
-                    JOptionPane.showMessageDialog(null, "删除成功！" , "提示", JOptionPane.INFORMATION_MESSAGE);
-                    senderTextField.setText(null);
-                    receiverTextField.setText(null);
-                    sendPlaceTextField.setText(null);
-                    receivePlaceTextField.setText(null);
-                    situationComboBox.setSelectedIndex(0);
-                } catch (Exception exception) {
-                    JOptionPane.showMessageDialog(null, exception.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        });
 
 
         JButton searchButton = new JButton("查找物流");
@@ -168,8 +169,8 @@ public class AlterPanel extends JPanel {
         }
     }
 
-    public Delivery alterDelivery(int id,String sendPlace, String receivePlace, String sender, String receiver, int situation) throws Exception {
-        Reply reply = (Reply) Client.sendRequest(new Request(7, new Delivery(id,sendPlace,receivePlace,sender,receiver,situation)));
+    public Delivery deleteDelivery(int id) throws Exception {
+        Reply reply = (Reply) Client.sendRequest(new Request(6, new Delivery(id)));
         if (reply.hasSucceed()) {
             return (Delivery) reply.getItem();
         } else {
@@ -177,8 +178,8 @@ public class AlterPanel extends JPanel {
         }
     }
 
-    public Delivery deleteDelivery(int id) throws Exception {
-        Reply reply = (Reply) Client.sendRequest(new Request(6, new Delivery(id)));
+    public Delivery alterDelivery(int id,String sendPlace, String receivePlace, String sender, String receiver, int situation) throws Exception {
+        Reply reply = (Reply) Client.sendRequest(new Request(7, new Delivery(id,sendPlace,receivePlace,sender,receiver,situation)));
         if (reply.hasSucceed()) {
             return (Delivery) reply.getItem();
         } else {
