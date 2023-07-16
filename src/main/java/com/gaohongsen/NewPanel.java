@@ -3,8 +3,7 @@ package com.gaohongsen;
 import javax.swing.*;
 import java.net.URL;
 
-import static com.gaohongsen.MainWindow.cardLayout;
-import static com.gaohongsen.MainWindow.contentPane;
+import static com.gaohongsen.MainWindow.*;
 
 public class NewPanel extends JPanel {
 
@@ -26,6 +25,9 @@ public class NewPanel extends JPanel {
         JLabel receiverLabel = new JLabel("收件人：");
         receiverLabel.setBounds(300, 110, 80, 25);
         add(receiverLabel);
+        JLabel situationLabel = new JLabel("物流状态");
+        situationLabel.setBounds(10, 140, 80, 25);
+        add(situationLabel);
 
         JTextField sendPlaceTextField = new JTextField();
         sendPlaceTextField.setBounds(90, 80, 80, 25);
@@ -40,11 +42,36 @@ public class NewPanel extends JPanel {
         receiverTextField.setBounds(380, 110, 80, 25);
         add(receiverTextField);
 
+        final String[] situation = {"-请选择-", "未发货","已揽收","已发货", "已到货","已签收"};
+        JComboBox<String> situationComboBox = new JComboBox<>(situation);
+        situationComboBox.setBounds(90, 140, 160, 25);
+        add(situationComboBox);
+
         JButton confirmNewButton = new JButton("创建");
-        confirmNewButton.setBounds(10, 140, 80, 25);
+        confirmNewButton.setBounds(300, 140, 80, 25);
         add(confirmNewButton);
         confirmNewButton.addActionListener(e -> {
-
+            if (sendPlaceTextField .getText().length() > 12 ||sendPlaceTextField.getText().length()<2)
+                JOptionPane.showMessageDialog(null, "发货地长度错误！", "错误", JOptionPane.ERROR_MESSAGE);
+            else if (receivePlaceTextField.getText().length() > 12 ||receivePlaceTextField.getText().length()<2)
+                JOptionPane.showMessageDialog(null, "收货地长度错误！", "错误", JOptionPane.ERROR_MESSAGE);
+            else if (senderTextField.getText().length() > 12 ||senderTextField.getText().length()<2)
+                JOptionPane.showMessageDialog(null, "发件人长度错误！", "错误", JOptionPane.ERROR_MESSAGE);
+            else if (receiverTextField .getText().length() > 12 ||receiverTextField.getText().length()<2)
+                JOptionPane.showMessageDialog(null, "收件人长度错误！", "错误", JOptionPane.ERROR_MESSAGE);
+            else {
+                try {
+                    Delivery delivery=(Delivery) newDelivery(
+                            sendPlaceTextField.getText(),
+                            receivePlaceTextField.getText(),
+                            senderTextField.getText(),
+                            receiverTextField.getText(),
+                            situationComboBox.getSelectedIndex());
+                    JOptionPane.showMessageDialog(null, "新建成功！\n单号："+delivery.getId(),"提示", JOptionPane.INFORMATION_MESSAGE);
+                } catch (Exception exception) {
+                    JOptionPane.showMessageDialog(null, exception.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
+                }
+            }
 
         });
 
@@ -78,5 +105,14 @@ public class NewPanel extends JPanel {
         if (icon != null)
             lblBackground.setBounds(0, 0, icon.getIconWidth(), icon.getIconHeight()); // 设置组件的显示位置及大小
         add(lblBackground); // 将组件添加到面板中
+    }
+
+    public Delivery newDelivery(String sendPlace, String receivePlace, String sender, String receiver, int situation)throws Exception {
+        Reply reply = (Reply) Client.sendRequest(new Request(2, new Delivery(sendPlace,receivePlace, sender, receiver,situation)));
+        if (reply.hasSucceed()) {
+            return (Delivery) reply.getItem();
+        } else {
+            throw (Exception) reply.getItem();
+        }
     }
 }

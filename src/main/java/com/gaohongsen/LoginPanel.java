@@ -48,9 +48,9 @@ public class LoginPanel extends JPanel {
         loginButton.addActionListener(e -> {
 
             //核验用户名和密码的长度
-            if (accountTextField.getText().length() > 12 || accountTextField.getText().length() < 3)
+            if (accountTextField.getText().length() > 12 || accountTextField.getText().length() < 2)
                 JOptionPane.showMessageDialog(null, "用户名长度错误！", "错误", JOptionPane.ERROR_MESSAGE);
-            else if (passwordField.getPassword().length > 12 || passwordField.getPassword().length < 3)
+            else if (passwordField.getPassword().length > 12 || passwordField.getPassword().length < 2)
                 JOptionPane.showMessageDialog(null, "密码长度错误！", "错误", JOptionPane.ERROR_MESSAGE);
             else {
                 try {

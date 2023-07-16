@@ -74,11 +74,11 @@ public class RegisterPanel extends JPanel {
         // 添加确认注册按钮的点击事件处理逻辑
         confirmRegisterButton.addActionListener(e -> {
             //核验用户名，密码和姓名的长度
-            if (accountTextField.getText().length() > 12 || accountTextField.getText().length() < 3)
+            if (accountTextField.getText().length() > 12 || accountTextField.getText().length() < 2)
                 JOptionPane.showMessageDialog(null, "用户名长度错误！", "错误", JOptionPane.ERROR_MESSAGE);
-            else if (passwordField.getPassword().length > 12 || passwordField.getPassword().length < 3)
+            else if (passwordField.getPassword().length > 12 || passwordField.getPassword().length < 2)
                 JOptionPane.showMessageDialog(null, "密码长度错误！", "错误", JOptionPane.ERROR_MESSAGE);
-            else if (nameTextField.getText().length() > 12 || nameTextField.getText().length() < 3)
+            else if (nameTextField.getText().length() > 12 || nameTextField.getText().length() < 2)
                 JOptionPane.showMessageDialog(null, "姓名长度错误！", "错误", JOptionPane.ERROR_MESSAGE);
                 //核验密码与确认密码
             else if (!passwordMatches(passwordField.getPassword(), confirmPasswordField.getPassword()))
