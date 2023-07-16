@@ -25,7 +25,7 @@ public class Server {
     }
 }
 
-
+//创建一个线程来处理与客户端的通信
 class Handler extends Thread{
     Socket sock;
     ObjectInputStream ois;
@@ -59,7 +59,11 @@ class Handler extends Thread{
                 //将会传入包含account和password的user对象
                 case 0:
                     try{
-                        this.logIn((User)request.getItem());
+                        Database.passwordCheck((User)request.getItem());
+                        User replyUser=Database.getUserInfo((User)request.getItem());
+                        Database.addLog(replyUser,0);
+                        oos.writeObject(new Reply(true,replyUser));
+                        oos.flush();
                         break;
                     }catch(Exception e){
                         oos.writeObject(new Reply(false,e));
@@ -71,7 +75,9 @@ class Handler extends Thread{
                 //将会传入包含account的user对象
                 case 1:
                     try{
-                        this.logOut((User)request.getItem());
+                        Database.addLog(Database.getUserInfo((User)request.getItem()),1);
+                        oos.writeObject(new Reply(true,null));
+                        oos.flush();
                         break;
                     }catch(Exception e){
                         oos.writeObject(new Reply(false,e));
@@ -83,7 +89,10 @@ class Handler extends Thread{
                 //将会传入包含account、password、name和permission的user对象
                 case 2:
                     try{
-                        this.register((User)request.getItem());
+                        Database.addUser((User)request.getItem());
+                        Database.addLog((User)request.getItem(),2);
+                        oos.writeObject(new Reply(true,null));
+                        oos.flush();
                         break;
                     }catch(Exception e){
                         oos.writeObject(new Reply(false,e));
@@ -94,7 +103,10 @@ class Handler extends Thread{
                 //将会传入包含account、password和updatedPassword的user对象
                 case 3:
                     try{
-                        this.changePassword((User)request.getItem());
+                        Database.passwordCheck((User)request.getItem());
+                        Database.updatePassword((User)request.getItem());
+                        oos.writeObject(new Reply(true,Database.getUserInfo((User)request.getItem())));
+                        oos.flush();
                         break;
                     }catch(Exception e){
                         oos.writeObject(new Reply(false,e));
@@ -106,7 +118,8 @@ class Handler extends Thread{
                 //将会传入包含sendplace、receiveplace、sender、receiver、situation的delivery对象
                 case 4:
                     try{
-                        this.addDelivery((Delivery)request.getItem());
+                        oos.writeObject(new Reply(true,Database.addDelivery((Delivery)request.getItem())));
+                        oos.flush();
                         break;
                     }catch(Exception e){
                         oos.writeObject(new Reply(false,e));
@@ -118,7 +131,8 @@ class Handler extends Thread{
                 //将会传入包含id的delivery对象
                 case 5:
                     try{
-                        this.getDeliveryInfoById((Delivery)request.getItem());
+                        oos.writeObject(new Reply(true,Database.getDeliveryInfo((Delivery)request.getItem())));
+                        oos.flush();
                         break;
                     }catch(Exception e){
                         oos.writeObject(new Reply(false,e));
@@ -126,9 +140,23 @@ class Handler extends Thread{
                         break;
                     }
 
+                //请求为删除一条物流信息
+                //将会传入包含id的delivery对象
                 case 6:
                     try{
-                        this.deleteDeliveryById((Delivery)request.getItem());
+                        Database.deleteDelivery((Delivery)request.getItem());
+                        oos.writeObject(new Reply(true,null));
+                    }catch(Exception e){
+                        oos.writeObject(new Reply(false,e));
+                        oos.flush();
+                        break;
+                    }
+                
+                //请求为显示所有物流信息
+                //不传入对象
+                case 7:
+                    try{
+                        oos.writeObject(Database.displayDeliveries());
                     }catch(Exception e){
                         oos.writeObject(new Reply(false,e));
                         oos.flush();
@@ -136,56 +164,5 @@ class Handler extends Thread{
                     }
             }
         }
-    }
-
-
-    //登入
-    private void logIn(User user)throws Exception{
-        Database.passwordCheck(user);
-        User replyUser=Database.getUserInfo(user);
-        Database.addLog(replyUser,0);
-        oos.writeObject(new Reply(true,replyUser));
-        oos.flush();
-    }
-
-    //登出
-    private void logOut(User user)throws Exception{
-        Database.addLog(Database.getUserInfo(user),1);
-        oos.writeObject(new Reply(true,null));
-        oos.flush();
-    }
-
-    //注册
-    private void register(User user)throws Exception{
-        Database.addUser(user);
-        Database.addLog(user,2);
-        oos.writeObject(new Reply(true,null));
-        oos.flush();
-    }
-
-    //修改密码
-    private void changePassword(User user)throws Exception{
-        Database.passwordCheck(user);
-        Database.updatePassword(user);
-        oos.writeObject(new Reply(true,Database.getUserInfo(user)));
-        oos.flush();
-    }
-
-    //添加一条物流信息
-    private void addDelivery(Delivery delivery)throws Exception{
-        oos.writeObject(new Reply(true,Database.addDelivery(delivery)));
-        oos.flush();
-    }
-
-    //按单号查找物流信息
-    private void getDeliveryInfoById(Delivery delivery)throws Exception{
-        oos.writeObject(new Reply(true,Database.getDeliveryInfo(delivery)));
-        oos.flush();
-    }
-
-    //按id删除一条物流信息
-    private void deleteDeliveryById(Delivery delivery)throws Exception{
-        Database.deleteDelivery(delivery);
-        oos.writeObject(new Reply(true,null));
     }
 }

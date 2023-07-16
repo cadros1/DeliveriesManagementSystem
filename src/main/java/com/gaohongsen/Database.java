@@ -1,6 +1,7 @@
 package com.gaohongsen;
 
 import java.sql.*;
+import java.util.*;
 import javax.sql.*;
 import com.zaxxer.hikari.*;
 
@@ -140,7 +141,6 @@ public class Database {
 
 
     //此方法向logs表中添加一条内容为name,account,time,type的日志，需要传入带name,account的user对象和type，time由程序获取系统时间填充
-    //如果数据库操作出错，则抛出SQLException
     public static void addLog(final User user,int type)throws SQLException{
         //如果未初始化，则进行一次初始化
         if(!hasInitialized){
@@ -179,7 +179,6 @@ public class Database {
     }
 
     //此方法用于添加一条快递信息，需要传入带sendplace,receiveplace,sender,receiver,situation的delivery对象
-    //如果出错，则抛出一个SQLException
     public static Delivery addDelivery(final Delivery delivery)throws SQLException{
         if(!hasInitialized){
             initialize();
@@ -243,6 +242,7 @@ public class Database {
         }
     }
 
+    //此方法用于删除一条物流的信息，需要传入带id的delivery对象
     public static void deleteDelivery(final Delivery delivery)throws SQLException{
         if(!hasInitialized){
             initialize();
@@ -253,6 +253,24 @@ public class Database {
                 ps.setInt(1,delivery.getId());
                 ps.executeUpdate();
             }
+        }
+    }
+
+    public static Iterator<Delivery> displayDeliveries()throws SQLException{
+        Vector<Delivery> deliveries=new Vector<Delivery>();
+        if(!hasInitialized){
+            initialize();
+        }
+
+        try(Connection conn=ds.getConnection()){
+            try(PreparedStatement ps=conn.prepareStatement("SELECT * FROM deliveries order by id desc limit 30")){
+                try(ResultSet rs=ps.executeQuery()){
+                    while(rs.next()){
+                        deliveries.add(new Delivery(rs.getInt("id"),rs.getString("sendplace"),rs.getString("receiveplace"),rs.getString("sender"),rs.getString("receiver"),rs.getInt("situation")));
+                    }
+                    return deliveries.iterator();
+                }
+            }        
         }
     }
 }
