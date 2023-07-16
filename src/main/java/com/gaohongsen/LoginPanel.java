@@ -52,7 +52,13 @@ public class LoginPanel extends JPanel {
                 JOptionPane.showMessageDialog(null, "密码长度错误！", "错误", JOptionPane.ERROR_MESSAGE);
             else {
                 //将登录时的用户名和密码，发送至数据库进行核验
-                User loginUser = (User) loginCheck(accountTextField.getText(), String.valueOf(passwordField.getPassword()));
+                User loginUser;
+                try{
+                    loginUser = loginCheck(accountTextField.getText(), String.valueOf(passwordField.getPassword()));
+                }catch (Exception exception){
+                    JOptionPane.showMessageDialog(null, exception.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
                 JOptionPane.showMessageDialog(null, "登录成功！", "提示", JOptionPane.INFORMATION_MESSAGE);
                 // 登录成功后显示应用主界面
                 user = loginUser;
@@ -72,23 +78,13 @@ public class LoginPanel extends JPanel {
     }
 
 
-    public Object loginCheck(String account, String password) {
+    public User loginCheck(String account, String password)throws Exception{
 //        return "1/001/Jack/2";
-        Reply reply = null;
-        try {
-            reply = (Reply) Client.sendRequest(new Request(1, new User(account, password)));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        if (reply.hasSuccess()) {
-            return reply.getItem();
-        } else
-            try {
-                Exception e = (Exception) reply.getItem();
-                JOptionPane.showMessageDialog(null, e.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
-                return null;
-            } catch (Exception e) {
-                throw new RuntimeException(e);
+            Reply reply = (Reply) Client.sendRequest(new Request(0, new User(account, password)));
+            if (reply.hasSucceed()) {
+                return (User)reply.getItem();
+            } else{
+                throw (Exception)reply.getItem();
             }
     }
     //将登录时的用户名和密码，发送至数据库进行核验
