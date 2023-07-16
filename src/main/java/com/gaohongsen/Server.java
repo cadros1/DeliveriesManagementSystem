@@ -121,8 +121,9 @@ class Handler extends Thread{
     //登入
     private void logIn(User user)throws Exception{
         Database.passwordCheck(user);
-        Database.addLog(user,0);
-        oos.writeObject(new Reply(true,Database.getUserInfo(user)));
+        User replyUser=Database.getUserInfo(user);
+        Database.addLog(replyUser,0);
+        oos.writeObject(new Reply(true,replyUser));
         oos.flush();
     }
 

@@ -27,7 +27,7 @@ public class Database {
             return;
         }
 
-        config.setJdbcUrl("jdbc:mysql://localhost:3306/DataMiningProject?useSSL=false&characterEncoding=utf8");
+        config.setJdbcUrl("jdbc:mysql://localhost:3306/dataminingproject?useSSL=false&characterEncoding=utf8");
         config.setUsername("root");
         config.setPassword("800618");
         config.addDataSourceProperty("connectionTimeout", "1000"); // 连接超时：1秒
@@ -175,6 +175,8 @@ public class Database {
         }
     }
 
+    //此方法用于添加一条快递信息，需要传入带sendplace,receiveplace,sender,receiver,situation的delivery对象
+    //如果出错，则抛出一个SQLException
     public static void addDelivery(final Delivery delivery)throws SQLException{
         if(!hasInitialized){
             initialize();
@@ -192,6 +194,9 @@ public class Database {
         }
     }
 
+    //此方法用于获取快递信息，需要传入带id的delivery对象
+    //将会返回带id,sendplace,receiveplace,sender,receiver,situation的delivery对象
+    //如果出错，则抛出一个SQLException
     public static Delivery getDeliveryInfo(final Delivery delivery)throws SQLException{
         if(!hasInitialized){
             initialize();
@@ -208,6 +213,20 @@ public class Database {
                         throw new SQLException("此单号不存在");
                     }
                 }
+            }
+        }
+    }
+
+    public static void updateDelivery(final Delivery delivery)throws SQLException{
+        if(!hasInitialized){
+            initialize();
+        }
+
+        try(Connection conn=ds.getConnection()){
+            try(PreparedStatement ps=conn.prepareStatement("UPDATE deliveries SET situation=? WHERE id=?")){
+                ps.setInt(1,delivery.getSituation());
+                ps.setInt(2,delivery.getId());
+                ps.executeUpdate();
             }
         }
     }
