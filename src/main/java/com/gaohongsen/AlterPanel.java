@@ -55,7 +55,7 @@ public class AlterPanel extends JPanel {
         add(situationComboBox);
 
         JButton inquireDeliveryButton = new JButton("查找");
-        inquireDeliveryButton.setBounds(200, 170, 80, 25);
+        inquireDeliveryButton.setBounds(200, 50, 80, 25);
         add(inquireDeliveryButton);
         inquireDeliveryButton.addActionListener(e -> {
             if (idTextField.getText().length() > 12 || idTextField.getText()==null)
@@ -107,7 +107,7 @@ public class AlterPanel extends JPanel {
         });
 
         JButton deleteButton = new JButton("删除");
-        deleteButton.setBounds(590, 170, 80, 25);
+        deleteButton.setBounds(10, 170, 80, 25);
         add(deleteButton);
         deleteButton.addActionListener(e -> {
             if (idTextField.getText().length() > 12 || idTextField.getText()==null)
