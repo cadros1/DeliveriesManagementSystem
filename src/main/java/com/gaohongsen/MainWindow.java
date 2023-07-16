@@ -2,9 +2,9 @@ package com.gaohongsen;
 
 /*
  @file MainWindow
-  * @brief 实现图形化界面和交互逻辑
- * @author 李祖怡
- * @date 2023/7/15
+ @brief 实现图形化界面和交互逻辑
+ @author 李祖怡
+ @date 2023/7/16
  */
 
 import javax.swing.*;

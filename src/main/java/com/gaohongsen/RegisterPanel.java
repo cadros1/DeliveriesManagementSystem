@@ -53,7 +53,7 @@ public class RegisterPanel extends JPanel {
         add(permissionComboBox);
 
         JButton backToLoginButton = new JButton("返回");
-        backToLoginButton.setBounds(260, 220, 90, 25);
+        backToLoginButton.setBounds(260, 220, 80, 25);
         add(backToLoginButton);
 
         JButton confirmRegisterButton = new JButton("确认注册");
