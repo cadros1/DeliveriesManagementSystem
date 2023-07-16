@@ -234,9 +234,13 @@ public class Database {
         }
 
         try(Connection conn=ds.getConnection()){
-            try(PreparedStatement ps=conn.prepareStatement("UPDATE deliveries SET situation=? WHERE id=?")){
-                ps.setInt(1,delivery.getSituation());
-                ps.setInt(2,delivery.getId());
+            try(PreparedStatement ps=conn.prepareStatement("UPDATE deliveries SET sendplace=?,receiveplace=?,sender=?,receiver=?,situation=? WHERE id=?")){
+                ps.setString(1,delivery.getSendPlace());
+                ps.setString(2,delivery.getReceivePlace());
+                ps.setString(3,delivery.getSender());
+                ps.setString(4,delivery.getReceiver());
+                ps.setInt(5,delivery.getSituation());
+                ps.setInt(6,delivery.getId());
                 ps.executeUpdate();
             }
         }
