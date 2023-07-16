@@ -171,7 +171,9 @@ public class Database {
             try(PreparedStatement ps=conn.prepareStatement("UPDATE users SET password=? WHERE account=?")){
                 ps.setString(1,user.getUpdatedPassword());
                 ps.setString(2,user.getAccount());
-                ps.executeUpdate();
+                if(ps.executeUpdate()!=1){
+                    throw new SQLException("更新密码出错！");
+                }
             }
         }
     }
