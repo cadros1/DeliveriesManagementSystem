@@ -12,16 +12,35 @@ import java.net.*;
  * @author 高洪森
  */
 public class Client {
-    public static Object sendRequest(final Object request)throws IOException,ClassNotFoundException{
-        Socket sock=new Socket("localhost",6666);
-        Reply reply=null;
-        try(InputStream input=sock.getInputStream()){
-            try(OutputStream output=sock.getOutputStream()){
-                reply=handle(input,output,request);
-            }
+
+    static Socket sock=null;
+    static boolean isInitialized=false;
+    static ObjectOutputStream oos=null;
+    static ObjectInputStream ois=null;
+
+    public static Object sendRequest(final Request request)throws IOException,ClassNotFoundException{
+        if(!isInitialized){
+            initialize();
         }
-        sock.close();
+
+        Reply reply=handle(request);
+
+        if(request.getType()==1){
+            disconnected();
+        }
         return reply;
+    }
+
+    private static void initialize()throws IOException{
+        sock=new Socket("localhost",6666);
+        oos=new ObjectOutputStream(sock.getOutputStream());
+        ois=new ObjectInputStream(sock.getInputStream());
+        isInitialized=true;
+    }
+
+    private static void disconnected()throws IOException{
+        sock.close();
+        isInitialized=false;
     }
 
     /* 暂时无用功能，可与服务端之间以字符串形式通讯
@@ -36,9 +55,7 @@ public class Client {
     }
     */
 
-    private static Reply handle(InputStream input,OutputStream output,final Object request)throws IOException,ClassNotFoundException{
-        ObjectOutputStream oos=new ObjectOutputStream(output);
-        ObjectInputStream ois=new ObjectInputStream(input);
+    private static Reply handle(final Request request)throws IOException,ClassNotFoundException{
         oos.writeObject(request);
         oos.flush();
         Reply s=(Reply)ois.readObject();
