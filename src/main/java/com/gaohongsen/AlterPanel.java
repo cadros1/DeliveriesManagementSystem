@@ -46,23 +46,34 @@ public class AlterPanel extends JPanel {
         receiverTextField.setBounds(380, 110, 80, 25);
         add(receiverTextField);
 
-        JLabel logisticStatusLabel = new JLabel("物流状态");
-        logisticStatusLabel.setBounds(10, 140, 80, 25);
-        add(logisticStatusLabel);
-        JTextField logisticStatusTextField = new JTextField();
-        logisticStatusTextField.setBounds(90, 140, 80, 25);
-        add(logisticStatusTextField);
+        JLabel deliverySituation = new JLabel("物流状态");
+        deliverySituation.setBounds(10, 140, 80, 25);
+        add(deliverySituation);
+        final String[] situation = {"-请选择-", "未发货", "已揽收", "已发货", "已到货", "已签收"};
+        JComboBox<String> situationComboBox = new JComboBox<>(situation);
+        situationComboBox.setBounds(90, 140, 80, 25);
+        add(situationComboBox);
 
-
-        JButton confirmTitleButton = new JButton("重置");
-        confirmTitleButton.setBounds(10, 170, 80, 25);
+        JButton confirmTitleButton = new JButton("查找");
+        confirmTitleButton.setBounds(200, 170, 80, 25);
         add(confirmTitleButton);
         confirmTitleButton.addActionListener(e -> {
-            /**************************************************************************
-             * 待完成
-             * 查找titleTextField对应的物流信息,错误则弹出提示框，成功则通过setText更改下方输入框的值
-             *************************************************************************/
+            if (titleTextField.getText().length() > 12 || titleTextField.getText()==null)
+                JOptionPane.showMessageDialog(null, "单号长度错误！", "错误", JOptionPane.ERROR_MESSAGE);
+            else {
+                try {
+                    Delivery delivery = confirmTitleDelivery(Integer.valueOf(titleTextField.getText()));
+                    JOptionPane.showMessageDialog(null, "查找成功！" , "提示", JOptionPane.INFORMATION_MESSAGE);
+                    senderTextField.setText(delivery.getSender());
+                    receiverTextField.setText(delivery.getReceiver());
+                    sendPlaceTextField.setText(delivery.getSendPlace());
+                    receivePlaceTextField.setText(delivery.getReceivePlace());
+                    situationComboBox.setSelectedIndex(delivery.getSituation());
 
+                } catch (Exception exception) {
+                    JOptionPane.showMessageDialog(null, exception.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
+                }
+            }
         });
 
         JButton confirmButton = new JButton("更改");
@@ -117,4 +128,13 @@ public class AlterPanel extends JPanel {
             lblBackground.setBounds(0, 0, icon.getIconWidth(), icon.getIconHeight()); // 设置组件的显示位置及大小
         add(lblBackground); // 将组件添加到面板中
     }
+    public Delivery confirmTitleDelivery(int id) throws Exception {
+        Reply reply = (Reply) Client.sendRequest(new Request(5, new Delivery(id)));
+        if (reply.hasSucceed()) {
+            return (Delivery) reply.getItem();
+        } else {
+            throw (Exception) reply.getItem();
+        }
+    }
+
 }
