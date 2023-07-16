@@ -84,38 +84,39 @@ public class RegisterPanel extends JPanel {
                 JOptionPane.showMessageDialog(null, "前后密码不同！", "错误", JOptionPane.ERROR_MESSAGE);
             else if (permissionComboBox.getSelectedIndex() == 0)
                 JOptionPane.showMessageDialog(null, "请选择账户权限！", "错误", JOptionPane.ERROR_MESSAGE);
-            else {
-                String[] str = registerCheck(
-                        accountTextField.getText(),
-                        String.valueOf(passwordField.getPassword()),
-                        nameTextField.getText(),
-                        permissionComboBox.getSelectedIndex()
-                ).split("/");//将登录时的用户名，密码，姓名，权限，发送至数据库进行核验
-                switch (Integer.parseInt(str[0])) {
-                    case 0:
-                        //服务端返回值0，代表注册失败
-                        JOptionPane.showMessageDialog(null, str[1], "错误", JOptionPane.ERROR_MESSAGE);
-                        break;
-                    case 1:
-                        //服务端返回值1，代表注册成功
-                        JOptionPane.showMessageDialog(null, "注册成功！", "提示", JOptionPane.INFORMATION_MESSAGE);
-                        // 注册成功后显示登录界面
-                        cardLayout.show(contentPane, "login");
-                        break;
-                }
-            }
+//            else {
+////                String[] str = registerCheck(
+////                        accountTextField.getText(),
+////                        String.valueOf(passwordField.getPassword()),
+////                        nameTextField.getText(),
+////                        permissionComboBox.getSelectedIndex()
+////                ).split("/");//将登录时的用户名，密码，姓名，权限，发送至数据库进行核验
+//                switch (Integer.parseInt(str[0])) {
+//                    case 0:
+//                        //服务端返回值0，代表注册失败
+//                        JOptionPane.showMessageDialog(null, str[1], "错误", JOptionPane.ERROR_MESSAGE);
+//                        break;
+//                    case 1:
+//                        //服务端返回值1，代表注册成功
+//                        JOptionPane.showMessageDialog(null, "注册成功！", "提示", JOptionPane.INFORMATION_MESSAGE);
+//                        // 注册成功后显示登录界面
+//                        cardLayout.show(contentPane, "login");
+//                        break;
+//                }
+//            }
         });
         // 添加返回按钮的点击事件处理逻辑
         backToLoginButton.addActionListener(e -> cardLayout.show(contentPane, "login"));
     }
 
-    public String registerCheck(String account, String password, String name, int permission) {
-        try {
-            return Client.sendRequest("2/" + account + "/" + password + "/" + name + "/" + permission);
-        } catch (IOException e) {
-            return "0/" + e.getMessage();
-        }
-        //将注册时的用户名，发送至数据库进行核验
+    public Object registerCheck(String account, String password, String name, int permission) {
+        return  null;
+//        try {
+//            return Client.sendRequest("2/" + account + "/" + password + "/" + name + "/" + permission);
+//        } catch (IOException e) {
+//            return "0/" + e.getMessage();
+//        }
+//        //将注册时的用户名，发送至数据库进行核验
     }
 
     public static boolean passwordMatches(char[] password1, char[] password2) {

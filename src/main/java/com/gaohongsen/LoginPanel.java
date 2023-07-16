@@ -52,24 +52,17 @@ public class LoginPanel extends JPanel {
                 JOptionPane.showMessageDialog(null, "密码长度错误！", "错误", JOptionPane.ERROR_MESSAGE);
             else {
                 //将登录时的用户名和密码，发送至数据库进行核验
-                String[] str = loginCheck(accountTextField.getText(), String.valueOf(passwordField.getPassword())).split("/");
-                switch (str[0]) {
-                    case "0":
-                        //服务端返回值0，代表用户名或密码错误,弹出一个错误框
-                        JOptionPane.showMessageDialog(null, str[1], "错误", JOptionPane.ERROR_MESSAGE);
-                        break;
-                    case "1":
-                        //服务端返回值1，代表登录成功,弹出一个信息提示框
-                        JOptionPane.showMessageDialog(null, "登录成功！", "提示", JOptionPane.INFORMATION_MESSAGE);
-                        // 登录成功后显示应用主界面
-                        user = new User(Integer.parseInt(str[1]), accountTextField.getText(), str[2], Integer.parseInt(str[3]));
+                User loginUser = (User) loginCheck(accountTextField.getText(), String.valueOf(passwordField.getPassword()));
+                JOptionPane.showMessageDialog(null, "登录成功！", "提示", JOptionPane.INFORMATION_MESSAGE);
+                // 登录成功后显示应用主界面
+                user = loginUser;
 
-                        WelcomePanel welcomePanel = new WelcomePanel(mainWindow);
-                        contentPane.add(welcomePanel, "welcome");
+                WelcomePanel welcomePanel = new WelcomePanel(mainWindow);
+                contentPane.add(welcomePanel, "welcome");
 
-                        cardLayout.show(contentPane, "welcome");
-                        break;
-                }
+                cardLayout.show(contentPane, "welcome");
+
+
             }
         });
 
@@ -79,15 +72,27 @@ public class LoginPanel extends JPanel {
     }
 
 
-    public String loginCheck(String account, String password) {
-        return "1/001/Jack/2";
-//        try {
-//            return Client.sendRequest("0/" + account + "/" + password);
-//        } catch (IOException e) {
-//            return "0/" + e.getMessage();
-//        }
-        //将登录时的用户名和密码，发送至数据库进行核验
+    public Object loginCheck(String account, String password) {
+//        return "1/001/Jack/2";
+        Reply reply = null;
+        try {
+            reply = (Reply) Client.sendRequest(new Request(1, new User(account, password)));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        if (reply.hasSuccess()) {
+            return reply.getItem();
+        } else
+            try {
+                Exception e = (Exception) reply.getItem();
+                JOptionPane.showMessageDialog(null, e.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
+                return null;
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
     }
-
-
+    //将登录时的用户名和密码，发送至数据库进行核验
 }
+
+
+
