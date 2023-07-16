@@ -2,6 +2,8 @@ package com.gaohongsen;
 
 import javax.swing.*;
 import java.net.URL;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static com.gaohongsen.MainWindow.cardLayout;
 import static com.gaohongsen.MainWindow.contentPane;
@@ -29,6 +31,7 @@ public class SearchPanel extends JPanel {
         add(confirmSearchButton);
 
 
+        AtomicReference<Iterator<Delivery>> deliveries=null;
         // 表格上的title
         String[] columnNames = new String[]{"序号", "单号", "发货地", "收货地", "发件人", "收件人", "物流状态"};
         // 表格中的内容，是一个二维数组
@@ -48,6 +51,14 @@ public class SearchPanel extends JPanel {
         add(scrollPane);
 
         confirmSearchButton.addActionListener(e -> {
+            try {
+                deliveries.set((Iterator<Delivery>) searchDelivery(0));
+                JOptionPane.showMessageDialog(null, "查找成功！", "提示", JOptionPane.INFORMATION_MESSAGE);
+            } catch (Exception exception) {
+                JOptionPane.showMessageDialog(null, exception.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
+            }
+
+
             /**************************************************************************
              * 待完成
              * 通过选中项，查找对应物流信息，然后显示在表上
@@ -85,5 +96,14 @@ public class SearchPanel extends JPanel {
         if (icon != null)
             lblBackground.setBounds(0, 0, icon.getIconWidth(), icon.getIconHeight()); // 设置组件的显示位置及大小
         add(lblBackground); // 将组件添加到面板中
+    }
+
+    public Delivery searchDelivery(int id) throws Exception {
+        Reply reply = (Reply) Client.sendRequest(new Request(8, new Delivery(id)));
+        if (reply.hasSucceed()) {
+            return (Delivery) reply.getItem();
+        } else {
+            throw (Exception) reply.getItem();
+        }
     }
 }
