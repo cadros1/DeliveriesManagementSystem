@@ -56,15 +56,14 @@ public class LoginPanel extends JPanel {
                 try {
                     //将登录时的用户名和密码，发送至数据库进行核验
                     user = loginCheck(accountTextField.getText(), String.valueOf(passwordField.getPassword()));
+                    // 登录成功后显示应用主界面
+                    JOptionPane.showMessageDialog(null, "登录成功！", "提示", JOptionPane.INFORMATION_MESSAGE);
+                    WelcomePanel welcomePanel = new WelcomePanel(mainWindow);
+                    contentPane.add(welcomePanel, "welcome");
+                    cardLayout.show(contentPane, "welcome");
                 } catch (Exception exception) {
                     JOptionPane.showMessageDialog(null, exception.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
                 }
-                JOptionPane.showMessageDialog(null, "登录成功！", "提示", JOptionPane.INFORMATION_MESSAGE);
-
-                // 登录成功后显示应用主界面
-                WelcomePanel welcomePanel = new WelcomePanel(mainWindow);
-                contentPane.add(welcomePanel, "welcome");
-                cardLayout.show(contentPane, "welcome");
             }
         });
         // 添加注册按钮的点击事件处理逻辑

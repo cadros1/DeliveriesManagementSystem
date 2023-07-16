@@ -58,6 +58,8 @@ public class PasswordChange extends JFrame {
                             user.getAccount(),
                             String.valueOf(originalPasswordField.getPassword()),
                             String.valueOf(newPasswordField.getPassword()));
+                    JOptionPane.showMessageDialog(null, "注册成功！", "提示", JOptionPane.INFORMATION_MESSAGE);
+                    dispose();
                 } catch (Exception exception) {
                     JOptionPane.showMessageDialog(null, exception.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
                 }

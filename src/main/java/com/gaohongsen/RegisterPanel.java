@@ -91,10 +91,11 @@ public class RegisterPanel extends JPanel {
                             String.valueOf(passwordField.getPassword()),
                             nameTextField.getText(),
                             permissionComboBox.getSelectedIndex());
+                    JOptionPane.showMessageDialog(null, "注册成功！", "提示", JOptionPane.INFORMATION_MESSAGE);
+                    cardLayout.show(contentPane, "login");
                 } catch (Exception exception) {
                     JOptionPane.showMessageDialog(null, exception.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
                 }
-                cardLayout.show(contentPane, "login");
             }
         });
         // 添加返回按钮的点击事件处理逻辑
