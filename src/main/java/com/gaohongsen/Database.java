@@ -260,6 +260,7 @@ public class Database {
         }
     }
 
+    //此方法用于获取最近30条所有物流信息，将会返回一个Iterator<Delivery>对象
     public static Iterator<Delivery> displayDeliveries()throws SQLException{
         Vector<Delivery> deliveries=new Vector<Delivery>();
         if(!hasInitialized){

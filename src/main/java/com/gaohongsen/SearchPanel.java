@@ -31,7 +31,7 @@ public class SearchPanel extends JPanel {
         add(confirmSearchButton);
 
 
-        AtomicReference<Iterator<Delivery>> deliveries=null;
+        Iterator<Delivery> deliveries;
         // 表格上的title
         String[] columnNames = new String[]{"序号", "单号", "发货地", "收货地", "发件人", "收件人", "物流状态"};
         // 表格中的内容，是一个二维数组
@@ -52,8 +52,18 @@ public class SearchPanel extends JPanel {
 
         confirmSearchButton.addActionListener(e -> {
             try {
-                deliveries.set((Iterator<Delivery>) searchDelivery(0));
+                deliveries=(Iterator<Delivery>)displayDelivery(0);
                 JOptionPane.showMessageDialog(null, "查找成功！", "提示", JOptionPane.INFORMATION_MESSAGE);
+                for(int i=0;deliveries.hasNext();i++){
+                    Delivery delivery=deliveries.next();
+                    logistics[i][0]=String.valueOf(i+1);
+                    logistics[i][1]=String.valueOf(delivery.getId());
+                    logistics[i][2]=delivery.getSendPlace();
+                    logistics[i][3]=delivery.getReceivePlace();
+                    logistics[i][4]=delivery.getSender();
+                    logistics[i][5]=delivery.getReceiver();
+                    logistics[i][6]=String.valueOf(delivery.getSituation());
+                }
             } catch (Exception exception) {
                 JOptionPane.showMessageDialog(null, exception.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
             }
@@ -98,10 +108,10 @@ public class SearchPanel extends JPanel {
         add(lblBackground); // 将组件添加到面板中
     }
 
-    public Delivery searchDelivery(int id) throws Exception {
+    public Iterator<Delivery> displayDelivery(int id) throws Exception {
         Reply reply = (Reply) Client.sendRequest(new Request(8, new Delivery(id)));
         if (reply.hasSucceed()) {
-            return (Delivery) reply.getItem();
+            return (Iterator<Delivery>)reply.getItem();
         } else {
             throw (Exception) reply.getItem();
         }
