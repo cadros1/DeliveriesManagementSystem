@@ -167,7 +167,7 @@ class Handler extends Thread{
                         break;
                     }
                 
-                //请求为显示所有物流信息
+                //请求为显示最近30条物流信息
                 //不传入对象
                 case 8:
                     try{
