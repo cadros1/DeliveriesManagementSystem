@@ -73,7 +73,7 @@ public class WelcomePanel extends JPanel {
         JMI6.addActionListener(e -> JOptionPane.showMessageDialog(null, "BY高洪森&李祖怡（SCU）", "关于我们", JOptionPane.INFORMATION_MESSAGE));
 
 
-        JButton searchButton = new JButton("查找物流");
+        JButton searchButton = new JButton("物流清单");
         searchButton.setBounds(20, 20, 90, 25);
         add(searchButton);
         searchButton.addActionListener(e -> cardLayout.show(contentPane, "search"));

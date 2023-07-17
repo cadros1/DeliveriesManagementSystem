@@ -129,7 +129,7 @@ public class AlterPanel extends JPanel {
 
 
 
-        JButton searchButton = new JButton("查找物流");
+        JButton searchButton = new JButton("物流清单");
         searchButton.setBounds(20, 20, 90, 25);
         add(searchButton);
         searchButton.addActionListener(e -> cardLayout.show(contentPane, "search"));
