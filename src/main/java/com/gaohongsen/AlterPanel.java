@@ -8,7 +8,7 @@ import static com.gaohongsen.MainWindow.contentPane;
 
 public class AlterPanel extends JPanel {
 
-    public AlterPanel() {
+    public AlterPanel(MainWindow mainWindow) {
         setLayout(null);
 
         JLabel idLabel = new JLabel("请输入单号：");
@@ -120,7 +120,10 @@ public class AlterPanel extends JPanel {
                             senderTextField.getText(),
                             situationComboBox.getSelectedIndex()
                     );
-                    JOptionPane.showMessageDialog(null, "修改成功！" , "提示", JOptionPane.INFORMATION_MESSAGE);
+                    WelcomePanel welcomePanel = new WelcomePanel(mainWindow);
+                    contentPane.add(welcomePanel, "welcome");
+                    cardLayout.show(contentPane, "alter");
+                    JOptionPane.showMessageDialog(null, "修改成功！\n物流清单已更新" , "提示", JOptionPane.INFORMATION_MESSAGE);
                 } catch (Exception exception) {
                     JOptionPane.showMessageDialog(null, exception.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
                 }
@@ -148,6 +151,7 @@ public class AlterPanel extends JPanel {
         alterButton.setBounds(320, 20, 90, 25);
         add(alterButton);
         alterButton.addActionListener(e -> cardLayout.show(contentPane, "alter"));
+
 
         //设置背景
         JLabel lblBackground = new JLabel(); // 创建一个标签组件对象

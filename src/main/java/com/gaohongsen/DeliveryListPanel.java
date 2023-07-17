@@ -10,7 +10,7 @@ import static com.gaohongsen.MainWindow.contentPane;
 
 public class DeliveryListPanel extends JPanel {
 
-    public DeliveryListPanel() {
+    public DeliveryListPanel(MainWindow mainWindow) {
         setLayout(null);
 
         // 表格上的title
@@ -71,6 +71,7 @@ public class DeliveryListPanel extends JPanel {
         alterButton.setBounds(320, 20, 90, 25);
         add(alterButton);
         alterButton.addActionListener(e -> cardLayout.show(contentPane, "alter"));
+
 
         //设置背景
         JLabel lblBackground = new JLabel(); // 创建一个标签组件对象

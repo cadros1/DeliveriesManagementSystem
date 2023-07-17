@@ -2,7 +2,7 @@ package com.gaohongsen;
 
 import javax.swing.*;
 
-import static com.gaohongsen.MainWindow.user;
+import static com.gaohongsen.MainWindow.*;
 
 public class PasswordChange extends JFrame {
     public PasswordChange() {
@@ -60,6 +60,7 @@ public class PasswordChange extends JFrame {
                             String.valueOf(newPasswordField.getPassword()));
                     JOptionPane.showMessageDialog(null, "修改成功！", "提示", JOptionPane.INFORMATION_MESSAGE);
                     dispose();
+                    cardLayout.show(contentPane, "login");
                 } catch (Exception exception) {
                     JOptionPane.showMessageDialog(null, exception.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
                 }

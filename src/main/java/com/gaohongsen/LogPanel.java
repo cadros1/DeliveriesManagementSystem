@@ -10,7 +10,7 @@ import static com.gaohongsen.MainWindow.contentPane;
 
 public class LogPanel extends JPanel {
 
-    public LogPanel() {
+    public LogPanel(MainWindow mainWindow) {
         setLayout(null);
 
         // 表格上的title
@@ -50,24 +50,6 @@ public class LogPanel extends JPanel {
         add(scrollPane);
 
 
-        // 这是一个示例表，待开发。。。。。。。
-//        String[] columnNames = new String[]{"序号", "用户名", "姓名", "时间", "请求类型"};
-//        String[][] logistics = new String[][]{
-//                {"1", "Sun", "张三", "2022/12/31 23:59:59", "0"},
-//                {"2", "Moon", "李四", "2022/12/31 23:59:59", "1"},
-//                {"3", "Earth", "王五", "2022/12/31 23:59:59", "3"}};
-//        JTable table = new JTable(logistics, columnNames);
-//        table.setEnabled(false);
-//
-//        JScrollPane scrollPane = new JScrollPane(table);
-//        scrollPane.setBounds(10, 100, 720, 300);
-//        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS); // 设置垂直滚动条一直显示
-//        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER); // 设置水平滚动条从不显示
-//        scrollPane.setOpaque(false);
-//        scrollPane.getViewport().setOpaque(false);
-//        add(scrollPane);
-
-
 
 
 
@@ -90,6 +72,7 @@ public class LogPanel extends JPanel {
         alterButton.setBounds(320, 20, 90, 25);
         add(alterButton);
         alterButton.addActionListener(e -> cardLayout.show(contentPane, "alter"));
+
 
         //设置背景
         JLabel lblBackground = new JLabel(); // 创建一个标签组件对象
@@ -121,7 +104,7 @@ public class LogPanel extends JPanel {
         v.add(d.getAccount());
         v.add(d.getName());
         v.add(d.getDatetime());
-        v.add(d.getType());
+        v.add(d.getTypeString());
         vd.add(v);
     }
 }
