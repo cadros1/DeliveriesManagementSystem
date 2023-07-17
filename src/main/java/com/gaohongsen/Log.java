@@ -39,7 +39,7 @@ public class Log implements java.io.Serializable{
         return type;
     }
 
-    public String getTpyeString(){
+    public String getTypeString(){
         switch(this.type){
             case 0:
                 return "登录";
