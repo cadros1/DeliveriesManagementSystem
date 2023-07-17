@@ -31,18 +31,14 @@ public class SearchPanel extends JPanel {
         add(confirmSearchButton);
 
 
-        Iterator<Delivery> deliveries;
         // 表格上的title
         String[] columnNames = new String[]{"序号", "单号", "发货地", "收货地", "发件人", "收件人", "物流状态"};
         // 表格中的内容，是一个二维数组
-        String[][] logistics = new String[][]{
-                {"1", "114", "北京", "成都", "张三", "李四", "0"},
-                {"2", "115", "成都", "南京", "李四", "王五", "1"},
-                {"3", "116", "上海", "深圳", "赵六", "孙七", "2"}};
-        JTable table = new JTable(logistics, columnNames);
-        table.setEnabled(false);
+        String[][] logistics = new String[][]{};
+        AtomicReference<JTable> table = new AtomicReference<>(new JTable(logistics, columnNames));
+        table.get().setEnabled(false);
 
-        JScrollPane scrollPane = new JScrollPane(table);
+        JScrollPane scrollPane = new JScrollPane();
         scrollPane.setBounds(10, 100, 720, 300);
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS); // 设置垂直滚动条一直显示
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER); // 设置水平滚动条从不显示
@@ -52,10 +48,10 @@ public class SearchPanel extends JPanel {
 
         confirmSearchButton.addActionListener(e -> {
             try {
-                deliveries=(Iterator<Delivery>)displayDelivery(0);
+                Vector<Delivery> deliveries=displayDelivery(0);
                 JOptionPane.showMessageDialog(null, "查找成功！", "提示", JOptionPane.INFORMATION_MESSAGE);
-                for(int i=0;deliveries.hasNext();i++){
-                    Delivery delivery=deliveries.next();
+                for(int i = 0;i<deliveries.size(); i++){
+                    Delivery delivery= deliveries.get(i);
                     logistics[i][0]=String.valueOf(i+1);
                     logistics[i][1]=String.valueOf(delivery.getId());
                     logistics[i][2]=delivery.getSendPlace();
@@ -63,6 +59,7 @@ public class SearchPanel extends JPanel {
                     logistics[i][4]=delivery.getSender();
                     logistics[i][5]=delivery.getReceiver();
                     logistics[i][6]=String.valueOf(delivery.getSituation());
+                    table.set(new JTable(logistics, columnNames));
                 }
             } catch (Exception exception) {
                 JOptionPane.showMessageDialog(null, exception.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
@@ -108,10 +105,10 @@ public class SearchPanel extends JPanel {
         add(lblBackground); // 将组件添加到面板中
     }
 
-    public Iterator<Delivery> displayDelivery(int id) throws Exception {
+    public Vector<Delivery> displayDelivery(int id) throws Exception {
         Reply reply = (Reply) Client.sendRequest(new Request(8, new Delivery(id)));
         if (reply.hasSucceed()) {
-            return (Iterator<Delivery>)reply.getItem();
+            return (Vector<Delivery>) reply.getItem();
         } else {
             throw (Exception) reply.getItem();
         }
