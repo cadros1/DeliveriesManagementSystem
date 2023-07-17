@@ -9,7 +9,8 @@ package com.gaohongsen;
 
 import javax.swing.*;
 import java.awt.*;
-import javax.swing.JFrame;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 
 public class MainWindow extends JFrame {
@@ -17,6 +18,8 @@ public class MainWindow extends JFrame {
     public static JPanel contentPane;
 
     public static User user = new User(0, "0", "0", 0);
+
+    public static boolean onlineState = false;
 
 
     public MainWindow() {
@@ -43,6 +46,24 @@ public class MainWindow extends JFrame {
 
         // 设置内容面板为窗体的内容面板
         setContentPane(contentPane);
+
+        addWindowListener(new WindowAdapter() {
+
+
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                if(onlineState) {
+                    try {
+                        Reply reply = (Reply) Client.sendRequest(new Request(1, new User(user.getAccount())));
+                        if(!reply.hasSucceed()){
+                            throw (Exception)reply.getItem();
+                        }
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            }
+        });
 
         // 显示窗体
         setVisible(true);

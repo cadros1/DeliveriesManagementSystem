@@ -56,6 +56,7 @@ public class LoginPanel extends JPanel {
                 try {
                     //将登录时的用户名和密码，发送至数据库进行核验
                     user = loginCheck(accountTextField.getText(), String.valueOf(passwordField.getPassword()));
+                    onlineState=true;
                     // 登录成功后显示应用主界面
                     JOptionPane.showMessageDialog(null, "登录成功！", "提示", JOptionPane.INFORMATION_MESSAGE);
                     WelcomePanel welcomePanel = new WelcomePanel(mainWindow);

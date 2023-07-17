@@ -58,6 +58,7 @@ public class PasswordChange extends JFrame {
                             user.getAccount(),
                             String.valueOf(originalPasswordField.getPassword()),
                             String.valueOf(newPasswordField.getPassword()));
+                    onlineState = false;
                     JOptionPane.showMessageDialog(null, "修改成功！", "提示", JOptionPane.INFORMATION_MESSAGE);
                     dispose();
                     cardLayout.show(contentPane, "login");

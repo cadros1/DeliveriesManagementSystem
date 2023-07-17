@@ -84,12 +84,10 @@ public class AlterPanel extends JPanel {
             else {
                 try {
                     Delivery delivery = deleteDelivery(Integer.parseInt(idTextField.getText()));
+                    WelcomePanel welcomePanel = new WelcomePanel(mainWindow);
+                    contentPane.add(welcomePanel, "welcome");
+                    cardLayout.show(contentPane, "alter");
                     JOptionPane.showMessageDialog(null, "删除成功！" , "提示", JOptionPane.INFORMATION_MESSAGE);
-                    senderTextField.setText(null);
-                    receiverTextField.setText(null);
-                    sendPlaceTextField.setText(null);
-                    receivePlaceTextField.setText(null);
-                    situationComboBox.setSelectedIndex(0);
                 } catch (Exception exception) {
                     JOptionPane.showMessageDialog(null, exception.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
                 }
