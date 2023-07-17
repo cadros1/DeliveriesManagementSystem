@@ -1,5 +1,16 @@
 package com.gaohongsen;
 
+/*
+ * 此类对log进行了封装
+ * 实例化对象时请根据需求选择合适的构造方法传入参数，构造方法选择不当将会导致异常
+ * 
+ * @author 高洪森
+ * @param id 日志id，为自增主键
+ * @param name 用户姓名
+ * @param account 用户账号
+ * @param datetime 行为时间
+ * @param type 行为类型，0为登入，1为登出，2为注册，3为修改密码
+ */
 public class Log implements java.io.Serializable{
     private int id;
     private String name;
@@ -47,6 +58,8 @@ public class Log implements java.io.Serializable{
                 return "登出";
             case 2:
                 return "注册";
+            case 3:
+                return "修改密码";
             default:
                 return "未知";
         }

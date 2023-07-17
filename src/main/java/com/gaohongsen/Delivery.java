@@ -1,5 +1,17 @@
 package com.gaohongsen;
 
+/*
+ * 此类对delivery进行了封装
+ * 实例化对象时请根据需求选择合适的构造方法传入参数，构造方法选择不当将会导致异常
+ * 
+ * @author 高洪森
+ * @param id 物流单号，同时也是自增主键，由数据库分配
+ * @param sendPlace 发货地
+ * @param receivePlace 收货地
+ * @param sender 发货人
+ * @param receiver 收货人
+ * @param situation 物流状态，0为未发货，1为已揽收，2为已发货，3为已到货，4为已签收
+ */
 public class Delivery implements java.io.Serializable{
     private int id=0;
     private String sendPlace=null;
