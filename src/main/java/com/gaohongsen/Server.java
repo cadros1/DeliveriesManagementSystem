@@ -171,7 +171,7 @@ class Handler extends Thread{
                 //不传入对象
                 case 8:
                     try{
-                        oos.writeObject(Database.displayDeliveries());
+                        oos.writeObject(new Reply(true,Database.displayDeliveries()));
                         break;
                     }catch(Exception e){
                         oos.writeObject(new Reply(false,e));
