@@ -42,7 +42,7 @@ public class Log implements java.io.Serializable{
     public String getTypeString(){
         switch(this.type){
             case 0:
-                return "登录";
+                return "登入";
             case 1:
                 return "登出";
             case 2:
