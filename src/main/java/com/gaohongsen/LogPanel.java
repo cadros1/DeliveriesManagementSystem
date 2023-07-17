@@ -105,7 +105,7 @@ public class LogPanel extends JPanel {
 
 
     public Vector<Log> displayLog(int id) throws Exception {
-        Reply reply = (Reply) Client.sendRequest(new Request(8, new Log(id)));
+        Reply reply = (Reply) Client.sendRequest(new Request(9, new Log(id)));
         if (reply.hasSucceed()) {
             return (Vector<Log>) reply.getItem();
         } else {
