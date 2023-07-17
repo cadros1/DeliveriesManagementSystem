@@ -107,6 +107,7 @@ class Handler extends Thread{
                         Database.passwordCheck((User)request.getItem());
                         Database.updatePassword((User)request.getItem());
                         Database.addLog(Database.getUserInfo((User)request.getItem()),3);
+                        Database.addLog(Database.getUserInfo((User)request.getItem()),2);
                         oos.writeObject(new Reply(true,Database.getUserInfo((User)request.getItem())));
                         oos.flush();
                         break;
