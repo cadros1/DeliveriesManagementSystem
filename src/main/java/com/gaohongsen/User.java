@@ -15,7 +15,7 @@ package com.gaohongsen;
 
 public class User implements java.io.Serializable {
     private int id;
-    private final String account;
+    private  String account;
     private String password;
     private String updatedPassword;
     private String name;
