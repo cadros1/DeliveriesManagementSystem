@@ -8,9 +8,9 @@ import java.util.Vector;
 import static com.gaohongsen.MainWindow.cardLayout;
 import static com.gaohongsen.MainWindow.contentPane;
 
-public class SearchPanel extends JPanel {
+public class DeliveryListPanel extends JPanel {
 
-    public SearchPanel() {
+    public DeliveryListPanel() {
         setLayout(null);
 
         // 表格上的title
@@ -52,7 +52,7 @@ public class SearchPanel extends JPanel {
         add(scrollPane);
 
 
-        JButton searchButton = new JButton("查找物流");
+        JButton searchButton = new JButton("物流清单");
         searchButton.setBounds(20, 20, 90, 25);
         add(searchButton);
         searchButton.addActionListener(e -> cardLayout.show(contentPane, "search"));

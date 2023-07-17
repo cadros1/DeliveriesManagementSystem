@@ -15,6 +15,10 @@ public class Log implements java.io.Serializable{
         this.type = type;
     }
 
+    public Log(int id){
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }

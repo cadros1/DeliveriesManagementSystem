@@ -12,8 +12,8 @@ public class WelcomePanel extends JPanel {
     public WelcomePanel(MainWindow mainWindow) {
         setLayout(null);
 
-        SearchPanel searchPanel = new SearchPanel();
-        contentPane.add(searchPanel, "search");
+        DeliveryListPanel deliveryListPanel = new DeliveryListPanel();
+        contentPane.add(deliveryListPanel, "search");
         NewPanel newPanel = new NewPanel();
         contentPane.add(newPanel, "new");
         LogPanel logPanel = new LogPanel();
