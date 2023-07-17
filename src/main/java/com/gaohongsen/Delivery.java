@@ -1,12 +1,12 @@
 package com.gaohongsen;
 
 public class Delivery implements java.io.Serializable{
-    private int id;
-    private String sendPlace;
-    private String receivePlace;
-    private String sender;
-    private String receiver;
-    private int situation;
+    private int id=0;
+    private String sendPlace=null;
+    private String receivePlace=null;
+    private String sender=null;
+    private String receiver=null;
+    private int situation=0;
 
     //新增时使用此构造方法
     public Delivery(String sendPlace, String receivePlace, String sender, String receiver, int situation) {

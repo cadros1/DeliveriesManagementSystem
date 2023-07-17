@@ -278,4 +278,22 @@ public class Database {
             }        
         }
     }
+
+    public static Vector<Log> displayLogs()throws SQLException{
+        Vector<Log> logs=new Vector<Log>();
+        if(!hasInitialized){
+            initialize();
+        }
+
+        try(Connection conn=ds.getConnection()){
+            try(PreparedStatement ps=conn.prepareStatement("SELECT * FROM logs order by id desc limit 30")){
+                try(ResultSet rs=ps.executeQuery()){
+                    while(rs.next()){
+                        logs.add(new Log(rs.getInt("id"),rs.getString("name"),rs.getString("account"),rs.getString("datetime"),rs.getInt("type")));
+                    }
+                    return logs;
+                }
+            }        
+        }
+    }
 }
