@@ -38,4 +38,17 @@ public class Log implements java.io.Serializable{
     public int getType() {
         return type;
     }
+
+    public String getTpyeString(){
+        switch(this.type){
+            case 0:
+                return "登录";
+            case 1:
+                return "登出";
+            case 2:
+                return "注册";
+            default:
+                return "未知";
+        }
+    }
 }
