@@ -7,7 +7,7 @@ import static com.gaohongsen.MainWindow.*;
 
 public class NewPanel extends JPanel {
 
-    public NewPanel() {
+    public NewPanel(MainWindow mainWindow) {
         setLayout(null);
 
         JLabel titleLabel = new JLabel("新建物流信息");
@@ -69,7 +69,10 @@ public class NewPanel extends JPanel {
                             senderTextField.getText(),
                             receiverTextField.getText(),
                             situationComboBox.getSelectedIndex());
-                    JOptionPane.showMessageDialog(null, "新建成功！\n单号：" + delivery.getId(), "提示", JOptionPane.INFORMATION_MESSAGE);
+                    WelcomePanel welcomePanel = new WelcomePanel(mainWindow);
+                    contentPane.add(welcomePanel, "welcome");
+                    cardLayout.show(contentPane, "new");
+                    JOptionPane.showMessageDialog(null, "新建成功！\n单号：" + delivery.getId()+"\n物流清单已更新", "提示", JOptionPane.INFORMATION_MESSAGE);
                 } catch (Exception exception) {
                     JOptionPane.showMessageDialog(null, exception.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
                 }
@@ -96,6 +99,7 @@ public class NewPanel extends JPanel {
         alterButton.setBounds(320, 20, 90, 25);
         add(alterButton);
         alterButton.addActionListener(e -> cardLayout.show(contentPane, "alter"));
+
 
         //设置背景
         JLabel lblBackground = new JLabel(); // 创建一个标签组件对象

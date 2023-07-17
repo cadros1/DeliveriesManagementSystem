@@ -12,13 +12,13 @@ public class WelcomePanel extends JPanel {
     public WelcomePanel(MainWindow mainWindow) {
         setLayout(null);
 
-        DeliveryListPanel deliveryListPanel = new DeliveryListPanel();
+        DeliveryListPanel deliveryListPanel = new DeliveryListPanel(mainWindow);
         contentPane.add(deliveryListPanel, "search");
-        NewPanel newPanel = new NewPanel();
+        NewPanel newPanel = new NewPanel(mainWindow);
         contentPane.add(newPanel, "new");
-        LogPanel logPanel = new LogPanel();
+        LogPanel logPanel = new LogPanel(mainWindow);
         contentPane.add(logPanel, "log");
-        AlterPanel alterPanel = new AlterPanel();
+        AlterPanel alterPanel = new AlterPanel(mainWindow);
         contentPane.add(alterPanel, "alter");
 
         Font font = new Font("宋体", Font.PLAIN, 80);//创建1个字体实例
@@ -92,6 +92,7 @@ public class WelcomePanel extends JPanel {
         alterButton.setBounds(320, 20, 90, 25);
         add(alterButton);
         alterButton.addActionListener(e -> cardLayout.show(contentPane, "alter"));
+
 
         //设置背景
         JLabel lblBackground = new JLabel(); // 创建一个标签组件对象
