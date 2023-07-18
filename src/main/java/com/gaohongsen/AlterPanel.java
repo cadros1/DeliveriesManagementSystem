@@ -2,9 +2,10 @@ package com.gaohongsen;
 
 import javax.swing.*;
 import java.net.URL;
+import java.util.Objects;
 
-import static com.gaohongsen.MainWindow.cardLayout;
-import static com.gaohongsen.MainWindow.contentPane;
+import static com.gaohongsen.MainWindow.*;
+import static com.gaohongsen.MainWindow.user;
 
 public class AlterPanel extends JPanel {
 
@@ -58,12 +59,12 @@ public class AlterPanel extends JPanel {
         inquireDeliveryButton.setBounds(200, 50, 80, 25);
         add(inquireDeliveryButton);
         inquireDeliveryButton.addActionListener(e -> {
-            if (idTextField.getText().length() > 12 || idTextField.getText()==null)
+            if (idTextField.getText().length() > 12 || idTextField.getText() == null)
                 JOptionPane.showMessageDialog(null, "单号长度错误！", "错误", JOptionPane.ERROR_MESSAGE);
             else {
                 try {
                     Delivery delivery = inquireDelivery(Integer.parseInt(idTextField.getText()));
-                    JOptionPane.showMessageDialog(null, "查找成功！" , "提示", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "查找成功！", "提示", JOptionPane.INFORMATION_MESSAGE);
                     senderTextField.setText(delivery.getSender());
                     receiverTextField.setText(delivery.getReceiver());
                     sendPlaceTextField.setText(delivery.getSendPlace());
@@ -79,7 +80,7 @@ public class AlterPanel extends JPanel {
         deleteButton.setBounds(10, 170, 80, 25);
         add(deleteButton);
         deleteButton.addActionListener(e -> {
-            if (idTextField.getText().length() > 12 || idTextField.getText()==null)
+            if (idTextField.getText().length() > 12 || idTextField.getText() == null)
                 JOptionPane.showMessageDialog(null, "单号长度错误！", "错误", JOptionPane.ERROR_MESSAGE);
             else {
                 try {
@@ -87,7 +88,7 @@ public class AlterPanel extends JPanel {
                     WelcomePanel welcomePanel = new WelcomePanel(mainWindow);
                     contentPane.add(welcomePanel, "welcome");
                     cardLayout.show(contentPane, "alter");
-                    JOptionPane.showMessageDialog(null, "删除成功！" , "提示", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "删除成功！", "提示", JOptionPane.INFORMATION_MESSAGE);
                 } catch (Exception exception) {
                     JOptionPane.showMessageDialog(null, exception.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
                 }
@@ -98,7 +99,9 @@ public class AlterPanel extends JPanel {
         confirmButton.setBounds(300, 170, 80, 25);
         add(confirmButton);
         confirmButton.addActionListener(e -> {
-            if (sendPlaceTextField.getText().length() > 12 || sendPlaceTextField.getText().length() < 2)
+            if (Objects.equals(idTextField.getText(), ""))
+                JOptionPane.showMessageDialog(null, "请输入单号！", "错误", JOptionPane.ERROR_MESSAGE);
+            else if (sendPlaceTextField.getText().length() > 12 || sendPlaceTextField.getText().length() < 2)
                 JOptionPane.showMessageDialog(null, "发货地长度错误！", "错误", JOptionPane.ERROR_MESSAGE);
             else if (receivePlaceTextField.getText().length() > 12 || receivePlaceTextField.getText().length() < 2)
                 JOptionPane.showMessageDialog(null, "收货地长度错误！", "错误", JOptionPane.ERROR_MESSAGE);
@@ -110,24 +113,16 @@ public class AlterPanel extends JPanel {
                 JOptionPane.showMessageDialog(null, "请选择物流状态！", "错误", JOptionPane.ERROR_MESSAGE);
             else {
                 try {
-                    Delivery delivery = alterDelivery(
-                            Integer.parseInt(idTextField.getText()),
-                            sendPlaceTextField.getText(),
-                            receivePlaceTextField.getText(),
-                            senderTextField.getText(),
-                            senderTextField.getText(),
-                            situationComboBox.getSelectedIndex()
-                    );
+                    Delivery delivery = alterDelivery(Integer.parseInt(idTextField.getText()), sendPlaceTextField.getText(), receivePlaceTextField.getText(), senderTextField.getText(), senderTextField.getText(), situationComboBox.getSelectedIndex());
                     WelcomePanel welcomePanel = new WelcomePanel(mainWindow);
                     contentPane.add(welcomePanel, "welcome");
                     cardLayout.show(contentPane, "alter");
-                    JOptionPane.showMessageDialog(null, "修改成功！\n物流清单已更新" , "提示", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "修改成功！\n物流清单已更新", "提示", JOptionPane.INFORMATION_MESSAGE);
                 } catch (Exception exception) {
                     JOptionPane.showMessageDialog(null, exception.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
-
 
 
         JButton searchButton = new JButton("物流清单");
@@ -138,30 +133,44 @@ public class AlterPanel extends JPanel {
         JButton newButton = new JButton("新建物流");
         newButton.setBounds(120, 20, 90, 25);
         add(newButton);
-        newButton.addActionListener(e -> cardLayout.show(contentPane, "new"));
+        newButton.addActionListener(e -> {
+                    if (user.getPermission() == 1)
+                        JOptionPane.showMessageDialog(null, "权限不足！", "错误", JOptionPane.ERROR_MESSAGE);
+                    else cardLayout.show(contentPane, "new");
+                }
+        );
 
         JButton logButton = new JButton("日志");
         logButton.setBounds(220, 20, 90, 25);
         add(logButton);
-        logButton.addActionListener(e -> cardLayout.show(contentPane, "log"));
+        logButton.addActionListener(e -> {
+                    if (user.getPermission() == 1||user.getPermission()==2)
+                        JOptionPane.showMessageDialog(null, "权限不足！", "错误", JOptionPane.ERROR_MESSAGE);
+                    else cardLayout.show(contentPane, "log");
+                }
+        );
 
         JButton alterButton = new JButton("删改物流");
         alterButton.setBounds(320, 20, 90, 25);
         add(alterButton);
-        alterButton.addActionListener(e -> cardLayout.show(contentPane, "alter"));
+        alterButton.addActionListener(e -> {
+                    if (user.getPermission() == 1)
+                        JOptionPane.showMessageDialog(null, "权限不足！", "错误", JOptionPane.ERROR_MESSAGE);
+                    else cardLayout.show(contentPane, "alter");
+                }
+        );
 
 
         //设置背景
         JLabel lblBackground = new JLabel(); // 创建一个标签组件对象
         URL resource = this.getClass().getResource("/WhiteLine.jpg"); // 获取背景图片路径
         ImageIcon icon = null; // 创建背景图片对象
-        if (resource != null)
-            icon = new ImageIcon(resource);
+        if (resource != null) icon = new ImageIcon(resource);
         lblBackground.setIcon(icon); // 设置标签组件要显示的图标
-        if (icon != null)
-            lblBackground.setBounds(0, 0, icon.getIconWidth(), icon.getIconHeight()); // 设置组件的显示位置及大小
+        if (icon != null) lblBackground.setBounds(0, 0, icon.getIconWidth(), icon.getIconHeight()); // 设置组件的显示位置及大小
         add(lblBackground); // 将组件添加到面板中
     }
+
     public Delivery inquireDelivery(int id) throws Exception {
         Reply reply = (Reply) Client.sendRequest(new Request(5, new Delivery(id)));
         if (reply.hasSucceed()) {
@@ -180,8 +189,8 @@ public class AlterPanel extends JPanel {
         }
     }
 
-    public Delivery alterDelivery(int id,String sendPlace, String receivePlace, String sender, String receiver, int situation) throws Exception {
-        Reply reply = (Reply) Client.sendRequest(new Request(7, new Delivery(id,sendPlace,receivePlace,sender,receiver,situation)));
+    public Delivery alterDelivery(int id, String sendPlace, String receivePlace, String sender, String receiver, int situation) throws Exception {
+        Reply reply = (Reply) Client.sendRequest(new Request(7, new Delivery(id, sendPlace, receivePlace, sender, receiver, situation)));
         if (reply.hasSucceed()) {
             return (Delivery) reply.getItem();
         } else {
