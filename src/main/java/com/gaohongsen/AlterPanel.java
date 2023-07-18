@@ -2,9 +2,10 @@ package com.gaohongsen;
 
 import javax.swing.*;
 import java.net.URL;
+import java.util.Objects;
 
-import static com.gaohongsen.MainWindow.cardLayout;
-import static com.gaohongsen.MainWindow.contentPane;
+import static com.gaohongsen.MainWindow.*;
+import static com.gaohongsen.MainWindow.user;
 
 public class AlterPanel extends JPanel {
 
@@ -98,7 +99,9 @@ public class AlterPanel extends JPanel {
         confirmButton.setBounds(300, 170, 80, 25);
         add(confirmButton);
         confirmButton.addActionListener(e -> {
-            if (sendPlaceTextField.getText().length() > 12 || sendPlaceTextField.getText().length() < 2)
+            if (Objects.equals(idTextField.getText(), ""))
+                JOptionPane.showMessageDialog(null, "请输入单号！", "错误", JOptionPane.ERROR_MESSAGE);
+            else if (sendPlaceTextField.getText().length() > 12 || sendPlaceTextField.getText().length() < 2)
                 JOptionPane.showMessageDialog(null, "发货地长度错误！", "错误", JOptionPane.ERROR_MESSAGE);
             else if (receivePlaceTextField.getText().length() > 12 || receivePlaceTextField.getText().length() < 2)
                 JOptionPane.showMessageDialog(null, "收货地长度错误！", "错误", JOptionPane.ERROR_MESSAGE);
@@ -130,17 +133,32 @@ public class AlterPanel extends JPanel {
         JButton newButton = new JButton("新建物流");
         newButton.setBounds(120, 20, 90, 25);
         add(newButton);
-        newButton.addActionListener(e -> cardLayout.show(contentPane, "new"));
+        newButton.addActionListener(e -> {
+                    if (user.getPermission() == 1)
+                        JOptionPane.showMessageDialog(null, "权限不足！", "错误", JOptionPane.ERROR_MESSAGE);
+                    else cardLayout.show(contentPane, "new");
+                }
+        );
 
         JButton logButton = new JButton("日志");
         logButton.setBounds(220, 20, 90, 25);
         add(logButton);
-        logButton.addActionListener(e -> cardLayout.show(contentPane, "log"));
+        logButton.addActionListener(e -> {
+                    if (user.getPermission() == 1||user.getPermission()==2)
+                        JOptionPane.showMessageDialog(null, "权限不足！", "错误", JOptionPane.ERROR_MESSAGE);
+                    else cardLayout.show(contentPane, "log");
+                }
+        );
 
         JButton alterButton = new JButton("删改物流");
         alterButton.setBounds(320, 20, 90, 25);
         add(alterButton);
-        alterButton.addActionListener(e -> cardLayout.show(contentPane, "alter"));
+        alterButton.addActionListener(e -> {
+                    if (user.getPermission() == 1)
+                        JOptionPane.showMessageDialog(null, "权限不足！", "错误", JOptionPane.ERROR_MESSAGE);
+                    else cardLayout.show(contentPane, "alter");
+                }
+        );
 
 
         //设置背景

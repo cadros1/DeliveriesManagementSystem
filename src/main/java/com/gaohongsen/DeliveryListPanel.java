@@ -5,8 +5,8 @@ import javax.swing.table.DefaultTableModel;
 import java.net.URL;
 import java.util.Vector;
 
-import static com.gaohongsen.MainWindow.cardLayout;
-import static com.gaohongsen.MainWindow.contentPane;
+import static com.gaohongsen.MainWindow.*;
+import static com.gaohongsen.MainWindow.user;
 
 public class DeliveryListPanel extends JPanel {
 
@@ -60,17 +60,32 @@ public class DeliveryListPanel extends JPanel {
         JButton newButton = new JButton("新建物流");
         newButton.setBounds(120, 20, 90, 25);
         add(newButton);
-        newButton.addActionListener(e -> cardLayout.show(contentPane, "new"));
+        newButton.addActionListener(e -> {
+                    if (user.getPermission() == 1)
+                        JOptionPane.showMessageDialog(null, "权限不足！", "错误", JOptionPane.ERROR_MESSAGE);
+                    else cardLayout.show(contentPane, "new");
+                }
+        );
 
         JButton logButton = new JButton("日志");
         logButton.setBounds(220, 20, 90, 25);
         add(logButton);
-        logButton.addActionListener(e -> cardLayout.show(contentPane, "log"));
+        logButton.addActionListener(e -> {
+                    if (user.getPermission() == 1||user.getPermission()==2)
+                        JOptionPane.showMessageDialog(null, "权限不足！", "错误", JOptionPane.ERROR_MESSAGE);
+                    else cardLayout.show(contentPane, "log");
+                }
+        );
 
         JButton alterButton = new JButton("删改物流");
         alterButton.setBounds(320, 20, 90, 25);
         add(alterButton);
-        alterButton.addActionListener(e -> cardLayout.show(contentPane, "alter"));
+        alterButton.addActionListener(e -> {
+                    if (user.getPermission() == 1)
+                        JOptionPane.showMessageDialog(null, "权限不足！", "错误", JOptionPane.ERROR_MESSAGE);
+                    else cardLayout.show(contentPane, "alter");
+                }
+        );
 
 
         //设置背景
