@@ -302,6 +302,7 @@ public class Database {
         }
     }
 
+    //此方法用于导出最近30条物流信息到Excel表格
     public static void outputDeliveries()throws Exception{
         if(!hasInitialized){
             initialize();
@@ -342,6 +343,7 @@ public class Database {
         workbook.close();
     }
 
+    //此方法用于导出最近30条日志信息到Excel表格
     public static void outputLogs()throws Exception{
         if(!hasInitialized){
             initialize();

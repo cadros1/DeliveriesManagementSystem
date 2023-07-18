@@ -10,6 +10,7 @@ import java.net.*;
  * 完成请求后将返回一个封装后的Reply对象，包含了是否成功的布尔值，可能还有带有数据的对象，如果不成功，将会返回一个异常
  * 请求类型如下：0-登入，1-登出，2-注册，3-修改密码，4-添加一条物流信息,5-按单号查找一条物流信息,
  *              6-按id删除一条物流信息,7-修改一条物流信息,8-显示最近30条物流信息,9-显示最近30条日志信息
+ *              10-导出物流信息,11-导出日志信息
  * 
  * @author 高洪森
  */
@@ -193,6 +194,8 @@ class Handler extends Thread{
                         break;
                     }
 
+                //请求为导出物流信息
+                //不传入对象
                 case 10:
                     try{
                         Database.outputDeliveries();
@@ -203,7 +206,9 @@ class Handler extends Thread{
                         oos.flush();
                         break;
                     }
-
+                
+                //请求为导出日志
+                //不传入对象
                 case 11:
                     try{
                         Database.outputLogs();
