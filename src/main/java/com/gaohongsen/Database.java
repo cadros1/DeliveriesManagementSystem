@@ -1,8 +1,12 @@
 package com.gaohongsen;
 
+import java.io.FileOutputStream;
 import java.sql.*;
 import java.util.*;
 import javax.sql.*;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import com.zaxxer.hikari.*;
 
 /*
@@ -260,7 +264,7 @@ public class Database {
         }
     }
 
-    //此方法用于获取最近30条所有物流信息，将会返回一个Iterator<Delivery>对象
+    //此方法用于获取最近30条所有物流信息，将会返回一个Vector<Delivery>对象
     public static Vector<Delivery> displayDeliveries()throws SQLException{
         Vector<Delivery> deliveries=new Vector<Delivery>();
         if(!hasInitialized){
@@ -279,6 +283,7 @@ public class Database {
         }
     }
 
+    //此方法用于获取最近30条所有日志信息，将会返回一个Vector<Log>对象
     public static Vector<Log> displayLogs()throws SQLException{
         Vector<Log> logs=new Vector<Log>();
         if(!hasInitialized){
@@ -295,5 +300,83 @@ public class Database {
                 }
             }        
         }
+    }
+
+    public static void outputDeliveries()throws Exception{
+        if(!hasInitialized){
+            initialize();
+        }
+
+        String path="C:\\Users\\16272\\Desktop\\";
+
+        Workbook workbook=new XSSFWorkbook();
+        Sheet sheet=workbook.createSheet("物流信息");
+        Row row0=sheet.createRow(0);
+        row0.createCell(0).setCellValue("单号");
+        row0.createCell(1).setCellValue("发货地");
+        row0.createCell(2).setCellValue("收货地");
+        row0.createCell(3).setCellValue("发货人");
+        row0.createCell(4).setCellValue("收货人");
+        row0.createCell(5).setCellValue("状态");
+
+        try(Connection conn=ds.getConnection()){
+            try(PreparedStatement ps=conn.prepareStatement("SELECT * FROM deliveries order by id desc limit 30")){
+                try(ResultSet rs=ps.executeQuery()){
+                    int row=1;
+                    while(rs.next()){
+                        Row r=sheet.createRow(row);
+                        r.createCell(0).setCellValue(rs.getInt("id"));
+                        r.createCell(1).setCellValue(rs.getString("sendplace"));
+                        r.createCell(2).setCellValue(rs.getString("receiveplace"));
+                        r.createCell(3).setCellValue(rs.getString("sender"));
+                        r.createCell(4).setCellValue(rs.getString("receiver"));
+                        r.createCell(5).setCellValue(rs.getInt("situation"));
+                        row++;
+                    }
+                }
+            }
+        }
+        FileOutputStream fos=new FileOutputStream(path+"物流信息.xlsx");
+        workbook.write(fos);
+        fos.close();
+        workbook.close();
+    }
+
+    public static void outputLogs()throws Exception{
+        if(!hasInitialized){
+            initialize();
+        }
+
+        String path="C:\\Users\\16272\\Desktop\\";
+
+        Workbook workbook=new XSSFWorkbook();
+        Sheet sheet=workbook.createSheet("日志信息");
+        Row row0=sheet.createRow(0);
+        row0.createCell(0).setCellValue("编号");
+        row0.createCell(1).setCellValue("姓名");
+        row0.createCell(2).setCellValue("账号");
+        row0.createCell(3).setCellValue("时间");
+        row0.createCell(4).setCellValue("类型");
+
+        try(Connection conn=ds.getConnection()){
+            try(PreparedStatement ps=conn.prepareStatement("SELECT * FROM logs order by id desc limit 30")){
+                try(ResultSet rs=ps.executeQuery()){
+                    int row=1;
+                    while(rs.next()){
+                        Row r=sheet.createRow(row);
+                        r.createCell(0).setCellValue(rs.getInt("id"));
+                        r.createCell(1).setCellValue(rs.getString("name"));
+                        r.createCell(2).setCellValue(rs.getString("account"));
+                        r.createCell(3).setCellValue(rs.getString("datetime"));
+                        r.createCell(4).setCellValue(rs.getInt("type"));
+                        row++;
+                    }
+                }
+            }
+        }
+        FileOutputStream fos=new FileOutputStream(path+"日志信息.xlsx");
+        workbook.write(fos);
+        fos.close();
+        workbook.close();
     }
 }

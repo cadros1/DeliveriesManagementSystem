@@ -192,6 +192,28 @@ class Handler extends Thread{
                         oos.flush();
                         break;
                     }
+
+                case 10:
+                    try{
+                        Database.outputDeliveries();
+                        oos.writeObject(new Reply(true,null));
+                        break;
+                    }catch(Exception e){
+                        oos.writeObject(new Reply(false,e));
+                        oos.flush();
+                        break;
+                    }
+
+                case 11:
+                    try{
+                        Database.outputLogs();
+                        oos.writeObject(new Reply(true,null));
+                        break;
+                    }catch(Exception e){
+                        oos.writeObject(new Reply(false,e));
+                        oos.flush();
+                        break;
+                    }
             }
         }
     }
