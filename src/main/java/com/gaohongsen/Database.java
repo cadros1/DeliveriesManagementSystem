@@ -331,7 +331,7 @@ public class Database {
                         r.createCell(2).setCellValue(rs.getString("receiveplace"));
                         r.createCell(3).setCellValue(rs.getString("sender"));
                         r.createCell(4).setCellValue(rs.getString("receiver"));
-                        r.createCell(5).setCellValue(rs.getInt("situation"));
+                        r.createCell(5).setCellValue(Delivery.turnToString(rs.getInt("situation")));
                         row++;
                     }
                 }
@@ -370,7 +370,7 @@ public class Database {
                         r.createCell(1).setCellValue(rs.getString("name"));
                         r.createCell(2).setCellValue(rs.getString("account"));
                         r.createCell(3).setCellValue(rs.getString("datetime"));
-                        r.createCell(4).setCellValue(rs.getInt("type"));
+                        r.createCell(4).setCellValue(Log.turnToString(rs.getInt("type")));
                         row++;
                     }
                 }

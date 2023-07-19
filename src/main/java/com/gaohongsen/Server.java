@@ -154,7 +154,7 @@ class Handler extends Thread{
                 case 6:
                     try{
                         Database.deleteDelivery((Delivery)request.getItem());
-                        Database.addLog(currentUser,5);
+                        Database.addLog(currentUser,6);
                         oos.writeObject(new Reply(true,null));
                         break;
                     }catch(Exception e){

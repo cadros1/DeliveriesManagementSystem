@@ -80,7 +80,25 @@ public class Delivery implements java.io.Serializable{
                 return "已到货";
             case (5):
                 return "已签收";
+            default:
+                return "无可查询状态";
         }
-        return "无可查询状态";
+    }
+
+    public static String turnToString(int situation){
+        switch (situation) {
+            case (1):
+                return "未发货";
+            case (2):
+                return "已揽收";
+            case (3):
+                return "已发货";
+            case (4):
+                return "已到货";
+            case (5):
+                return "已签收";
+            default:
+                return "无可查询状态";
+        }
     }
 }
