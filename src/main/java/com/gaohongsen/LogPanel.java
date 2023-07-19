@@ -21,7 +21,7 @@ public class LogPanel extends JPanel {
                         exportExcel(0);
                         JOptionPane.showMessageDialog(null, "导出成功！", "提示", JOptionPane.INFORMATION_MESSAGE);
                     } catch (Exception ex) {
-                        throw new RuntimeException(ex);
+                        JOptionPane.showMessageDialog(null, ex.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
                     }
                 }
         );
