@@ -8,8 +8,8 @@ package com.gaohongsen;
  * @param item 请求的内容，为一个对象，具体内容由type决定
  */
 public class Request implements java.io.Serializable{
-    private int type;
-    private Object item;
+    private final int type;
+    private final Object item;
 
     public Request(int type,Object item){
         this.type=type;
@@ -17,10 +17,10 @@ public class Request implements java.io.Serializable{
     }
 
     public int getType(){
-        return type;
+        return this.type;
     }
 
     public Object getItem(){
-        return item;
+        return this.item;
     }
 }

@@ -162,6 +162,7 @@ public class Database {
         }
     }
 
+
     //此方法用于更新用户密码，需要传入带account,password，updatedPassword的user对象
     //如果出错，则抛出一个SQLException
     public static void updatePassword(final User user)throws SQLException{
@@ -181,6 +182,7 @@ public class Database {
             }
         }
     }
+
 
     //此方法用于添加一条快递信息，需要传入带sendplace,receiveplace,sender,receiver,situation的delivery对象
     public static Delivery addDelivery(final Delivery delivery)throws SQLException{
@@ -207,6 +209,7 @@ public class Database {
         }
     }
 
+
     //此方法用于获取快递信息，需要传入带id的delivery对象
     //将会返回带id,sendplace,receiveplace,sender,receiver,situation的delivery对象
     //如果出错，则抛出一个SQLException
@@ -231,6 +234,7 @@ public class Database {
         }
     }
 
+
     //此方法用于修改一条物流的信息，需要传入带id的delivery对象
     public static void updateDelivery(final Delivery delivery)throws SQLException{
         if(!hasInitialized){
@@ -250,6 +254,7 @@ public class Database {
         }
     }
 
+
     //此方法用于删除一条物流的信息，需要传入带id的delivery对象
     public static void deleteDelivery(final Delivery delivery)throws SQLException{
         if(!hasInitialized){
@@ -263,6 +268,7 @@ public class Database {
             }
         }
     }
+
 
     //此方法用于获取最近30条所有物流信息，将会返回一个Vector<Delivery>对象
     public static Vector<Delivery> displayDeliveries()throws SQLException{
@@ -283,6 +289,7 @@ public class Database {
         }
     }
 
+
     //此方法用于获取最近30条所有日志信息，将会返回一个Vector<Log>对象
     public static Vector<Log> displayLogs()throws SQLException{
         Vector<Log> logs=new Vector<Log>();
@@ -301,6 +308,7 @@ public class Database {
             }        
         }
     }
+
 
     //此方法用于导出最近30条物流信息到Excel表格
     public static void outputDeliveries()throws Exception{
@@ -343,6 +351,7 @@ public class Database {
         workbook.close();
     }
 
+
     //此方法用于导出最近30条日志信息到Excel表格
     public static void outputLogs()throws Exception{
         if(!hasInitialized){
@@ -381,6 +390,7 @@ public class Database {
         fos.close();
         workbook.close();
     }
+
 
     //此方法用于注销账号
     public static void deleteUser(final User user)throws SQLException{

@@ -50,6 +50,8 @@ public class Log implements java.io.Serializable{
         return type;
     }
 
+    //将type转换为String
+    //提供给持有对象的情况下使用
     public String getTypeString(){
         switch(this.type){
             case 0:
@@ -73,6 +75,8 @@ public class Log implements java.io.Serializable{
         }
     }
 
+    //将type转换为String
+    //提供给不持有对象的情况下使用
     public static String turnToString(int type){
         switch(type){
             case 0:
