@@ -117,7 +117,7 @@ public class AlterPanel extends JPanel {
                 JOptionPane.showMessageDialog(null, "请选择物流状态！", "错误", JOptionPane.ERROR_MESSAGE);
             else {
                 try {
-                    Delivery delivery = alterDelivery(Integer.parseInt(idTextField.getText()), sendPlaceTextField.getText(), receivePlaceTextField.getText(), senderTextField.getText(), senderTextField.getText(), situationComboBox.getSelectedIndex());
+                    Delivery delivery = alterDelivery(Integer.parseInt(idTextField.getText()), sendPlaceTextField.getText(), receivePlaceTextField.getText(), senderTextField.getText(), receiverTextField.getText(), situationComboBox.getSelectedIndex());
                     WelcomePanel welcomePanel = new WelcomePanel(mainWindow);
                     contentPane.add(welcomePanel, "welcome");
                     cardLayout.show(contentPane, "alter");
