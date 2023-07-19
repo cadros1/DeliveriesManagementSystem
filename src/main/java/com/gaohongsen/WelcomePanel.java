@@ -145,13 +145,10 @@ public class WelcomePanel extends JPanel {
         }
     }
 
-    public User logOut(String account) throws Exception {
+    public void logOut(String account) throws Exception {
         //将注销时的用户名，发送至数据库进行核验
         Reply reply = (Reply) Client.sendRequest(new Request(12, new User(account)));
-        if (reply.hasSucceed()) {
-            return (User) reply.getItem();
-        } else {
+        if (!reply.hasSucceed())
             throw (Exception) reply.getItem();
-        }
     }
 }
