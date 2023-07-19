@@ -63,7 +63,30 @@ public class Log implements java.io.Serializable{
             case 4:
                 return "新建物流";
             case 5:
-                return "删改物流";
+                return "修改物流";
+            case 6:
+                return "删除物流";
+            default:
+                return "未知";
+        }
+    }
+
+    public static String turnToString(int type){
+        switch(type){
+            case 0:
+                return "登入";
+            case 1:
+                return "登出";
+            case 2:
+                return "注册";
+            case 3:
+                return "修改密码";
+            case 4:
+                return "新建物流";
+            case 5:
+                return "修改物流";
+            case 6:
+                return "删除物流";
             default:
                 return "未知";
         }
