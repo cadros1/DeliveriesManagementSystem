@@ -63,6 +63,18 @@ public class WelcomePanel extends JPanel {
         JM1.add(JMI3);//添加到菜单
         JMI3.addActionListener(e -> new PasswordChange());
 
+        JMenuItem JMI4 = new JMenuItem("注销账户");//创建一个菜单项
+        JM1.add(JMI4);//添加到菜单
+        JMI4.addActionListener(e -> {
+            try {
+                logOut(user.getAccount());
+                JOptionPane.showMessageDialog(null, "注销成功！", "提示", JOptionPane.INFORMATION_MESSAGE);
+                cardLayout.show(contentPane, "login");
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
         JMenu JM2 = new JMenu("帮助");//创建一个子菜单
         JMB.add(JM2);//添加到菜单栏
 
@@ -126,6 +138,16 @@ public class WelcomePanel extends JPanel {
     public User exitCheck(String account) throws Exception {
         //将登出时的用户名，发送至数据库进行核验
         Reply reply = (Reply) Client.sendRequest(new Request(1, new User(account)));
+        if (reply.hasSucceed()) {
+            return (User) reply.getItem();
+        } else {
+            throw (Exception) reply.getItem();
+        }
+    }
+
+    public User logOut(String account) throws Exception {
+        //将注销时的用户名，发送至数据库进行核验
+        Reply reply = (Reply) Client.sendRequest(new Request(12, new User(account)));
         if (reply.hasSucceed()) {
             return (User) reply.getItem();
         } else {
