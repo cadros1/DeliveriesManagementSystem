@@ -138,12 +138,16 @@ public class RegisterPanel extends JPanel {
         });
         // 添加返回按钮的点击事件处理逻辑
         backToLoginButton.addActionListener(e -> {
+            //重置验证码
+            changeVerify(imgVerifyLabel);
+            //清空输入框的数据
             accountTextField.setText(null);
             nameTextField.setText(null);
             passwordField.setText(null);
             confirmPasswordField.setText(null);
             permissionComboBox.setSelectedIndex(0);
             verifyTextField.setText(null);
+            // 返回登录界面
             cardLayout.show(contentPane, "login");
         });
         // 添加切换验证码按钮的点击事件处理逻辑

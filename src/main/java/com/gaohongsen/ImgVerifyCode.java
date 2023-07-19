@@ -1,21 +1,16 @@
 package com.gaohongsen;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.Random;
 
 public class ImgVerifyCode {
 
-    private int weight = 100;           //验证码图片的长和宽
-    private int height = 40;
+    private final int weight = 100;           //验证码图片的长和宽
+    private final int height = 40;
     private String text;                //用来保存验证码的文本内容
-    private Random r = new Random();    //获取随机数对象
-    private String[] fontNames = {"宋体", "华文楷体", "黑体", "微软雅黑", "楷体_GB2312"};   //字体数组
-    //验证码数组
-    private String codes = "23456789abcdefghjkmnopqrstuvwxyzABCDEFGHJKMNPQRSTUVWXYZ";
+    private final Random r = new Random();    //获取随机数对象
+    private final String[] fontNames = {"宋体", "华文楷体", "黑体", "微软雅黑", "楷体_GB2312"};   //字体数组
 
     /**
      * 获取随机的颜色
@@ -42,6 +37,8 @@ public class ImgVerifyCode {
      * 获取随机字符
      */
     private char randomChar() {
+        //验证码数组
+        String codes = "23456789abcdefghjkmnopqrstuvwxyzABCDEFGHJKMNPQRSTUVWXYZ";
         int index = r.nextInt(codes.length());
         return codes.charAt(index);
     }
@@ -86,7 +83,7 @@ public class ImgVerifyCode {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < 4; i++)             //画四个字符即可
         {
-            String s = randomChar() + "";      //随机生成字符，因为只有画字符串的方法，没有画字符的方法，所以需要将字符变成字符串再画
+            String s = String.valueOf(randomChar());      //随机生成字符，因为只有画字符串的方法，没有画字符的方法，所以需要将字符变成字符串再画
             sb.append(s);                      //添加到StringBuilder里面
             float x = i * 1.0F * weight / 4;   //定义字符的x坐标
             g.setFont(randomFont());           //设置字体，随机
@@ -105,8 +102,4 @@ public class ImgVerifyCode {
         return text;
     }
 
-    public static void output(BufferedImage image, OutputStream out) throws IOException                  //将验证码图片写出的方法
-    {
-        ImageIO.write(image, "JPEG", out);
-    }
 }

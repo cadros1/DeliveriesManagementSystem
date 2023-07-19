@@ -107,6 +107,8 @@ public class LoginPanel extends JPanel {
             accountTextField.setText(null);
             passwordField.setText(null);
             verifyTextField.setText(null);
+            //重置验证码
+            changeVerify(imgVerifyLabel);
             //显示注册页面
             cardLayout.show(contentPane, "register");
         });
