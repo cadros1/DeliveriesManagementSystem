@@ -52,6 +52,8 @@ class Handler extends Thread{
     }
 
     private void handle(InputStream input,OutputStream output)throws IOException,ClassNotFoundException{
+        User currentUser=null;
+
         ois=new ObjectInputStream(input);
         oos=new ObjectOutputStream(output);
         for(;;){
@@ -62,9 +64,9 @@ class Handler extends Thread{
                 case 0:
                     try{
                         Database.passwordCheck((User)request.getItem());
-                        User replyUser=Database.getUserInfo((User)request.getItem());
-                        Database.addLog(replyUser,0);
-                        oos.writeObject(new Reply(true,replyUser));
+                        currentUser=Database.getUserInfo((User)request.getItem());
+                        Database.addLog(currentUser,0);
+                        oos.writeObject(new Reply(true,currentUser));
                         oos.flush();
                         break;
                     }catch(Exception e){
@@ -78,6 +80,7 @@ class Handler extends Thread{
                 case 1:
                     try{
                         Database.addLog(Database.getUserInfo((User)request.getItem()),1);
+                        currentUser=null;
                         oos.writeObject(new Reply(true,null));
                         oos.flush();
                         break;
@@ -107,9 +110,9 @@ class Handler extends Thread{
                     try{
                         Database.passwordCheck((User)request.getItem());
                         Database.updatePassword((User)request.getItem());
-                        Database.addLog(Database.getUserInfo((User)request.getItem()),3);
-                        Database.addLog(Database.getUserInfo((User)request.getItem()),1);
-                        oos.writeObject(new Reply(true,Database.getUserInfo((User)request.getItem())));
+                        Database.addLog(currentUser,3);
+                        Database.addLog(currentUser,1);
+                        oos.writeObject(new Reply(true,currentUser));
                         oos.flush();
                         break;
                     }catch(Exception e){
@@ -122,7 +125,9 @@ class Handler extends Thread{
                 //将会传入包含sendplace、receiveplace、sender、receiver、situation的delivery对象
                 case 4:
                     try{
-                        oos.writeObject(new Reply(true,Database.addDelivery((Delivery)request.getItem())));
+                        Delivery d=Database.addDelivery((Delivery)request.getItem());
+                        Database.addLog(currentUser,4);
+                        oos.writeObject(new Reply(true,d));
                         oos.flush();
                         break;
                     }catch(Exception e){
@@ -149,6 +154,7 @@ class Handler extends Thread{
                 case 6:
                     try{
                         Database.deleteDelivery((Delivery)request.getItem());
+                        Database.addLog(currentUser,5);
                         oos.writeObject(new Reply(true,null));
                         break;
                     }catch(Exception e){
@@ -162,6 +168,7 @@ class Handler extends Thread{
                 case 7:
                     try{
                         Database.updateDelivery((Delivery)request.getItem());
+                        Database.addLog(currentUser,5);
                         oos.writeObject(new Reply(true,null));
                         break;
                     }catch(Exception e){

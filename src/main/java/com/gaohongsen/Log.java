@@ -60,6 +60,10 @@ public class Log implements java.io.Serializable{
                 return "注册";
             case 3:
                 return "修改密码";
+            case 4:
+                return "新建物流";
+            case 5:
+                return "删改物流";
             default:
                 return "未知";
         }
