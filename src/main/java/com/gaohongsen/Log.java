@@ -12,7 +12,7 @@ package com.gaohongsen;
  * @param type 行为类型，0为登入，1为登出，2为注册，3为修改密码
  */
 public class Log implements java.io.Serializable{
-    private int id;
+    private final int id;
     private String name;
     private String account;
     private String datetime;
@@ -44,10 +44,6 @@ public class Log implements java.io.Serializable{
 
     public String getDatetime() {
         return datetime;
-    }
-
-    public int getType() {
-        return type;
     }
 
     //将type转换为String

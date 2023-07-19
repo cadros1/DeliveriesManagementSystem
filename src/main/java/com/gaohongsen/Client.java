@@ -58,7 +58,6 @@ public class Client {
     private static Reply handle(final Request request)throws IOException,ClassNotFoundException{
         oos.writeObject(request);
         oos.flush();
-        Reply s=(Reply)ois.readObject();
-        return s;
+        return (Reply)ois.readObject();
     }
 }

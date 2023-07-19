@@ -12,11 +12,11 @@ public class WelcomePanel extends JPanel {
     public WelcomePanel(MainWindow mainWindow) {
         setLayout(null);
 
-        DeliveryListPanel deliveryListPanel = new DeliveryListPanel(mainWindow);
+        DeliveryListPanel deliveryListPanel = new DeliveryListPanel();
         contentPane.add(deliveryListPanel, "search");
         NewPanel newPanel = new NewPanel(mainWindow);
         contentPane.add(newPanel, "new");
-        LogPanel logPanel = new LogPanel(mainWindow);
+        LogPanel logPanel = new LogPanel();
         contentPane.add(logPanel, "log");
         AlterPanel alterPanel = new AlterPanel(mainWindow);
         contentPane.add(alterPanel, "alter");

@@ -10,7 +10,7 @@ import static com.gaohongsen.MainWindow.user;
 
 public class LogPanel extends JPanel {
 
-    public LogPanel(MainWindow mainWindow) {
+    public LogPanel() {
         setLayout(null);
 
         JButton exportExcelButton = new JButton("导出EXCEL");

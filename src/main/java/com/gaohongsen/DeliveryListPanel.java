@@ -10,7 +10,7 @@ import static com.gaohongsen.MainWindow.user;
 
 public class DeliveryListPanel extends JPanel {
 
-    public DeliveryListPanel(MainWindow mainWindow) {
+    public DeliveryListPanel() {
         setLayout(null);
 
         JButton exportExcelButton = new JButton("导出EXCEL");
