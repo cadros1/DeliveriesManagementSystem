@@ -17,10 +17,10 @@ public class Reply implements java.io.Serializable {
     }
 
     public boolean hasSucceed() {
-        return hasSucceed;
+        return this.hasSucceed;
     }
 
     public Object getItem() {
-        return item;
+        return this.item;
     }
 }

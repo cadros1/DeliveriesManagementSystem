@@ -57,35 +57,39 @@ public class User implements java.io.Serializable {
     }
 
     public int getId() {
-        return id;
+        return this.id;
     }
 
     public String getAccount() {
-        return account;
+        return this.account;
     }
 
     public String getPassword() {
-        return password;
+        return this.password;
     }
 
     public String getUpdatedPassword() {
-        return updatedPassword;
+        return this.updatedPassword;
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public int getPermission() {
-        return permission;
+        return this.permission;
     }
 
     public String getPermissionString() {
-        if (permission == 1)
-            return "用户";
-        else if (permission == 2)
-            return "工作人员";
-        else
-            return "管理员";
+        switch(this.permission) {
+            case 0:
+                return "客户";
+            case 1:
+                return "普通员工";
+            case 2:
+                return "管理员";
+            default:
+                return "未知";
+        }
     }
 }

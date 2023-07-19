@@ -68,6 +68,8 @@ public class Delivery implements java.io.Serializable{
         return situation;
     }
 
+    //将int类型的situation转换为String类型
+    //提供给持有对象的情况下使用
     public String getSituationString() {
         switch (situation) {
             case (1):
@@ -85,6 +87,8 @@ public class Delivery implements java.io.Serializable{
         }
     }
 
+    //将int类型的situation转换为String类型
+    //提供给不持有对象的情况下使用
     public static String turnToString(int situation){
         switch (situation) {
             case (1):
