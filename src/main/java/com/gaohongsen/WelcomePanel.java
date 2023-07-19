@@ -68,6 +68,7 @@ public class WelcomePanel extends JPanel {
         JMI4.addActionListener(e -> {
             try {
                 logOut(user.getAccount());
+                onlineState = false;
                 JOptionPane.showMessageDialog(null, "注销成功！", "提示", JOptionPane.INFORMATION_MESSAGE);
                 cardLayout.show(contentPane, "login");
             } catch (Exception ex) {
