@@ -82,11 +82,11 @@ public class User implements java.io.Serializable {
 
     public String getPermissionString() {
         switch(this.permission) {
-            case 0:
-                return "客户";
             case 1:
-                return "普通员工";
+                return "客户";
             case 2:
+                return "普通员工";
+            case 3:
                 return "管理员";
             default:
                 return "未知";
