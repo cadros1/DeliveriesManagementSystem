@@ -6,7 +6,7 @@ import java.net.URL;
 import static com.gaohongsen.MainWindow.*;
 
 public class RegisterPanel extends JPanel {
-
+    public static String verifyCode;
     public RegisterPanel() {
         setLayout(null);
         // 初始化界面组件和布局
@@ -52,13 +52,35 @@ public class RegisterPanel extends JPanel {
         permissionComboBox.setBounds(320, 140, 160, 25);
         add(permissionComboBox);
 
+        JLabel verifyLabel = new JLabel("验证码");
+        verifyLabel.setBounds(240, 170, 80, 25);
+        add(verifyLabel);
+
+        JTextField verifyTextField = new JTextField();
+        verifyTextField.setBounds(320, 170, 160, 25);
+        add(verifyTextField);
+
+        JButton changeVerifyButton = new JButton("切换验证码");
+        changeVerifyButton.setBounds(380, 200, 100, 25);
+        add(changeVerifyButton);
+
         JButton backToLoginButton = new JButton("返回");
-        backToLoginButton.setBounds(260, 220, 80, 25);
+        backToLoginButton.setBounds(260, 260, 80, 25);
         add(backToLoginButton);
 
         JButton confirmRegisterButton = new JButton("确认注册");
-        confirmRegisterButton.setBounds(370, 220, 80, 25);
+        confirmRegisterButton.setBounds(370, 260, 80, 25);
         add(confirmRegisterButton);
+
+        // 设置图片验证码
+        JLabel imgVerifyLabel = new JLabel(); // 创建一个标签组件对象
+        ImgVerifyCode imgVerifyCode = new ImgVerifyCode();
+        ImageIcon img = new ImageIcon(imgVerifyCode.getImage()); // 创建验证码图片对象
+        imgVerifyLabel.setIcon(img); // 设置标签组件要显示的图标
+        imgVerifyLabel.setBounds(250, 205, img.getIconWidth(), img.getIconHeight()); // 设置组件的显示位置及大小
+        add(imgVerifyLabel); // 将组件添加到面板中
+
+        verifyCode = imgVerifyCode.getText();
 
         // 设置背景
         JLabel lblBackground = new JLabel(); // 创建一个标签组件对象
@@ -85,6 +107,10 @@ public class RegisterPanel extends JPanel {
                 JOptionPane.showMessageDialog(null, "前后密码不同！", "错误", JOptionPane.ERROR_MESSAGE);
             else if (permissionComboBox.getSelectedIndex() == 0)
                 JOptionPane.showMessageDialog(null, "请选择账户权限！", "错误", JOptionPane.ERROR_MESSAGE);
+            else if (!verifyTextField.getText().equals(verifyCode)) {
+                JOptionPane.showMessageDialog(null, "验证码错误！", "错误", JOptionPane.ERROR_MESSAGE);
+                changeVerify(imgVerifyLabel);
+            }
             else {
                 try {
                     user = registerCheck(accountTextField.getText(),
@@ -92,6 +118,12 @@ public class RegisterPanel extends JPanel {
                             nameTextField.getText(),
                             permissionComboBox.getSelectedIndex());
                     JOptionPane.showMessageDialog(null, "注册成功！", "提示", JOptionPane.INFORMATION_MESSAGE);
+                    accountTextField.setText(null);
+                    nameTextField.setText(null);
+                    passwordField.setText(null);
+                    confirmPasswordField.setText(null);
+                    permissionComboBox.setSelectedIndex(0);
+                    verifyTextField.setText(null);
                     cardLayout.show(contentPane, "login");
                 } catch (Exception exception) {
                     JOptionPane.showMessageDialog(null, exception.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
@@ -99,7 +131,17 @@ public class RegisterPanel extends JPanel {
             }
         });
         // 添加返回按钮的点击事件处理逻辑
-        backToLoginButton.addActionListener(e -> cardLayout.show(contentPane, "login"));
+        backToLoginButton.addActionListener(e -> {
+            accountTextField.setText(null);
+            nameTextField.setText(null);
+            passwordField.setText(null);
+            confirmPasswordField.setText(null);
+            permissionComboBox.setSelectedIndex(0);
+            verifyTextField.setText(null);
+            cardLayout.show(contentPane, "login");
+        });
+        // 添加切换验证码按钮的点击事件处理逻辑
+        changeVerifyButton.addActionListener(e -> changeVerify(imgVerifyLabel));
     }
 
     public User registerCheck(String account, String password, String name, int permission) throws Exception {
@@ -122,5 +164,12 @@ public class RegisterPanel extends JPanel {
             }
         }
         return true;
+    }
+
+    public void changeVerify(JLabel L){
+        ImgVerifyCode i = new ImgVerifyCode();
+        ImageIcon img = new ImageIcon(i.getImage()); // 创建新验证码图片对象
+        L.setIcon(img); // 设置标签组件要显示的图标
+        verifyCode=i.getText();
     }
 }
