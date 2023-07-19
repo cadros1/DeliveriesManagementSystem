@@ -95,8 +95,13 @@ public class NewPanel extends JPanel {
                 }
         );
 
+        JButton alterButton = new JButton("查找物流");
+        alterButton.setBounds(220, 20, 90, 25);
+        add(alterButton);
+        alterButton.addActionListener(e -> cardLayout.show(contentPane, "alter"));
+
         JButton logButton = new JButton("日志");
-        logButton.setBounds(220, 20, 90, 25);
+        logButton.setBounds(320, 20, 90, 25);
         add(logButton);
         logButton.addActionListener(e -> {
                     if (user.getPermission() == 1||user.getPermission()==2)
@@ -104,12 +109,6 @@ public class NewPanel extends JPanel {
                     else cardLayout.show(contentPane, "log");
                 }
         );
-
-        JButton alterButton = new JButton("删改物流");
-        alterButton.setBounds(320, 20, 90, 25);
-        add(alterButton);
-        alterButton.addActionListener(e -> cardLayout.show(contentPane, "alter"));
-
 
         //设置背景
         JLabel lblBackground = new JLabel(); // 创建一个标签组件对象
