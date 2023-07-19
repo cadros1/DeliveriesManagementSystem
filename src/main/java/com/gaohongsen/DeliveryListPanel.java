@@ -13,6 +13,19 @@ public class DeliveryListPanel extends JPanel {
     public DeliveryListPanel(MainWindow mainWindow) {
         setLayout(null);
 
+        JButton exportExcelButton = new JButton("导出EXCEL");
+        exportExcelButton.setBounds(600,50,120,25);
+        add(exportExcelButton);
+        exportExcelButton.addActionListener(e -> {
+                    try {
+                        exportExcel(0);
+                        JOptionPane.showMessageDialog(null, "导出成功！", "提示", JOptionPane.INFORMATION_MESSAGE);
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+        );
+
         // 表格上的title
         Vector<String> vh = new Vector<>();
         vh.add("序号");
@@ -105,6 +118,12 @@ public class DeliveryListPanel extends JPanel {
         } else {
             throw (Exception) reply.getItem();
         }
+    }
+
+    public void exportExcel(int id) throws Exception{
+        Reply reply = (Reply) Client.sendRequest(new Request(10,new Delivery(id)));
+        if (!reply.hasSucceed())
+            throw (Exception) reply.getItem();
     }
 
     public void addLine(int line, Vector<Delivery> deliveries, Vector<Vector<Object>> vd) {

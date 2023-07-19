@@ -93,6 +93,7 @@ public class LoginPanel extends JPanel {
                     cardLayout.show(contentPane, "welcome");
                 } catch (Exception exception) {
                     JOptionPane.showMessageDialog(null, exception.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
+                    changeVerify(imgVerifyLabel);
                 }
             }
         });
