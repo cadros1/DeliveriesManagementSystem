@@ -16,11 +16,8 @@ import java.awt.event.WindowEvent;
 public class MainWindow extends JFrame {
     public static CardLayout cardLayout;
     public static JPanel contentPane;
-
     public static User user = new User(0, "0", "0", 0);
-
     public static boolean onlineState = false;
-
 
     public MainWindow() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -36,7 +33,6 @@ public class MainWindow extends JFrame {
         LoginPanel loginPanel = new LoginPanel(this);
         RegisterPanel registerPanel = new RegisterPanel();
 
-
         // 添加面板到内容面板
         contentPane.add(loginPanel, "login");
         contentPane.add(registerPanel, "register");
@@ -48,8 +44,6 @@ public class MainWindow extends JFrame {
         setContentPane(contentPane);
 
         addWindowListener(new WindowAdapter() {
-
-
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
                 if(onlineState) {
@@ -64,7 +58,6 @@ public class MainWindow extends JFrame {
                 }
             }
         });
-
         // 显示窗体
         setVisible(true);
     }

@@ -46,7 +46,6 @@ public class LoginPanel extends JPanel {
         registerButton.setBounds(370, 230, 80, 25);
         add(registerButton);
 
-
         // 设置图片验证码
         JLabel imgVerifyLabel = new JLabel(); // 创建一个标签组件对象
         ImgVerifyCode imgVerifyCode = new ImgVerifyCode();
@@ -74,7 +73,7 @@ public class LoginPanel extends JPanel {
                 JOptionPane.showMessageDialog(null, "用户名长度错误！", "错误", JOptionPane.ERROR_MESSAGE);
             else if (passwordField.getPassword().length > 12 || passwordField.getPassword().length < 2)
                 JOptionPane.showMessageDialog(null, "密码长度错误！", "错误", JOptionPane.ERROR_MESSAGE);
-            else if (!verifyTextField.getText().equals(verifyCode)) {
+            else if (!verifyTextField.getText().equalsIgnoreCase(verifyCode)) {
                 JOptionPane.showMessageDialog(null, "验证码错误！", "错误", JOptionPane.ERROR_MESSAGE);
                 changeVerify(imgVerifyLabel);
             }
@@ -83,25 +82,32 @@ public class LoginPanel extends JPanel {
                     //将登录时的用户名和密码，发送至数据库进行核验
                     user = loginCheck(accountTextField.getText(), String.valueOf(passwordField.getPassword()));
                     onlineState=true;
-                    // 登录成功后显示应用主界面
                     JOptionPane.showMessageDialog(null, "登录成功！", "提示", JOptionPane.INFORMATION_MESSAGE);
+                    //重置验证码
+                    changeVerify(imgVerifyLabel);
+                    //清空输入框的数据
                     accountTextField.setText(null);
                     passwordField.setText(null);
                     verifyTextField.setText(null);
+                    // 登录成功后显示应用主界面
                     WelcomePanel welcomePanel = new WelcomePanel(mainWindow);
                     contentPane.add(welcomePanel, "welcome");
                     cardLayout.show(contentPane, "welcome");
                 } catch (Exception exception) {
+                    //登陆失败时显示失败原因
                     JOptionPane.showMessageDialog(null, exception.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
+                    //重置验证码
                     changeVerify(imgVerifyLabel);
                 }
             }
         });
         // 添加注册按钮的点击事件处理逻辑
         registerButton.addActionListener(e -> {
+            //清空登陆时的输入框数据
             accountTextField.setText(null);
             passwordField.setText(null);
             verifyTextField.setText(null);
+            //显示注册页面
             cardLayout.show(contentPane, "register");
         });
         // 添加切换验证码按钮的点击事件处理逻辑

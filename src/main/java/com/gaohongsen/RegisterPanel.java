@@ -8,8 +8,8 @@ import static com.gaohongsen.MainWindow.*;
 public class RegisterPanel extends JPanel {
     public static String verifyCode;
     public RegisterPanel() {
-        setLayout(null);
         // 初始化界面组件和布局
+        setLayout(null);
 
         JLabel accountLabel = new JLabel("用户名:");
         accountLabel.setBounds(240, 20, 80, 25);
@@ -79,7 +79,6 @@ public class RegisterPanel extends JPanel {
         imgVerifyLabel.setIcon(img); // 设置标签组件要显示的图标
         imgVerifyLabel.setBounds(250, 205, img.getIconWidth(), img.getIconHeight()); // 设置组件的显示位置及大小
         add(imgVerifyLabel); // 将组件添加到面板中
-
         verifyCode = imgVerifyCode.getText();
 
         // 设置背景
@@ -107,7 +106,7 @@ public class RegisterPanel extends JPanel {
                 JOptionPane.showMessageDialog(null, "前后密码不同！", "错误", JOptionPane.ERROR_MESSAGE);
             else if (permissionComboBox.getSelectedIndex() == 0)
                 JOptionPane.showMessageDialog(null, "请选择账户权限！", "错误", JOptionPane.ERROR_MESSAGE);
-            else if (!verifyTextField.getText().equals(verifyCode)) {
+            else if (!verifyTextField.getText().equalsIgnoreCase(verifyCode)) {
                 JOptionPane.showMessageDialog(null, "验证码错误！", "错误", JOptionPane.ERROR_MESSAGE);
                 changeVerify(imgVerifyLabel);
             }
@@ -118,15 +117,22 @@ public class RegisterPanel extends JPanel {
                             nameTextField.getText(),
                             permissionComboBox.getSelectedIndex());
                     JOptionPane.showMessageDialog(null, "注册成功！", "提示", JOptionPane.INFORMATION_MESSAGE);
+                    //重置验证码
+                    changeVerify(imgVerifyLabel);
+                    //清空输入框的数据
                     accountTextField.setText(null);
                     nameTextField.setText(null);
                     passwordField.setText(null);
                     confirmPasswordField.setText(null);
                     permissionComboBox.setSelectedIndex(0);
                     verifyTextField.setText(null);
+                    // 注册成功后显示登录界面
                     cardLayout.show(contentPane, "login");
                 } catch (Exception exception) {
+                    //注册失败时显示失败原因
                     JOptionPane.showMessageDialog(null, exception.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
+                    //重置验证码
+                    changeVerify(imgVerifyLabel);
                 }
             }
         });
