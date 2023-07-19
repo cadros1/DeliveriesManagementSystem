@@ -23,8 +23,7 @@ public class LogPanel extends JPanel {
                     } catch (Exception ex) {
                         JOptionPane.showMessageDialog(null, ex.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
                     }
-                }
-        );
+                });
 
         // 表格上的title
         Vector<String> vh = new Vector<>();
@@ -62,10 +61,6 @@ public class LogPanel extends JPanel {
         scrollPane.getViewport().setOpaque(false);
         add(scrollPane);
 
-
-
-
-
         JButton searchButton = new JButton("物流清单");
         searchButton.setBounds(20, 20, 90, 25);
         add(searchButton);
@@ -94,13 +89,7 @@ public class LogPanel extends JPanel {
         JButton alterButton = new JButton("删改物流");
         alterButton.setBounds(320, 20, 90, 25);
         add(alterButton);
-        alterButton.addActionListener(e -> {
-                    if (user.getPermission() == 1)
-                        JOptionPane.showMessageDialog(null, "权限不足！", "错误", JOptionPane.ERROR_MESSAGE);
-                    else cardLayout.show(contentPane, "alter");
-                }
-        );
-
+        alterButton.addActionListener(e -> cardLayout.show(contentPane, "alter"));
 
         //设置背景
         JLabel lblBackground = new JLabel(); // 创建一个标签组件对象
@@ -113,7 +102,6 @@ public class LogPanel extends JPanel {
             lblBackground.setBounds(0, 0, icon.getIconWidth(), icon.getIconHeight()); // 设置组件的显示位置及大小
         add(lblBackground); // 将组件添加到面板中
     }
-
 
     public Vector<Log> displayLog(int id) throws Exception {
         Reply reply = (Reply) Client.sendRequest(new Request(9, new Log(id)));

@@ -115,12 +115,7 @@ public class WelcomePanel extends JPanel {
         JButton alterButton = new JButton("删改物流");
         alterButton.setBounds(320, 20, 90, 25);
         add(alterButton);
-        alterButton.addActionListener(e -> {
-                    if (user.getPermission() == 1)
-                        JOptionPane.showMessageDialog(null, "权限不足！", "错误", JOptionPane.ERROR_MESSAGE);
-                    else cardLayout.show(contentPane, "alter");
-                }
-        );
+        alterButton.addActionListener(e -> cardLayout.show(contentPane, "alter"));
 
 
         //设置背景

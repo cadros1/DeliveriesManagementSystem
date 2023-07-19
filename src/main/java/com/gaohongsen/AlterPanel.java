@@ -80,7 +80,9 @@ public class AlterPanel extends JPanel {
         deleteButton.setBounds(10, 170, 80, 25);
         add(deleteButton);
         deleteButton.addActionListener(e -> {
-            if (idTextField.getText().length() > 12 || idTextField.getText() == null)
+            if (user.getPermission() == 1||user.getPermission()==2)
+                JOptionPane.showMessageDialog(null, "权限不足！", "错误", JOptionPane.ERROR_MESSAGE);
+            else if (idTextField.getText().length() > 12 || idTextField.getText() == null)
                 JOptionPane.showMessageDialog(null, "单号长度错误！", "错误", JOptionPane.ERROR_MESSAGE);
             else {
                 try {
@@ -99,7 +101,9 @@ public class AlterPanel extends JPanel {
         confirmButton.setBounds(300, 170, 80, 25);
         add(confirmButton);
         confirmButton.addActionListener(e -> {
-            if (Objects.equals(idTextField.getText(), ""))
+            if (user.getPermission() == 1||user.getPermission()==2)
+                JOptionPane.showMessageDialog(null, "权限不足！", "错误", JOptionPane.ERROR_MESSAGE);
+            else if (Objects.equals(idTextField.getText(), ""))
                 JOptionPane.showMessageDialog(null, "请输入单号！", "错误", JOptionPane.ERROR_MESSAGE);
             else if (sendPlaceTextField.getText().length() > 12 || sendPlaceTextField.getText().length() < 2)
                 JOptionPane.showMessageDialog(null, "发货地长度错误！", "错误", JOptionPane.ERROR_MESSAGE);
@@ -153,12 +157,7 @@ public class AlterPanel extends JPanel {
         JButton alterButton = new JButton("删改物流");
         alterButton.setBounds(320, 20, 90, 25);
         add(alterButton);
-        alterButton.addActionListener(e -> {
-                    if (user.getPermission() == 1)
-                        JOptionPane.showMessageDialog(null, "权限不足！", "错误", JOptionPane.ERROR_MESSAGE);
-                    else cardLayout.show(contentPane, "alter");
-                }
-        );
+        alterButton.addActionListener(e -> cardLayout.show(contentPane, "alter"));
 
 
         //设置背景
