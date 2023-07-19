@@ -226,6 +226,21 @@ class Handler extends Thread{
                         oos.flush();
                         break;
                     }
+                
+                //请求为删除用户
+                case 12:
+                    try{
+                        Database.deleteUser(currentUser);
+                        Database.addLog(currentUser,7);
+                        currentUser=null;
+                        oos.writeObject(new Reply(true,null));
+                        oos.flush();
+                        break;
+                    }catch(Exception e){
+                        oos.writeObject(new Reply(false,e));
+                        oos.flush();
+                        break;
+                    }
             }
         }
     }

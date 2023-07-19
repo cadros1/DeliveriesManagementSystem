@@ -25,7 +25,7 @@ public class Client {
 
         Reply reply=handle(request);
 
-        if(request.getType()==1){
+        if(request.getType()==1||request.getType()==12){
             disconnected();
         }
         return reply;

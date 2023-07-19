@@ -381,4 +381,18 @@ public class Database {
         fos.close();
         workbook.close();
     }
+
+    //此方法用于注销账号
+    public static void deleteUser(final User user)throws SQLException{
+        if(!hasInitialized){
+            initialize();
+        }
+
+        try(Connection conn=ds.getConnection()){
+            try(PreparedStatement ps=conn.prepareStatement("DELETE FROM users WHERE id=?")){
+                ps.setInt(1,user.getId());
+                ps.executeUpdate();
+            }
+        }
+    }
 }

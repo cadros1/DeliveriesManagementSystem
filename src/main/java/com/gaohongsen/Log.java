@@ -87,6 +87,8 @@ public class Log implements java.io.Serializable{
                 return "修改物流";
             case 6:
                 return "删除物流";
+            case 7:
+                return "注销账号";
             default:
                 return "未知";
         }
