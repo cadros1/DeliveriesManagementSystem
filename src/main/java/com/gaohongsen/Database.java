@@ -27,7 +27,7 @@ public class Database {
     private Database(){}
 
 
-    //此方法用于初始化数据库连接池，只可调用一次，后续调用无效果
+    //此方法用于初始化Hikari连接池，只可调用一次，后续调用无效果
     private static void initialize(){
         if(hasInitialized){
             return;
