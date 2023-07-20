@@ -113,7 +113,7 @@ public class LogPanel extends JPanel {
     }
 
     public void exportExcel(int id) throws Exception{
-        Reply reply = (Reply) Client.sendRequest(new Request(10,new Log(id)));
+        Reply reply = (Reply) Client.sendRequest(new Request(11,new Log(id)));
         if (!reply.hasSucceed())
             throw (Exception) reply.getItem();
     }
