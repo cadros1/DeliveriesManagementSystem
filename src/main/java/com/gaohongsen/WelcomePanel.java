@@ -83,7 +83,7 @@ public class WelcomePanel extends JPanel {
         JM2.add(JMI5);//添加到菜单
         JMI5.addActionListener(e -> JOptionPane.showMessageDialog(null, "version1.0", "版本信息", JOptionPane.INFORMATION_MESSAGE));
         JMenuItem JMI6 = new JMenuItem("关于我们");//创建一个菜单项
-        JM2.add(JMI6);//添加到菜单
+        JM2.add(JMI6);//添加到菜单.
         JMI6.addActionListener(e -> JOptionPane.showMessageDialog(null, "BY高洪森&李祖怡（SCU）\n联系方式：lizuyi@scu.edu.cn", "关于我们", JOptionPane.INFORMATION_MESSAGE));
 
 
