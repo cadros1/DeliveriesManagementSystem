@@ -1,7 +1,7 @@
 package com.gaohongsen;
 
-/*
- * 此类对delivery进行了封装
+/**
+ * 此类对delivery进行了封装<p>
  * 实例化对象时请根据需求选择合适的构造方法传入参数，构造方法选择不当将会导致异常
  * 
  * @author 高洪森

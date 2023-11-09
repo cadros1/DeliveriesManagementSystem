@@ -9,11 +9,9 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.zaxxer.hikari.*;
 
-/*
- * 此类提供了对数据库的访问功能
- * 当前功能：按账号查询名字，按账号查询用户所有信息，新增用户，登录检查，新增日志，更改密码，添加一条物流信息，修改物流信息
- * 所有方法均为静态方法，不需要实例化对象
- * 使用了Hikari连接池
+/**
+ * 此类提供了对数据库的访问功能<p>
+ * 当前功能：按账号查询名字，按账号查询用户所有信息，新增用户，登录检查，新增日志，更改密码，添加一条物流信息，修改物流信息<p>
  * 
  * @author 高洪森
  */
@@ -23,11 +21,15 @@ public class Database {
     private static DataSource ds;
     private static boolean hasInitialized=false;
 
-    //不允许实例化对象
+    /**
+     * 不允许实例化对象
+     */
     private Database(){}
 
 
-    //此方法用于初始化Hikari连接池，只可调用一次，后续调用无效果
+    /**
+     * 此方法用于初始化Hikari连接池，只可调用一次，后续调用无效果
+     */
     private static void initialize(){
         if(hasInitialized){
             return;
@@ -45,8 +47,10 @@ public class Database {
     }
     
 
-    //此方法根据账号查询用户姓名，并返回姓名。需要传入account参数
-    //如果出现错误如查询出错、账号不存在等，均抛出SQLException
+    /**
+     * 此方法根据账号查询用户姓名，并返回姓名。需要传入account参数<p>
+     * 如果出现错误如查询出错、账号不存在等，均抛出SQLException
+     */
     public static String getUserName(final User user)throws SQLException{
         String name;
         try(Connection conn=ds.getConnection()){
@@ -65,8 +69,10 @@ public class Database {
     }
 
 
-    //此方法根据账号查询用户信息，并返回带有id/account/name/permission的user对象。需要传入带有account的user对象
-    //如果出现错误如查询出错、账号不存在等，均抛出SQLException
+    /**
+     * 此方法根据账号查询用户信息，并返回带有id/account/name/permission的user对象。需要传入带有account的user对象<p>
+     * 如果出现错误如查询出错、账号不存在等，均抛出SQLException
+     */
     public static User getUserInfo(final User user)throws SQLException{
         int id;
         String name;
@@ -87,8 +93,10 @@ public class Database {
     }
 
 
-    //此方法用于在users表中新增一个用户，需要传入带account,password,name,permission的user对象
-    //如果传入的account已经存在，则抛出一个SQLException
+    /**
+     * 此方法用于在users表中新增一个用户，需要传入带account,password,name,permission的user对象<p>
+     * 如果传入的account已经存在，则抛出一个SQLException
+     */
     public static void addUser(final User user)throws SQLException{
         //如果未初始化，则进行一次初始化
         if(!hasInitialized){
@@ -118,8 +126,10 @@ public class Database {
     }
 
 
-    //此方法用于检查用户是否存在以及密码是否正确，需要传入带account,password的user对象
-    //如果传入的account不存在或者account与password不匹配，则抛出一个SQLException
+    /**
+     * 此方法用于检查用户是否存在以及密码是否正确，需要传入带account,password的user对象<p>
+     * 如果传入的account不存在或者account与password不匹配，则抛出一个SQLException
+     */
     public static void passwordCheck(final User user)throws SQLException{
         //如果未初始化，则进行一次初始化
         if(!hasInitialized){
@@ -144,7 +154,9 @@ public class Database {
     }
 
 
-    //此方法向logs表中添加一条内容为name,account,time,type的日志，需要传入带name,account的user对象和type，time由程序获取系统时间填充
+    /**
+     * 此方法向logs表中添加一条内容为name,account,time,type的日志，需要传入带name,account的user对象和type，time由程序获取系统时间填充
+     */
     public static void addLog(final User user,int type)throws SQLException{
         //如果未初始化，则进行一次初始化
         if(!hasInitialized){
@@ -163,8 +175,10 @@ public class Database {
     }
 
 
-    //此方法用于更新用户密码，需要传入带account,password，updatedPassword的user对象
-    //如果出错，则抛出一个SQLException
+    /**
+     * 此方法用于更新用户密码，需要传入带account,password，updatedPassword的user对象
+     * 如果出错，则抛出一个SQLException
+     */
     public static void updatePassword(final User user)throws SQLException{
         //如果未初始化，则进行一次初始化
         if(!hasInitialized){
@@ -184,7 +198,9 @@ public class Database {
     }
 
 
-    //此方法用于添加一条快递信息，需要传入带sendplace,receiveplace,sender,receiver,situation的delivery对象
+    /**
+     * 此方法用于添加一条快递信息，需要传入带sendplace,receiveplace,sender,receiver,situation的delivery对象
+     */
     public static Delivery addDelivery(final Delivery delivery)throws SQLException{
         if(!hasInitialized){
             initialize();
@@ -210,9 +226,10 @@ public class Database {
     }
 
 
-    //此方法用于获取快递信息，需要传入带id的delivery对象
-    //将会返回带id,sendplace,receiveplace,sender,receiver,situation的delivery对象
-    //如果出错，则抛出一个SQLException
+    /**此方法用于获取快递信息，需要传入带id的delivery对象<p>
+     * 将会返回带id,sendplace,receiveplace,sender,receiver,situation的delivery对象<p>
+     * 如果出错，则抛出一个SQLException
+     */
     public static Delivery getDeliveryInfo(final Delivery delivery)throws SQLException{
         if(!hasInitialized){
             initialize();
@@ -235,7 +252,9 @@ public class Database {
     }
 
 
-    //此方法用于修改一条物流的信息，需要传入带id的delivery对象
+    /**
+     * 此方法用于修改一条物流的信息，需要传入带id的delivery对象
+     */
     public static void updateDelivery(final Delivery delivery)throws SQLException{
         if(!hasInitialized){
             initialize();
@@ -255,7 +274,9 @@ public class Database {
     }
 
 
-    //此方法用于删除一条物流的信息，需要传入带id的delivery对象
+    /**
+     * 此方法用于删除一条物流的信息，需要传入带id的delivery对象
+     */
     public static void deleteDelivery(final Delivery delivery)throws SQLException{
         if(!hasInitialized){
             initialize();
@@ -270,7 +291,9 @@ public class Database {
     }
 
 
-    //此方法用于获取最近30条所有物流信息，将会返回一个Vector<Delivery>对象
+    /**
+     * 此方法用于获取最近30条所有物流信息，将会返回一个Vector<Delivery>对象
+     */
     public static Vector<Delivery> displayDeliveries()throws SQLException{
         Vector<Delivery> deliveries=new Vector<Delivery>();
         if(!hasInitialized){
@@ -290,7 +313,9 @@ public class Database {
     }
 
 
-    //此方法用于获取最近30条所有日志信息，将会返回一个Vector<Log>对象
+    /**
+     * 此方法用于获取最近30条所有日志信息，将会返回一个Vector<Log>对象
+     */
     public static Vector<Log> displayLogs()throws SQLException{
         Vector<Log> logs=new Vector<Log>();
         if(!hasInitialized){
@@ -310,7 +335,9 @@ public class Database {
     }
 
 
-    //此方法用于导出最近30条物流信息到Excel表格
+    /**
+     * 此方法用于导出最近30条物流信息到Excel表格
+     */
     public static void outputDeliveries()throws Exception{
         if(!hasInitialized){
             initialize();
@@ -352,7 +379,9 @@ public class Database {
     }
 
 
-    //此方法用于导出最近30条日志信息到Excel表格
+    /**
+     * 此方法用于导出最近30条日志信息到Excel表格
+     */
     public static void outputLogs()throws Exception{
         if(!hasInitialized){
             initialize();
@@ -392,7 +421,9 @@ public class Database {
     }
 
 
-    //此方法用于注销账号
+    /**
+     * 此方法用于注销账号
+     */
     public static void deleteUser(final User user)throws SQLException{
         if(!hasInitialized){
             initialize();

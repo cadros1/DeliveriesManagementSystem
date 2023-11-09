@@ -1,7 +1,7 @@
 package com.gaohongsen;
 
-/*
- * 此类对user进行了封装
+/**
+ * 此类对user进行了封装<p>
  * 实例化对象时请根据需求选择合适的构造方法传入参数，构造方法选择不当将会导致异常
  *
  * @author 高洪森
@@ -12,7 +12,6 @@ package com.gaohongsen;
  * @param name 用户姓名
  * @param permission 用户权限，0为客户，1为普通员工，2为管理员
  */
-
 public class User implements java.io.Serializable {
     private int id;
     private  String account;

@@ -1,6 +1,6 @@
 package com.gaohongsen;
 
-/*
+/**
  * 此类封装了一个请求类型与一个Object对象，便于客户端与服务端之间的通讯
  * 
  * @author 高洪森
