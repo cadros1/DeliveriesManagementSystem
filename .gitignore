@@ -1,4 +1,8 @@
 # 自动生成的文件
 target
-
 .jar
+
+#IDE
+.vscode
+.idea
+.vs
